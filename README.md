@@ -3,3 +3,6 @@
 используется модель модель https://replicate.com/cuuupid/idm-vton
 
 https://dvvtech.github.io/virtual-fit/
+
+Todo
+Добавить поле для вввода промокода
