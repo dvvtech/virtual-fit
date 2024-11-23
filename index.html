@@ -10,13 +10,13 @@
         formData.append('file', file);
 
         try {
-		const response1 = await fetch('https://a30726-0187.u.d-f.pw/swagger/index.html/api/virtual-fit/test', {
+		const response1 = await fetch('https://a30726-0187.u.d-f.pw/api/virtual-fit/test', {
 		method: 'GET'
 
             });
             // Отправка файла на сервер
             //const response = await fetch('https://localhost:7147/api/virtual-fit/upload', {
-			const response = await fetch('https://a30726-0187.u.d-f.pw/swagger/index.html/api/virtual-fit/upload', {
+			const response = await fetch('https://a30726-0187.u.d-f.pw/api/virtual-fit/upload', {
                 method: 'POST',
                 body: formData,
             });
