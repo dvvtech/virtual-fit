@@ -11,8 +11,8 @@
 
         try {
 		const response1 = await fetch('https://a30726-0187.u.d-f.pw/api/virtual-fit/test', {
-		method: 'GET'
-
+		method: 'GET',
+        mode: 'cors'
             });
             // Отправка файла на сервер
             //const response = await fetch('https://localhost:7147/api/virtual-fit/upload', {
