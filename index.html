@@ -75,33 +75,85 @@
         <button class="absolute top-10 right-10 bg-red-600 px-4 py-2 rounded hover:bg-red-500" onclick="closeResult()">Close</button>
     </div>
 
-    <script>
-        function previewImage(event, previewId) {
-            const file = event.target.files[0];
-            const preview = document.getElementById(previewId);
+    <script>function previewImage(event, previewId) {
+    const file = event.target.files[0];
+    const preview = document.getElementById(previewId);
 
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    preview.src = e.target.result;
-                    preview.classList.remove('hidden');
-                }
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            preview.src = e.target.result;
+            preview.classList.remove('hidden');
+        }
+        reader.readAsDataURL(file);
+
+        // Upload file to server
+        const formData = new FormData();
+        formData.append(previewId === 'humanPreview' ? 'humanFile' : 'garmFile', file);
+
+        fetch('https://a30944-8332.x.d-f.pw/api/virtual-fit/upload', {
+            method: 'POST',
+            body: formData,
+        })
+        .then(response => response.text())
+        .then(url => {
+            if (previewId === 'humanPreview') {
+                window.humanPhotoUrl = url;
+            } else {
+                window.garmPhotoUrl = url;
+            }
+        })
+        .catch(error => {
+            console.error('Error uploading file:', error);
+        });
+    }
+}
                 reader.readAsDataURL(file);
             }
         }
 
         function tryOn() {
-            const mainContent = document.getElementById('mainContent');
-            const loadingIndicator = document.getElementById('loadingIndicator');
+    const mainContent = document.getElementById('mainContent');
+    const loadingIndicator = document.getElementById('loadingIndicator');
 
-            mainContent.classList.add('hidden');
-            loadingIndicator.classList.remove('hidden');
+    mainContent.classList.add('hidden');
+    loadingIndicator.classList.remove('hidden');
 
-            setTimeout(() => {
-                loadingIndicator.classList.add('hidden');
-                showResult('https://replicate.delivery/yhqm/ieUAqd1K7ekDZkNcPBVUC4D6YIRAO5HLLIbgKHJa6MG24K4TA/output.jpg');
-            }, 5000);
-        }
+    // Commented out for simulation
+    /*
+    const humanFile = document.getElementById('humanFile').files[0];
+    const garmFile = document.getElementById('garmFile').files[0];
+    const promoCode = document.getElementById('promoCode').value;
+    const category = document.getElementById('category').value;
+
+    const formData = new FormData();
+    formData.append('humanFile', humanFile);
+    formData.append('garmFile', garmFile);
+    formData.append('Promocode', promoCode);
+    formData.append('Category', category);
+
+    fetch('https://a30944-8332.x.d-f.pw/api/virtual-fit/try-on', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        loadingIndicator.classList.add('hidden');
+        showResult(data);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        loadingIndicator.classList.add('hidden');
+        mainContent.classList.remove('hidden');
+    });
+    */
+
+    // Simulated response for testing
+    setTimeout(() => {
+        loadingIndicator.classList.add('hidden');
+        showResult('https://replicate.delivery/yhqm/ieUAqd1K7ekDZkNcPBVUC4D6YIRAO5HLLIbgKHJa6MG24K4TA/output.jpg');
+    }, 5000);
+}
 
         function showResult(url) {
             const resultViewer = document.getElementById('resultViewer');
@@ -127,7 +179,6 @@
 
             resultViewer.classList.add('hidden');
             mainContent.classList.remove('hidden');
-        }
-    </script>
+        }</script>
 </body>
 </html>
