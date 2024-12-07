@@ -8,33 +8,33 @@
 </head>
 <body class="bg-gradient-to-br from-gray-100 via-gray-200 to-gray-300 min-h-screen flex items-center justify-center">
     <div id="mainContent" class="bg-white p-8 rounded-xl shadow-2xl w-full max-w-md">
-        <h1 class="text-3xl font-bold mb-6 text-gray-900 text-center">Upload Your Photos</h1>
+        <h1 class="text-3xl font-bold mb-6 text-gray-900 text-center">Trying on clothes</h1>
 
         <div class="grid grid-cols-2 gap-6 mb-6">
             <!-- Photo Upload 1 -->
             <div class="relative group">
                 <input type="file"
                        accept="image/*"
-                       id="upload1"
+                       id="humanFile"
                        class="hidden"
-                       onchange="previewImage(event, 'preview1')">
-                <label for="upload1" class="w-full h-40 border-2 border-dashed border-gray-300 flex items-center justify-center rounded-lg cursor-pointer transition group-hover:border-gray-400 group-hover:shadow-md">
-                    <span class="text-sm text-gray-500 group-hover:text-gray-700">Click to Upload Photo 1</span>
+                       onchange="previewImage(event, 'humanPreview')">
+                <label for="humanFile" class="w-full h-40 border-2 border-dashed border-gray-300 flex items-center justify-center rounded-lg cursor-pointer transition group-hover:border-gray-400 group-hover:shadow-md">
+                    <span class="text-sm text-gray-500 group-hover:text-gray-700">Upload your photo</span>
                 </label>
-                <img id="preview1" src="" alt="" class="absolute inset-0 w-full h-40 object-contain rounded-lg hidden">
+                <img id="humanPreview" src="" alt="" class="absolute inset-0 w-full h-40 object-contain rounded-lg hidden">
             </div>
 
             <!-- Photo Upload 2 -->
             <div class="relative group">
                 <input type="file"
                        accept="image/*"
-                       id="upload2"
+                       id="garmFile"
                        class="hidden"
-                       onchange="previewImage(event, 'preview2')">
-                <label for="upload2" class="w-full h-40 border-2 border-dashed border-gray-300 flex items-center justify-center rounded-lg cursor-pointer transition group-hover:border-gray-400 group-hover:shadow-md">
-                    <span class="text-sm text-gray-500 group-hover:text-gray-700">Click to Upload Photo 2</span>
+                       onchange="previewImage(event, 'garmPreview')">
+                <label for="garmFile" class="w-full h-40 border-2 border-dashed border-gray-300 flex items-center justify-center rounded-lg cursor-pointer transition group-hover:border-gray-400 group-hover:shadow-md">
+                    <span class="text-sm text-gray-500 group-hover:text-gray-700">Upload photo of clothes</span>
                 </label>
-                <img id="preview2" src="" alt="" class="absolute inset-0 w-full h-40 object-contain rounded-lg hidden">
+                <img id="garmPreview" src="" alt="" class="absolute inset-0 w-full h-40 object-contain rounded-lg hidden">
             </div>
         </div>
 
@@ -68,8 +68,8 @@
     <div id="resultViewer" class="hidden fixed inset-0 bg-black text-white flex flex-col items-center justify-center z-50">
         <img id="resultImage" src="" alt="Result" class="max-w-full max-h-screen">
         <div class="absolute bottom-10 flex gap-4">
-            <button class="bg-gray-800 px-4 py-2 rounded hover:bg-gray-700" onclick="showPreview('preview1')">Photo 1</button>
-            <button class="bg-gray-800 px-4 py-2 rounded hover:bg-gray-700" onclick="showPreview('preview2')">Photo 2</button>
+            <button class="bg-gray-800 px-4 py-2 rounded hover:bg-gray-700" onclick="showPreview('humanPreview')">Photo 1</button>
+            <button class="bg-gray-800 px-4 py-2 rounded hover:bg-gray-700" onclick="showPreview('garmPreview')">Photo 2</button>
             <button class="bg-gray-800 px-4 py-2 rounded hover:bg-gray-700" onclick="showPreview('resultImage')">Result</button>
         </div>
         <button class="absolute top-10 right-10 bg-red-600 px-4 py-2 rounded hover:bg-red-500" onclick="closeResult()">Close</button>
