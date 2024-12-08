@@ -94,8 +94,7 @@
         fetch('https://a30944-8332.x.d-f.pw/api/virtual-fit/upload', {
             method: 'POST',
             body: formData,
-        })
-        .then(response => response.text())
+        })        
         .then(response => response.json())
         .then(data => {
             const imageUrl = data.url;
