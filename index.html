@@ -130,6 +130,7 @@
             })
             .then(response => response.json())
             .then(data => {
+                window.resultUrl = data.url; // Сохранение результата в глобальную переменную
                 loadingIndicator.classList.add('hidden');
                 showResult(data.url);
             })
@@ -139,7 +140,6 @@
                 mainContent.classList.remove('hidden');
             });
         }
-
 
         function showResult(url) {
             const resultViewer = document.getElementById('resultViewer');
@@ -152,7 +152,7 @@
         function showPreview(previewId) {
             const resultImage = document.getElementById('resultImage');
             if (previewId === 'resultImage') {
-                resultImage.src = 'https://replicate.delivery/yhqm/ieUAqd1K7ekDZkNcPBVUC4D6YIRAO5HLLIbgKHJa6MG24K4TA/output.jpg';
+                resultImage.src = window.resultUrl;
             } else {
                 const preview = document.getElementById(previewId);
                 resultImage.src = preview.src;
