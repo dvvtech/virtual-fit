@@ -114,12 +114,32 @@
             mainContent.classList.add('hidden');
             loadingIndicator.classList.remove('hidden');
 
-            // Simulated response for testing
-            setTimeout(() => {
+            const payload = {
+                GarmImg: window.garmPhotoUrl,
+                HumanImg: window.humanPhotoUrl,
+                Promocode: document.getElementById('promoCode').value,
+                Category: document.getElementById('category').value
+            };
+
+            fetch('https://a30944-8332.x.d-f.pw/api/virtual-fit/try-on', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(response => response.json())
+            .then(data => {
                 loadingIndicator.classList.add('hidden');
-                showResult('https://replicate.delivery/yhqm/ieUAqd1K7ekDZkNcPBVUC4D6YIRAO5HLLIbgKHJa6MG24K4TA/output.jpg');
-            }, 5000);
+                showResult(data.url);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                loadingIndicator.classList.add('hidden');
+                mainContent.classList.remove('hidden');
+            });
         }
+
 
         function showResult(url) {
             const resultViewer = document.getElementById('resultViewer');
