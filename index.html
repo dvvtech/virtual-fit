@@ -83,9 +83,6 @@
                 promoCodeField.value = savedPromoCode;
             }
 
-            promoCodeField.addEventListener('input', () => {
-                localStorage.setItem('promoCode', promoCodeField.value);
-            });
         });
         function previewImage(event, previewId) {
             const file = event.target.files[0];
