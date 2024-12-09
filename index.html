@@ -68,9 +68,9 @@
     <div id="resultViewer" class="hidden fixed inset-0 bg-black text-white flex flex-col items-center justify-center z-50">
         <img id="resultImage" src="" alt="Result" class="max-w-full max-h-screen">
         <div class="absolute bottom-10 flex gap-4">
-            <button class="bg-gray-800 px-4 py-2 rounded hover:bg-gray-700" onclick="showPreview('humanPreview')">Photo 1</button>
-            <button class="bg-gray-800 px-4 py-2 rounded hover:bg-gray-700" onclick="showPreview('garmPreview')">Photo 2</button>
-            <button class="bg-gray-800 px-4 py-2 rounded hover:bg-gray-700" onclick="showPreview('resultImage')">Result</button>
+            <button class="bg-gray-800 px-4 py-2 rounded hover:bg-gray-700" onclick="showPreview('humanPreview')">Your photo</button>
+            <button class="bg-gray-800 px-4 py-2 rounded hover:bg-gray-700" onclick="showPreview('garmPreview')">Photo of clothes</button>
+            <button class="bg-gray-800 px-4 py-2 rounded hover:bg-gray-700" onclick="showPreview('resultImage')">Fitting result</button>
         </div>
         <button class="absolute top-10 right-10 bg-red-600 px-4 py-2 rounded hover:bg-red-500" onclick="closeResult()">Close</button>
     </div>
@@ -156,7 +156,7 @@
                 errorMessage.className = 'text-red-600 text-center mt-4 error-message';
                 mainContent.appendChild(errorMessage);
             });
-        }                       
+        }
 
         function showResult(url) {
             const resultViewer = document.getElementById('resultViewer');
