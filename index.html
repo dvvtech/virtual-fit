@@ -111,6 +111,10 @@
             const mainContent = document.getElementById('mainContent');
             const loadingIndicator = document.getElementById('loadingIndicator');
 
+            // Remove existing error messages
+            const existingErrors = mainContent.querySelectorAll('.error-message');
+            existingErrors.forEach(error => error.remove());
+
             mainContent.classList.add('hidden');
             loadingIndicator.classList.remove('hidden');
 
@@ -137,7 +141,7 @@
                 return response.json();
             })
             .then(data => {
-                window.resultUrl = data.url; // Сохранение результата в глобальную переменную
+                window.resultUrl = data.url; // Save the result URL
                 loadingIndicator.classList.add('hidden');
                 showResult(data.url);
             })
@@ -149,9 +153,10 @@
                 // Display error message to user
                 const errorMessage = document.createElement('div');
                 errorMessage.textContent = error.message;
-                errorMessage.className = 'text-red-600 text-center mt-4';
+                errorMessage.className = 'text-red-600 text-center mt-4 error-message';
                 mainContent.appendChild(errorMessage);
             });
+          }               
         }
 
         function showResult(url) {
