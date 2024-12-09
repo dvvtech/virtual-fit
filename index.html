@@ -75,7 +75,19 @@
         <button class="absolute top-10 right-10 bg-red-600 px-4 py-2 rounded hover:bg-red-500" onclick="closeResult()">Close</button>
     </div>
 
-    <script>function previewImage(event, previewId) {
+    <script>document.addEventListener('DOMContentLoaded', () => {
+            const promoCodeField = document.getElementById('promoCode');
+            const savedPromoCode = localStorage.getItem('promoCode');
+
+            if (savedPromoCode) {
+                promoCodeField.value = savedPromoCode;
+            }
+
+            promoCodeField.addEventListener('input', () => {
+                localStorage.setItem('promoCode', promoCodeField.value);
+            });
+        });
+        function previewImage(event, previewId) {
             const file = event.target.files[0];
             const preview = document.getElementById(previewId);
 
