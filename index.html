@@ -120,40 +120,42 @@
         }
 
         function tryOn() {
-            const mainContent = document.getElementById('mainContent');
-            const loadingIndicator = document.getElementById('loadingIndicator');
+    const mainContent = document.getElementById('mainContent');
+    const loadingIndicator = document.getElementById('loadingIndicator');
 
-            // Remove existing error messages
-            const existingErrors = mainContent.querySelectorAll('.error-message');
-            existingErrors.forEach(error => error.remove());
+    // Remove existing error messages
+    const existingErrors = mainContent.querySelectorAll('.error-message');
+    existingErrors.forEach(error => error.remove());
 
-            mainContent.classList.add('hidden');
-            loadingIndicator.classList.remove('hidden');
+    mainContent.classList.add('hidden');
+    loadingIndicator.classList.remove('hidden');
 
-            const payload = {
-                GarmImg: window.garmPhotoUrl,
-                HumanImg: window.humanPhotoUrl,
-                Promocode: document.getElementById('promoCode').value,
-                Category: document.getElementById('category').value
-            };
+    const promoCodeField = document.getElementById('promoCode');
+    const payload = {
+        GarmImg: window.garmPhotoUrl,
+        HumanImg: window.humanPhotoUrl,
+        Promocode: promoCodeField.value,
+        Category: document.getElementById('category').value
+    };
 
-            fetch('https://a30944-8332.x.d-f.pw/api/virtual-fit/try-on', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(payload)
-            })
-            .then(response => {
-                if (!response.ok) {
-                    return response.json().then(err => {
-                        throw new Error(err.description || 'Unknown error occurred');
-                    });
-                }
-                return response.json();
-            })
-            .then(data => {
-                window.resultUrl = data.url; // Save the result URL
+    fetch('https://a30944-8332.x.d-f.pw/api/virtual-fit/try-on', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(err => {
+                throw new Error(err.description || 'Unknown error occurred');
+            });
+        }
+        return response.json();
+    })
+    .then(data => {
+        window.resultUrl = data.url; // Save the result URL
+        localStorage.setItem('promoCode', promoCodeField.value); // Save promo code on success
                 loadingIndicator.classList.add('hidden');
                 showResult(data.url);
             })
