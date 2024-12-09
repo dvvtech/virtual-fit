@@ -68,9 +68,9 @@
     <div id="resultViewer" class="hidden fixed inset-0 bg-black text-white flex flex-col items-center justify-center z-50">
         <img id="resultImage" src="" alt="Result" class="max-w-full max-h-screen">
         <div class="absolute bottom-10 flex gap-4">
-            <button class="bg-gray-800 px-4 py-2 rounded hover:bg-gray-700" onclick="showPreview('humanPreview')">Your photo</button>
-            <button class="bg-gray-800 px-4 py-2 rounded hover:bg-gray-700" onclick="showPreview('garmPreview')">Photo of clothes</button>
-            <button class="bg-gray-800 px-4 py-2 rounded hover:bg-gray-700" onclick="showPreview('resultImage')">Fitting result</button>
+            <button class="bg-gray-800 px-4 py-2 rounded hover:bg-gray-700" onclick="showPreview('humanPreview')">Photo 1</button>
+            <button class="bg-gray-800 px-4 py-2 rounded hover:bg-gray-700" onclick="showPreview('garmPreview')">Photo 2</button>
+            <button class="bg-gray-800 px-4 py-2 rounded hover:bg-gray-700" onclick="showPreview('resultImage')">Result</button>
         </div>
         <button class="absolute top-10 right-10 bg-red-600 px-4 py-2 rounded hover:bg-red-500" onclick="closeResult()">Close</button>
     </div>
@@ -128,7 +128,14 @@
                 },
                 body: JSON.stringify(payload)
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(err => {
+                        throw new Error(err.description || 'Unknown error occurred');
+                    });
+                }
+                return response.json();
+            })
             .then(data => {
                 window.resultUrl = data.url; // Сохранение результата в глобальную переменную
                 loadingIndicator.classList.add('hidden');
@@ -138,6 +145,12 @@
                 console.error('Error:', error);
                 loadingIndicator.classList.add('hidden');
                 mainContent.classList.remove('hidden');
+
+                // Display error message to user
+                const errorMessage = document.createElement('div');
+                errorMessage.textContent = error.message;
+                errorMessage.className = 'text-red-600 text-center mt-4';
+                mainContent.appendChild(errorMessage);
             });
         }
 
