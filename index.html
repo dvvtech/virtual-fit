@@ -83,8 +83,8 @@
     </div>
 
     <script>
-      //const API_BASE_URL = 'http://localhost:5023';
-      const API_BASE_URL = 'https://a30944-8332.x.d-f.pw';
+      const API_BASE_URL = 'http://localhost:5023';
+      //const API_BASE_URL = 'https://a30944-8332.x.d-f.pw';
         document.addEventListener('DOMContentLoaded', () => {
             const promoCodeField = document.getElementById('promoCode');
             const savedPromoCode = localStorage.getItem('promoCode');
@@ -255,8 +255,8 @@
 
                 data.forEach(item => {
                     const row = document.createElement('tr');
-
-                    [item.HumanImgUrl, item.GarmentImgUrl, item.ResultImgUrl].forEach(imgUrl => {
+                    
+                    [item.humanImgUrl, item.garmentImgUrl, item.resultImgUrl].forEach(imgUrl => {
                         const cell = document.createElement('td');
                         cell.className = 'border border-gray-200 p-2';
 
