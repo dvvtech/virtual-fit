@@ -88,6 +88,14 @@
             if (savedPromoCode) {
                 promoCodeField.value = savedPromoCode;
             }
+
+            const savedRemainingUsage = localStorage.getItem('remainingUsage');
+            if (savedRemainingUsage) {
+                const remainingUsageContainer = document.getElementById('remainingUsageContainer');
+                const remainingUsageField = document.getElementById('remainingUsage');
+                remainingUsageContainer.style.display = 'block';
+                remainingUsageField.textContent = savedRemainingUsage;
+            }
         });
         function previewImage(event, previewId) {
             const file = event.target.files[0];
@@ -162,6 +170,7 @@
                 showResult(data.url);
         document.getElementById('remainingUsageContainer').style.display = 'block';
         document.getElementById('remainingUsage').textContent = data.remainingUsage;
+        localStorage.setItem('remainingUsage', data.remainingUsage);
             })
             .catch(error => {
                 console.error('Error:', error);
