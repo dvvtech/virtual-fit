@@ -82,9 +82,8 @@
         <button class="absolute top-10 right-10 bg-red-600 px-4 py-2 rounded hover:bg-red-500" onclick="closeResult()">Close</button>
     </div>
 
-    <script>
-      const API_BASE_URL = 'https://a30944-8332.x.d-f.pw';
-      //const API_BASE_URL = 'http://localhost:5023';      
+    <script>const API_BASE_URL = 'https://a30944-8332.x.d-f.pw';
+      //const API_BASE_URL = 'http://localhost:5023';
         document.addEventListener('DOMContentLoaded', () => {
             const promoCodeField = document.getElementById('promoCode');
             const savedPromoCode = localStorage.getItem('promoCode');
@@ -171,7 +170,7 @@
         window.resultUrl = data.url; // Save the result URL
         localStorage.setItem('promoCode', promoCodeField.value); // Save promo code on success
                 loadingIndicator.classList.add('hidden');
-                showResult(data.url);
+                showResult(data.url, window.humanPhotoUrl, window.garmPhotoUrl, data.url);
         document.getElementById('remainingUsageContainer').style.display = 'block';
         document.getElementById('remainingUsage').textContent = data.remainingUsage;
         localStorage.setItem('remainingUsage', data.remainingUsage);
@@ -189,13 +188,20 @@
             });
         }
 
-        function showResult(url) {
-            const resultViewer = document.getElementById('resultViewer');
-            const resultImage = document.getElementById('resultImage');
+        function showResult(url, humanImgUrl, garmentImgUrl, resultImgUrl) {
+    const resultViewer = document.getElementById('resultViewer');
+    const resultImage = document.getElementById('resultImage');
 
-            resultImage.src = url;
-            resultViewer.classList.remove('hidden');
-        }
+    // Set initial image
+    resultImage.src = url;
+    resultViewer.classList.remove('hidden');
+
+    // Update buttons for switching images
+    const buttons = resultViewer.querySelectorAll('.bottom-buttons button');
+    buttons[0].onclick = () => (resultImage.src = humanImgUrl || window.humanPhotoUrl);
+    buttons[1].onclick = () => (resultImage.src = garmentImgUrl || window.garmPhotoUrl);
+    buttons[2].onclick = () => (resultImage.src = resultImgUrl || url);
+}
 
         function showPreview(previewId) {
             const resultImage = document.getElementById('resultImage');
