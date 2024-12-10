@@ -74,16 +74,17 @@
 
     <div id="resultViewer" class="hidden fixed inset-0 bg-black text-white flex flex-col items-center justify-center z-50">
         <img id="resultImage" src="" alt="Result" class="max-w-full max-h-screen">
-        <div class="absolute bottom-10 flex gap-4">
-            <button class="bg-gray-800 px-4 py-2 rounded hover:bg-gray-700" onclick="showPreview('humanPreview')">Your photo</button>
-            <button class="bg-gray-800 px-4 py-2 rounded hover:bg-gray-700" onclick="showPreview('garmPreview')">Photo of clothes</button>
-            <button class="bg-gray-800 px-4 py-2 rounded hover:bg-gray-700" onclick="showPreview('resultImage')">Fitting result</button>
+        <div class="absolute bottom-10 flex gap-4 bottom-buttons">
+            <button class="bg-gray-800 px-4 py-2 rounded hover:bg-gray-700">Your photo</button>
+            <button class="bg-gray-800 px-4 py-2 rounded hover:bg-gray-700">Photo of clothes</button>
+            <button class="bg-gray-800 px-4 py-2 rounded hover:bg-gray-700">Fitting result</button>
         </div>
         <button class="absolute top-10 right-10 bg-red-600 px-4 py-2 rounded hover:bg-red-500" onclick="closeResult()">Close</button>
     </div>
 
-    <script>const API_BASE_URL = 'http://localhost:5023';
-      //const API_BASE_URL = 'https://a30944-8332.x.d-f.pw';
+    <script>
+      const API_BASE_URL = 'https://a30944-8332.x.d-f.pw';
+      //const API_BASE_URL = 'http://localhost:5023';      
         document.addEventListener('DOMContentLoaded', () => {
             const promoCodeField = document.getElementById('promoCode');
             const savedPromoCode = localStorage.getItem('promoCode');
@@ -268,7 +269,12 @@
                         const img = document.createElement('img');
                         img.src = imgUrl;
                         img.className = 'w-full h-40 object-contain cursor-pointer';
-                        img.onclick = () => showImageFullScreen(imgUrl);
+                        img.onclick = () => showImageFullScreen(
+    imgUrl,
+    item.humanImgUrl,
+    item.garmentImgUrl,
+    item.resultImgUrl
+);
 
                         cell.appendChild(img);
                         row.appendChild(cell);
@@ -294,12 +300,19 @@
             mainContent.classList.remove('hidden');
         }
 
-        function showImageFullScreen(imgUrl) {
-            const resultViewer = document.getElementById('resultViewer');
-            const resultImage = document.getElementById('resultImage');
+        function showImageFullScreen(imgUrl, humanImgUrl, garmentImgUrl, resultImgUrl) {
+    const resultViewer = document.getElementById('resultViewer');
+    const resultImage = document.getElementById('resultImage');
 
-            resultImage.src = imgUrl;
-            resultViewer.classList.remove('hidden');
-        }</script>
+    // Set initial image
+    resultImage.src = imgUrl;
+    resultViewer.classList.remove('hidden');
+
+    // Update buttons for switching images
+    const buttons = resultViewer.querySelectorAll('.bottom-buttons button');
+    buttons[0].onclick = () => (resultImage.src = humanImgUrl);
+    buttons[1].onclick = () => (resultImage.src = garmentImgUrl);
+    buttons[2].onclick = () => (resultImage.src = resultImgUrl);
+}</script>
 </body>
 </html>
