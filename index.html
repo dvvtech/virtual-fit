@@ -8,6 +8,7 @@
 </head>
 <body class="bg-gradient-to-br from-gray-100 via-gray-200 to-gray-300 min-h-screen flex items-center justify-center">
     <div id="mainContent" class="bg-white p-8 rounded-xl shadow-2xl w-full max-w-md">
+        <button id="historyButton" class="w-full bg-gradient-to-r from-gray-500 to-gray-600 text-white font-semibold py-2 px-4 rounded-lg hover:from-gray-600 hover:to-gray-700 transition shadow-md hover:shadow-lg mb-6" onclick="showHistory()">History</button>
         <h1 class="text-3xl font-bold mb-6 text-gray-900 text-center">Trying on clothes</h1>
 
         <div class="grid grid-cols-2 gap-6 mb-6">
@@ -81,7 +82,9 @@
         <button class="absolute top-10 right-10 bg-red-600 px-4 py-2 rounded hover:bg-red-500" onclick="closeResult()">Close</button>
     </div>
 
-    <script>const API_BASE_URL = 'https://a30944-8332.x.d-f.pw';
+    <script>
+      //const API_BASE_URL = 'http://localhost:5023';
+      const API_BASE_URL = 'https://a30944-8332.x.d-f.pw';
         document.addEventListener('DOMContentLoaded', () => {
             const promoCodeField = document.getElementById('promoCode');
             const savedPromoCode = localStorage.getItem('promoCode');
@@ -210,6 +213,88 @@
 
             resultViewer.classList.add('hidden');
             mainContent.classList.remove('hidden');
+        }</script>
+    <div id="historyContent" class="hidden bg-white p-8 rounded-xl shadow-2xl w-full max-w-5xl">
+        <h2 class="text-2xl font-bold mb-6 text-gray-900 text-center">Fitting History</h2>
+        <table class="table-auto w-full border-collapse border border-gray-200">
+            <thead>
+                <tr>
+                    <th class="border border-gray-200 p-2">Your Photo</th>
+                    <th class="border border-gray-200 p-2">Clothes Photo</th>
+                    <th class="border border-gray-200 p-2">Result</th>
+                </tr>
+            </thead>
+            <tbody id="historyTableBody"></tbody>
+        </table>
+        <button class="mt-6 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600" onclick="hideHistory()">Back</button>
+    </div>
+
+    <script>function showHistory() {
+            const promoCode = document.getElementById('promoCode').value;
+            const historyContent = document.getElementById('historyContent');
+            const mainContent = document.getElementById('mainContent');
+
+            fetch(`${API_BASE_URL}/api/virtual-fit/history`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ promocode: promoCode })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(err => {
+                        throw new Error(err.description || 'Failed to fetch history');
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                const historyTableBody = document.getElementById('historyTableBody');
+                historyTableBody.innerHTML = '';
+
+                data.forEach(item => {
+                    const row = document.createElement('tr');
+
+                    [item.HumanImgUrl, item.GarmentImgUrl, item.ResultImgUrl].forEach(imgUrl => {
+                        const cell = document.createElement('td');
+                        cell.className = 'border border-gray-200 p-2';
+
+                        const img = document.createElement('img');
+                        img.src = imgUrl;
+                        img.className = 'w-full h-40 object-contain cursor-pointer';
+                        img.onclick = () => showImageFullScreen(imgUrl);
+
+                        cell.appendChild(img);
+                        row.appendChild(cell);
+                    });
+
+                    historyTableBody.appendChild(row);
+                });
+
+                mainContent.classList.add('hidden');
+                historyContent.classList.remove('hidden');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert(error.message);
+            });
+        }
+
+        function hideHistory() {
+            const historyContent = document.getElementById('historyContent');
+            const mainContent = document.getElementById('mainContent');
+
+            historyContent.classList.add('hidden');
+            mainContent.classList.remove('hidden');
+        }
+
+        function showImageFullScreen(imgUrl) {
+            const resultViewer = document.getElementById('resultViewer');
+            const resultImage = document.getElementById('resultImage');
+
+            resultImage.src = imgUrl;
+            resultViewer.classList.remove('hidden');
         }</script>
 </body>
 </html>
