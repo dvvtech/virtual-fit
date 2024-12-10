@@ -82,8 +82,7 @@
         <button class="absolute top-10 right-10 bg-red-600 px-4 py-2 rounded hover:bg-red-500" onclick="closeResult()">Close</button>
     </div>
 
-    <script>
-      const API_BASE_URL = 'http://localhost:5023';
+    <script>const API_BASE_URL = 'http://localhost:5023';
       //const API_BASE_URL = 'https://a30944-8332.x.d-f.pw';
         document.addEventListener('DOMContentLoaded', () => {
             const promoCodeField = document.getElementById('promoCode');
@@ -208,12 +207,18 @@
         }
 
         function closeResult() {
-            const resultViewer = document.getElementById('resultViewer');
-            const mainContent = document.getElementById('mainContent');
+    const resultViewer = document.getElementById('resultViewer');
+    resultViewer.classList.add('hidden');
 
-            resultViewer.classList.add('hidden');
-            mainContent.classList.remove('hidden');
-        }</script>
+    const historyContent = document.getElementById('historyContent');
+    const mainContent = document.getElementById('mainContent');
+
+    if (!historyContent.classList.contains('hidden')) {
+        historyContent.classList.remove('hidden');
+    } else {
+        mainContent.classList.remove('hidden');
+    }
+}</script>
     <div id="historyContent" class="hidden bg-white p-8 rounded-xl shadow-2xl w-full max-w-5xl">
         <h2 class="text-2xl font-bold mb-6 text-gray-900 text-center">Fitting History</h2>
         <table class="table-auto w-full border-collapse border border-gray-200">
@@ -255,7 +260,7 @@
 
                 data.forEach(item => {
                     const row = document.createElement('tr');
-                    
+
                     [item.humanImgUrl, item.garmentImgUrl, item.resultImgUrl].forEach(imgUrl => {
                         const cell = document.createElement('td');
                         cell.className = 'border border-gray-200 p-2';
