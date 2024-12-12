@@ -28,16 +28,18 @@
             <!-- Photo Upload 2 -->
 
             <div class="relative group">
-                <input type="file"
-                       accept="image/*"
-                       id="garmFile"
-                       class="hidden"
-                       onchange="previewImage(event, 'garmPreview')">
-                <label for="garmFile" class="w-full h-40 border-2 border-dashed border-gray-300 flex items-center justify-center rounded-lg cursor-pointer transition group-hover:border-gray-400 group-hover:shadow-md">
+                <div class="w-full h-20 border-b-2 border-dashed border-gray-300 flex items-center justify-center rounded-t-lg cursor-pointer transition group-hover:border-gray-400 group-hover:shadow-md">
+                    <input type="file"
+                           accept="image/*"
+                           id="garmFile"
+                           class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                           onchange="previewImage(event, 'garmPreview')">
                     <span class="text-sm text-gray-500 group-hover:text-gray-700">Upload photo of clothes</span>
-                </label>
-                <img id="garmPreview" src="" alt="" class="absolute inset-0 w-full h-40 object-contain rounded-lg hidden" onclick="document.getElementById('garmFile').click()">
-                <button id="openCollection" class="absolute inset-0 bg-blue-500 bg-opacity-50 text-white text-sm font-semibold rounded-lg flex items-center justify-center opacity-0 hover:opacity-100 transition" onclick="openCollection()">Select from Collection</button>
+                </div>
+                <div class="w-full h-20 bg-blue-500 text-white text-sm font-semibold flex items-center justify-center rounded-b-lg cursor-pointer transition hover:bg-blue-600" onclick="openCollection()">
+                    Select from Collection
+                </div>
+                <img id="garmPreview" src="" alt="" class="absolute inset-0 w-full h-40 object-contain rounded-lg hidden">
             </div>
         </div>
 
