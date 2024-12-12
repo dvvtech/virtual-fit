@@ -23,7 +23,7 @@
                     <span class="text-sm text-gray-500 group-hover:text-gray-700">Upload your photo</span>
                 </label>
                 <img id="humanPreview" src="" alt="" class="absolute inset-0 w-full h-40 object-contain rounded-lg hidden" onclick="document.getElementById('humanFile').click()">
-                <button class="bg-blue-500 text-white text-xs font-semibold py-1 px-3 rounded-lg mt-2 w-full" onclick="openCollection(event)">Select from Collection</button>
+                <button class="bg-blue-500 text-white text-xs font-semibold py-1 px-3 rounded-lg mt-2 w-full" onclick="openCollection(event, 'humanPreview')">Photo from the collection</button>
             </div>
 
             <!-- Photo Upload 2 -->
@@ -37,7 +37,7 @@
                     <span class="text-sm text-gray-500 group-hover:text-gray-700">Upload photo of clothes</span>
                 </label>
                 <img id="garmPreview" src="" alt="" class="absolute inset-0 w-full h-40 object-contain rounded-lg hidden" onclick="document.getElementById('garmFile').click()">
-                <button class="bg-blue-500 text-white text-xs font-semibold py-1 px-3 rounded-lg mt-2 w-full" onclick="openCollection(event)">Select from Collection</button>
+                <button class="bg-blue-500 text-white text-xs font-semibold py-1 px-3 rounded-lg mt-2 w-full" onclick="openCollection(event, 'garmPreview')">Photo from the collection</button>
             </div>
         </div>
 
@@ -338,7 +338,7 @@ function showHistory() {
     </div>
 
     <script>
-function openCollection(event) {
+function openCollection(event, previewId) {
 event.stopPropagation();
         const collectionModal = document.getElementById('collectionModal');
         const collectionGrid = document.getElementById('collectionGrid');
@@ -355,7 +355,7 @@ event.stopPropagation();
                     img.src = item.link;
                     img.alt = item.category;
                     img.className = 'w-full h-40 object-cover rounded cursor-pointer hover:opacity-75';
-                    img.onclick = () => selectFromCollection(item.link);
+                    img.onclick = () => selectFromCollection(item.link, previewId);
                     collectionGrid.appendChild(img);
                 });
 
@@ -371,8 +371,8 @@ event.stopPropagation();
         collectionModal.classList.add('hidden');
     }
 
-    function selectFromCollection(link) {
-        const garmPreview = document.getElementById('garmPreview');
+    function selectFromCollection(link, previewId) {
+        const garmPreview = document.getElementById(previewId);
         garmPreview.src = link;
         garmPreview.classList.remove('hidden');
         window.garmPhotoUrl = link; // Set URL for the request
