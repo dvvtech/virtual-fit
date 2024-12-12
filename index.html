@@ -26,7 +26,7 @@
             </div>
 
             <!-- Photo Upload 2 -->
-            <button id="openCollection" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 mb-2" onclick="openCollection()">Select from Collection</button>
+
             <div class="relative group">
                 <input type="file"
                        accept="image/*"
@@ -37,6 +37,7 @@
                     <span class="text-sm text-gray-500 group-hover:text-gray-700">Upload photo of clothes</span>
                 </label>
                 <img id="garmPreview" src="" alt="" class="absolute inset-0 w-full h-40 object-contain rounded-lg hidden" onclick="document.getElementById('garmFile').click()">
+                <button id="openCollection" class="absolute inset-0 bg-blue-500 bg-opacity-50 text-white text-sm font-semibold rounded-lg flex items-center justify-center opacity-0 hover:opacity-100 transition" onclick="openCollection()">Select from Collection</button>
             </div>
         </div>
 
