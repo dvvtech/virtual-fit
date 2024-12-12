@@ -28,17 +28,14 @@
             <!-- Photo Upload 2 -->
 
             <div class="relative group">
-                <div class="w-full h-20 border-b-2 border-dashed border-gray-300 flex items-center justify-center rounded-t-lg cursor-pointer transition group-hover:border-gray-400 group-hover:shadow-md">
-                    <input type="file"
-                           accept="image/*"
-                           id="garmFile"
-                           class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                           onchange="previewImage(event, 'garmPreview')">
+                <input type="file"
+                       accept="image/*"
+                       id="garmFile"
+                       class="hidden"
+                       onchange="previewImage(event, 'garmPreview')">
+                <label for="garmFile" class="w-full h-40 border-2 border-dashed border-gray-300 flex items-center justify-center rounded-lg cursor-pointer transition group-hover:border-gray-400 group-hover:shadow-md">
                     <span class="text-sm text-gray-500 group-hover:text-gray-700">Upload photo of clothes</span>
-                </div>
-                <div class="w-full h-20 bg-blue-500 text-white text-sm font-semibold flex items-center justify-center rounded-b-lg cursor-pointer transition hover:bg-blue-600" onclick="openCollection()">
-                    Select from Collection
-                </div>
+                </label>
                 <img id="garmPreview" src="" alt="" class="absolute inset-0 w-full h-40 object-contain rounded-lg hidden">
             </div>
         </div>
@@ -139,7 +136,7 @@
             event.target.value = '';
         })
         .catch(error => console.error('Error uploading file:', error));
-    }              
+    }
         }
 
         function tryOn() {
@@ -340,7 +337,8 @@
         </div>
     </div>
 
-    <script>function openCollection() {
+    <script>function openCollection(event) {
+    event.stopPropagation();
             const collectionModal = document.getElementById('collectionModal');
             const collectionGrid = document.getElementById('collectionGrid');
 
