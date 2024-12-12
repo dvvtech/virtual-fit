@@ -13,7 +13,7 @@
 
         <div class="grid grid-cols-2 gap-6 mb-6">
             <!-- Photo Upload 1 -->
-            <div class="relative group">
+            <div class="relative group mb-4">
                 <input type="file"
                        accept="image/*"
                        id="humanFile"
@@ -23,11 +23,13 @@
                     <span class="text-sm text-gray-500 group-hover:text-gray-700">Upload your photo</span>
                 </label>
                 <img id="humanPreview" src="" alt="" class="absolute inset-0 w-full h-40 object-contain rounded-lg hidden" onclick="document.getElementById('humanFile').click()">
+                <button class="bg-blue-500 text-white text-xs font-semibold py-1 px-3 rounded-lg mt-2 w-full" onclick="openCollection(event)">Select from Collection</button>
             </div>
+
 
             <!-- Photo Upload 2 -->
 
-            <div class="relative group">
+            <div class="relative group mb-4">
                 <input type="file"
                        accept="image/*"
                        id="garmFile"
@@ -37,7 +39,9 @@
                     <span class="text-sm text-gray-500 group-hover:text-gray-700">Upload photo of clothes</span>
                 </label>
                 <img id="garmPreview" src="" alt="" class="absolute inset-0 w-full h-40 object-contain rounded-lg hidden">
+                <button class="bg-blue-500 text-white text-xs font-semibold py-1 px-3 rounded-lg mt-2 w-full" onclick="openCollection(event)">Select from Collection</button>
             </div>
+            
         </div>
 
         <!-- Dropdown -->
