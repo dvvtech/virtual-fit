@@ -364,19 +364,28 @@ event.stopPropagation();
             .catch(error => {
                 console.error('Error fetching collection:', error);
             });
-    }
+    }    
 
+    function selectFromCollection(link, previewId) {
+        const preview = document.getElementById(previewId);
+        preview.src = link;
+        preview.classList.remove('hidden');
+
+        if (previewId === 'humanPreview') {
+            window.humanPhotoUrl = link;
+        }
+        else {
+            window.garmPhotoUrl = link;
+        }
+        
+        closeCollection();
+    }
+    
     function closeCollection() {
         const collectionModal = document.getElementById('collectionModal');
         collectionModal.classList.add('hidden');
     }
-
-    function selectFromCollection(link, previewId) {
-        const garmPreview = document.getElementById(previewId);
-        garmPreview.src = link;
-        garmPreview.classList.remove('hidden');
-        window.garmPhotoUrl = link; // Set URL for the request
-        closeCollection();
-    }</script>
+    
+    </script>
 </body>
 </html>
