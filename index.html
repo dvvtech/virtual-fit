@@ -358,6 +358,15 @@ event.stopPropagation();
                     img.onclick = () => selectFromCollection(item.link, previewId);
                     collectionGrid.appendChild(img);
                 });
+                
+                data.womanItems.forEach(item => {
+                    const img = document.createElement('img');
+                    img.src = item.link;
+                    img.alt = item.category;
+                    img.className = 'w-full h-40 object-contain rounded cursor-pointer hover:opacity-75';
+                    img.onclick = () => selectFromCollection(item.link, previewId);
+                    collectionGrid.appendChild(img);
+                });
 
                 collectionModal.classList.remove('hidden');
             })
