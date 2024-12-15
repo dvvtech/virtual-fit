@@ -88,8 +88,8 @@
     </div>
 
     <script>
-const API_BASE_URL = 'https://a30944-8332.x.d-f.pw';
-      //const API_BASE_URL = 'http://localhost:5023';
+        const API_BASE_URL = 'https://a30944-8332.x.d-f.pw';
+        //const API_BASE_URL = 'http://localhost:5023';
         document.addEventListener('DOMContentLoaded', () => {
             const promoCodeField = document.getElementById('promoCode');
             const savedPromoCode = localStorage.getItem('promoCode');
@@ -350,7 +350,7 @@ event.stopPropagation();
         fetch(`${API_BASE_URL}/api/virtual-fit/clothing-collection`)
             .then(response => response.json())
             .then(data => {
-                data.manItems.forEach(item => {
+                data.manСlothingItems.forEach(item => {
                     const img = document.createElement('img');
                     img.src = item.link;
                     img.alt = item.category;
@@ -359,7 +359,7 @@ event.stopPropagation();
                     collectionGrid.appendChild(img);
                 });
                 
-                data.womanItems.forEach(item => {
+                data.man.forEach(item => {
                     const img = document.createElement('img');
                     img.src = item.link;
                     img.alt = item.category;
