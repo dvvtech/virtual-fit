@@ -420,7 +420,7 @@ function showTab(tab) {
     function selectFromCollection(imageLink, previewId) {
         const preview = document.getElementById(previewId);
         const cleanImageLink = removeThumbnailSuffix(imageLink);        
-        //preview.src = imageLink;
+        preview.src = imageLink;
         preview.classList.remove('hidden');
 
         if (previewId === 'humanPreview') {
