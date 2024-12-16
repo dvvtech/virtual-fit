@@ -117,7 +117,8 @@
         const shareButton = document.getElementById('shareButton');
         // Обработчик для кнопки "Поделиться"
         shareButton.onclick = () => {
-            navigator.clipboard.writeText("example link")
+            const resultImage = document.getElementById('resultImage');            
+            navigator.clipboard.writeText(resultImage.src)
             .then(() => {
                 alert("Ссылка на изображение скопирована в буфер обмена!");
             })
@@ -125,7 +126,7 @@
                 console.error("Ошибка при копировании ссылки: ", err);
                 alert("Не удалось скопировать ссылку.");
             });
-};
+        };
 
         function previewImage(event, previewId) {
             const file = event.target.files[0];
