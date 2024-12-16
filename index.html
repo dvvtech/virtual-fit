@@ -113,6 +113,20 @@
                 remainingUsageField.textContent = savedRemainingUsage;
             }
         });
+
+        const shareButton = document.getElementById('shareButton');
+        // Обработчик для кнопки "Поделиться"
+        shareButton.onclick = () => {
+            navigator.clipboard.writeText("example link")
+            .then(() => {
+                alert("Ссылка на изображение скопирована в буфер обмена!");
+            })
+            .catch(err => {
+                console.error("Ошибка при копировании ссылки: ", err);
+                alert("Не удалось скопировать ссылку.");
+            });
+};
+
         function previewImage(event, previewId) {
             const file = event.target.files[0];
             const preview = document.getElementById(previewId);
@@ -205,8 +219,7 @@
 
             const resultViewer = document.getElementById('resultViewer');
             const resultImage = document.getElementById('resultImage');
-            const shareButton = document.getElementById('shareButton');
-
+            
             // Set initial image
             resultImage.src = url;
             resultViewer.classList.remove('hidden');
@@ -215,19 +228,7 @@
             const buttons = resultViewer.querySelectorAll('.bottom-buttons button');
             buttons[0].onclick = () => (resultImage.src = humanImgUrl || window.humanPhotoUrl);
             buttons[1].onclick = () => (resultImage.src = garmentImgUrl || window.garmPhotoUrl);
-            buttons[2].onclick = () => (resultImage.src = resultImgUrl || url);
-
-            // Обработчик для кнопки "Поделиться"
-            shareButton.onclick = () => {
-                navigator.clipboard.writeText(resultImage.src)
-                .then(() => {
-                    alert("Ссылка на изображение скопирована в буфер обмена!");
-                })
-                .catch(err => {
-                    console.error("Ошибка при копировании ссылки: ", err);
-                    alert("Не удалось скопировать ссылку.");
-                });
-            };
+            buttons[2].onclick = () => (resultImage.src = resultImgUrl || url);            
     }
 
         function showPreview(previewId) {
