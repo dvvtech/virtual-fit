@@ -379,14 +379,17 @@ function openCollection(event, previewId) {
     fetch(`${API_BASE_URL}/api/virtual-fit/clothing-collection`)
         .then(response => response.json())
         .then(data => {
-            data.manСlothingItems.forEach(item => {
-                const img = document.createElement('img');
-                img.src = item.link;
-                img.alt = item.category;
-                img.className = 'w-full h-40 object-contain rounded cursor-pointer hover:opacity-75';
-                img.onclick = () => selectFromCollection(item.link, previewId);
-                collectionGridMan.appendChild(img);
-            });
+            if(previewId === "garmPreview")
+            {
+                data.manСlothingItems.forEach(item => {
+                    const img = document.createElement('img');
+                    img.src = item.link;
+                    img.alt = item.category;
+                    img.className = 'w-full h-40 object-contain rounded cursor-pointer hover:opacity-75';
+                    img.onclick = () => selectFromCollection(item.link, previewId);
+                    collectionGridMan.appendChild(img);
+                });
+            }
             data.man.forEach(item => {
                 const img = document.createElement('img');
                 img.src = item.link;
@@ -396,14 +399,17 @@ function openCollection(event, previewId) {
                 collectionGridMan.appendChild(img);
             });
 
-            data.womanСlothingItems.forEach(item => {
-                const img = document.createElement('img');
-                img.src = item.link;
-                img.alt = item.category;
-                img.className = 'w-full h-40 object-contain rounded cursor-pointer hover:opacity-75';
-                img.onclick = () => selectFromCollection(item.link, previewId);
-                collectionGridWoman.appendChild(img);
-            });
+            if(previewId === "garmPreview")
+            {
+                data.womanСlothingItems.forEach(item => {
+                    const img = document.createElement('img');
+                    img.src = item.link;
+                    img.alt = item.category;
+                    img.className = 'w-full h-40 object-contain rounded cursor-pointer hover:opacity-75';
+                    img.onclick = () => selectFromCollection(item.link, previewId);
+                    collectionGridWoman.appendChild(img);
+                });
+            }
             data.woman.forEach(item => {
                 const img = document.createElement('img');
                 img.src = item.link;
