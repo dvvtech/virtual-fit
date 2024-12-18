@@ -289,66 +289,98 @@
 
     <script>
 function showHistory() {
-            const promoCode = document.getElementById('promoCode').value;
-            if (!promoCode) {
-                alert('Promo code cannot be empty!');
-                return;
-            }
+    const promoCode = document.getElementById('promoCode').value;
+    if (!promoCode) {
+        alert('Promo code cannot be empty!');
+        return;
+    }
 
-            const savedPromoCode = localStorage.getItem('promoCode');
-            if (promoCode !== savedPromoCode) {
-                localStorage.setItem('promoCode', promoCode);             
-            }
+    const savedPromoCode = localStorage.getItem('promoCode');
+    if (promoCode !== savedPromoCode) {
+        localStorage.setItem('promoCode', promoCode);             
+    }
 
-            const historyContent = document.getElementById('historyContent');
-            const mainContent = document.getElementById('mainContent');            
+    const historyContent = document.getElementById('historyContent');
+    const mainContent = document.getElementById('mainContent');            
 
-            fetch(`${API_BASE_URL}/api/virtual-fit/history`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ promocode: promoCode })
-            })
-            .then(response => {
-                if (!response.ok) {
-                    return response.json().then(err => {
-                        throw new Error(err.description || 'Failed to fetch history');
-                    });
-                }
-                return response.json();
-            })
-            .then(data => {
-                const historyTableBody = document.getElementById('historyTableBody');
-                historyTableBody.innerHTML = '';
-
-                data.forEach(item => {
-                    const row = document.createElement('tr');
-
-                    [item.humanImgUrl, item.garmentImgUrl, item.resultImgUrl].forEach(imgUrl => {
-                        const cell = document.createElement('td');
-                        cell.className = 'border border-gray-200 p-2';
-
-                        const img = document.createElement('img');
-                        img.src = imgUrl;
-                        img.className = 'w-full h-40 object-contain cursor-pointer';
-                        img.onclick = () => showImageFullScreen(imgUrl, item.humanImgUrl, item.garmentImgUrl, item.resultImgUrl);
-
-                        cell.appendChild(img);
-                        row.appendChild(cell);
-                    });
-
-                    historyTableBody.appendChild(row);
-                });
-
-                mainContent.classList.add('hidden');
-                historyContent.classList.remove('hidden');
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert(error.message);
+    fetch(`${API_BASE_URL}/api/virtual-fit/history`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ promocode: promoCode })
+    })
+    .then(response => {
+        if (!response.ok) {
+            return response.json().then(err => {
+                throw new Error(err.description || 'Failed to fetch history');
             });
         }
+        return response.json();
+    })
+    .then(data => {
+        const historyTableBody = document.getElementById('historyTableBody');
+        historyTableBody.innerHTML = '';
+
+        data.forEach(item => {
+            const row = document.createElement('tr');
+
+            [item.humanImgUrl, item.garmentImgUrl, item.resultImgUrl].forEach(imgUrl => {
+                const cell = document.createElement('td');
+                cell.className = 'border border-gray-200 p-2';
+
+                const img = document.createElement('img');
+                img.src = imgUrl;
+                img.className = 'w-full h-40 object-contain cursor-pointer';
+                img.onclick = () => showImageFullScreen(imgUrl, item.humanImgUrl, item.garmentImgUrl, item.resultImgUrl);
+
+                cell.appendChild(img);
+                row.appendChild(cell);
+            });
+
+            // Добавляем кнопку "Удалить"
+            const deleteCell = document.createElement('td');
+            deleteCell.className = 'border border-gray-200 p-2 text-center';
+
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete';
+            deleteButton.className = 'bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600';
+            deleteButton.onclick = () => deleteRow(row, item.id); // Удаление строки
+
+            deleteCell.appendChild(deleteButton);
+            row.appendChild(deleteCell);
+
+            historyTableBody.appendChild(row);
+        });
+
+        mainContent.classList.add('hidden');
+        historyContent.classList.remove('hidden');
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert(error.message);
+    });
+}
+
+function deleteRow(row, itemId) {
+    // Удаляем строку из DOM
+    row.remove();
+
+    // Дополнительно можно отправить запрос на сервер
+    fetch(`${API_BASE_URL}/api/virtual-fit/history/${itemId}`, {
+        method: 'DELETE',
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Failed to delete item.');
+        }
+        console.log('Item successfully deleted.');
+    })
+    .catch(error => {
+        console.error('Error deleting item:', error);
+        alert('Failed to delete item.');
+    });
+}
 
         function hideHistory() {
             const historyContent = document.getElementById('historyContent');
