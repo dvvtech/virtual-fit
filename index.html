@@ -196,11 +196,13 @@
             const existingErrors = mainContent.querySelectorAll('.error-message');
             existingErrors.forEach(error => error.remove());
         
+            cat = document.getElementById('category').value;
+
             const payload = {
                 GarmImg: window.garmPhotoUrl,
                 HumanImg: window.humanPhotoUrl,
                 Promocode: promoCodeField.value,
-                Category: document.getElementById('category').value
+                Category: cat
             };
 
             fetch(`${API_BASE_URL}/api/virtual-fit/try-on`, {
