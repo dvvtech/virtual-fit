@@ -290,8 +290,13 @@
     <script>
 function showHistory() {
             const promoCode = document.getElementById('promoCode').value;
+            if (!promoCode) {
+                alert('Promo code cannot be empty!');
+                return;
+            }
+
             const historyContent = document.getElementById('historyContent');
-            const mainContent = document.getElementById('mainContent');
+            const mainContent = document.getElementById('mainContent');            
 
             fetch(`${API_BASE_URL}/api/virtual-fit/history`, {
                 method: 'POST',
@@ -322,12 +327,7 @@ function showHistory() {
                         const img = document.createElement('img');
                         img.src = imgUrl;
                         img.className = 'w-full h-40 object-contain cursor-pointer';
-                        img.onclick = () => showImageFullScreen(
-    imgUrl,
-    item.humanImgUrl,
-    item.garmentImgUrl,
-    item.resultImgUrl
-);
+                        img.onclick = () => showImageFullScreen(imgUrl, item.humanImgUrl, item.garmentImgUrl, item.resultImgUrl);
 
                         cell.appendChild(img);
                         row.appendChild(cell);
