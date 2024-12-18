@@ -295,6 +295,11 @@ function showHistory() {
                 return;
             }
 
+            const savedPromoCode = localStorage.getItem('promoCode');
+            if (promoCode !== savedPromoCode) {
+                localStorage.setItem('promoCode', promoCode);             
+            }
+
             const historyContent = document.getElementById('historyContent');
             const mainContent = document.getElementById('mainContent');            
 
