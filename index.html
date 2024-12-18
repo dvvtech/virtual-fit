@@ -73,10 +73,6 @@
         <button id="tryOnButton" class="w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:from-blue-600 hover:to-blue-700 transition shadow-md hover:shadow-lg" onclick="tryOn()">Try On</button>
     </div>
 
-    <div id="loadingIndicator" class="hidden fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50">
-        <div class="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-    </div>
-
     <div id="resultViewer" class="hidden fixed inset-0 bg-black text-white flex flex-col items-center justify-center z-50">
         <img id="resultImage" src="" alt="Result" class="max-w-full max-h-screen">
         <div class="absolute bottom-10 flex gap-4 bottom-buttons">
@@ -186,15 +182,14 @@
         }
 
         function tryOn() {
-    const mainContent = document.getElementById('mainContent');
-    const loadingIndicator = document.getElementById('loadingIndicator');
+    const mainContent = document.getElementById('mainContent');    
+    document.getElementById('overlay').classList.remove('hidden');
 
     // Remove existing error messages
     const existingErrors = mainContent.querySelectorAll('.error-message');
     existingErrors.forEach(error => error.remove());
 
-    mainContent.classList.add('hidden');
-    loadingIndicator.classList.remove('hidden');
+    mainContent.classList.add('hidden');    
 
     const promoCodeField = document.getElementById('promoCode');
     const payload = {
@@ -221,8 +216,8 @@
     })
     .then(data => {
         window.resultUrl = data.url; // Save the result URL
-        localStorage.setItem('promoCode', promoCodeField.value); // Save promo code on success
-        loadingIndicator.classList.add('hidden');
+        localStorage.setItem('promoCode', promoCodeField.value); // Save promo code on success        
+        document.getElementById('overlay').classList.add('hidden');
         showResult(data.url, window.humanPhotoUrl, window.garmPhotoUrl, data.url);
         document.getElementById('remainingUsageContainer').style.display = 'block';
         document.getElementById('remainingUsage').textContent = data.remainingUsage;
@@ -230,7 +225,7 @@
             })
             .catch(error => {
                 console.error('Error:', error);
-                loadingIndicator.classList.add('hidden');
+                document.getElementById('overlay').classList.add('hidden');
                 mainContent.classList.remove('hidden');
 
                 // Display error message to user
