@@ -199,10 +199,10 @@
             cat = document.getElementById('category').value;
 
             const payload = {
-                GarmImg: window.garmPhotoUrl,
-                HumanImg: window.humanPhotoUrl,
-                Promocode: promoCodeField.value,
-                Category: cat
+                garmImg: window.garmPhotoUrl,
+                humanImg: window.humanPhotoUrl,
+                promocode: promoCodeField.value,
+                category: cat
             };
 
             fetch(`${API_BASE_URL}/api/virtual-fit/try-on`, {
@@ -228,17 +228,17 @@
                 document.getElementById('remainingUsageContainer').style.display = 'block';
                 document.getElementById('remainingUsage').textContent = data.remainingUsage;
                 localStorage.setItem('remainingUsage', data.remainingUsage);
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        document.getElementById('overlay').classList.add('hidden');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('overlay').classList.add('hidden');
 
-                        // Display error message to user
-                        const errorMessage = document.createElement('div');
-                        errorMessage.textContent = error.message;
-                        errorMessage.className = 'text-red-600 text-center mt-4 error-message';
-                        mainContent.appendChild(errorMessage);
-                    });
+                // Display error message to user
+                const errorMessage = document.createElement('div');
+                errorMessage.textContent = error.message;
+                errorMessage.className = 'text-red-600 text-center mt-4 error-message';
+                mainContent.appendChild(errorMessage);
+            });
         }
 
         function showResult(url, humanImgUrl, garmentImgUrl, resultImgUrl) {
