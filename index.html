@@ -142,6 +142,15 @@
             document.getElementById('overlay').classList.remove('hidden');
 
             if (file) {
+
+                // Валидация типа файла (только изображения)
+                if (!file.type.startsWith('image/'))
+                {
+                    alert('Please upload a valid image file.');
+                    document.getElementById('overlay').classList.add('hidden');
+                    return;
+                }
+
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     preview.src = e.target.result;
