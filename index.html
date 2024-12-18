@@ -94,6 +94,14 @@
         <button class="absolute top-28 right-10 bg-red-600 px-4 py-2 rounded hover:bg-red-500 z-50" onclick="closeResult()">Close</button>
     </div>
 
+    <!-- Busy indicator -->
+    <div id="overlay" class="fixed inset-0 bg-white bg-opacity-90 hidden flex items-center justify-center z-50">
+        <div class="flex flex-col items-center">
+            <div class="h-16 w-16 border-4 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
+            <div class="mt-4 text-lg font-semibold text-gray-700">Please wait...</div>
+        </div>
+    </div>
+
     <script>
         const API_BASE_URL = 'https://a30944-8332.x.d-f.pw';
         //const API_BASE_URL = 'https://localhost:7147';
@@ -117,7 +125,7 @@
         const shareButton = document.getElementById('shareButton');
         // Обработчик для кнопки "Поделиться"
         shareButton.onclick = () => {
-            const resultImage = document.getElementById('resultImage');            
+            const resultImage = document.getElementById('resultImage');
             navigator.clipboard.writeText(resultImage.src)
             .then(() => {
                 alert("Ссылка на изображение скопирована в буфер обмена!");
@@ -131,6 +139,7 @@
         function previewImage(event, previewId) {
             const file = event.target.files[0];
             const preview = document.getElementById(previewId);
+            document.getElementById('overlay').classList.remove('hidden');
 
             if (file) {
                 const reader = new FileReader();
@@ -149,13 +158,20 @@
                     body: formData,
                 })
                 .then(response => response.json())
-                .then(data => {
+                .then(data => {                    
                     const imageUrl = data.url;
                     if (previewId === 'humanPreview') {
                         window.humanPhotoUrl = imageUrl;
                     } else {
                         window.garmPhotoUrl = imageUrl;
                     }
+                })
+                .catch(error => {
+                    console.error('Error uploading file:', error);
+                    alert('An error occurred while uploading the file.');
+                })  
+                .finally(() => {
+                    document.getElementById('overlay').classList.add('hidden');
                 });
             }
         }
@@ -220,7 +236,7 @@
 
             const resultViewer = document.getElementById('resultViewer');
             const resultImage = document.getElementById('resultImage');
-            
+
             // Set initial image
             resultImage.src = url;
             resultViewer.classList.remove('hidden');
@@ -229,7 +245,7 @@
             const buttons = resultViewer.querySelectorAll('.bottom-buttons button');
             buttons[0].onclick = () => (resultImage.src = humanImgUrl || window.humanPhotoUrl);
             buttons[1].onclick = () => (resultImage.src = garmentImgUrl || window.garmPhotoUrl);
-            buttons[2].onclick = () => (resultImage.src = resultImgUrl || url);            
+            buttons[2].onclick = () => (resultImage.src = resultImgUrl || url);
     }
 
         function showPreview(previewId) {
@@ -448,7 +464,7 @@ function showTab(tab) {
 
     function selectFromCollection(imageLink, previewId) {
         const preview = document.getElementById(previewId);
-        const cleanImageLink = removeThumbnailSuffix(imageLink);        
+        const cleanImageLink = removeThumbnailSuffix(imageLink);
         preview.src = imageLink;
         preview.classList.remove('hidden');
 
@@ -467,7 +483,7 @@ function showTab(tab) {
         collectionModal.classList.add('hidden');
     }
 
-    
+
 function removeThumbnailSuffix(link) {
     return link.replace(/_t(\.[a-z]+)$/, '$1');
 }
@@ -483,5 +499,5 @@ function removeThumbnailSuffix(link) {
             transition: all 0.3s ease;
         }
     </style>
-        </body >
+</body>
         </html >
