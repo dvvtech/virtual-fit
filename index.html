@@ -183,55 +183,60 @@
         }
 
         function tryOn() {
-    const mainContent = document.getElementById('mainContent');
-    document.getElementById('overlay').classList.remove('hidden');
+            const promoCodeField = document.getElementById('promoCode').value;
+            if (!promoCodeField) {
+                alert('Promo code cannot be empty!');            
+                return;
+            }
 
-    // Remove existing error messages
-    const existingErrors = mainContent.querySelectorAll('.error-message');
-    existingErrors.forEach(error => error.remove());
+            const mainContent = document.getElementById('mainContent');
+            document.getElementById('overlay').classList.remove('hidden');
 
-    const promoCodeField = document.getElementById('promoCode');
-    const payload = {
-        GarmImg: window.garmPhotoUrl,
-        HumanImg: window.humanPhotoUrl,
-        Promocode: promoCodeField.value,
-        Category: document.getElementById('category').value
-    };
+            // Remove existing error messages
+            const existingErrors = mainContent.querySelectorAll('.error-message');
+            existingErrors.forEach(error => error.remove());
+        
+            const payload = {
+                GarmImg: window.garmPhotoUrl,
+                HumanImg: window.humanPhotoUrl,
+                Promocode: promoCodeField.value,
+                Category: document.getElementById('category').value
+            };
 
-    fetch(`${API_BASE_URL}/api/virtual-fit/try-on`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(payload)
-    })
-    .then(response => {
-        if (!response.ok) {
-            return response.json().then(err => {
-                throw new Error(err.description || 'Unknown error occurred');
-            });
-        }
-        return response.json();
-    })
-    .then(data => {
-        window.resultUrl = data.url; // Save the result URL
-        localStorage.setItem('promoCode', promoCodeField.value); // Save promo code on success
-        document.getElementById('overlay').classList.add('hidden');
-        showResult(data.url, window.humanPhotoUrl, window.garmPhotoUrl, data.url);
-        document.getElementById('remainingUsageContainer').style.display = 'block';
-        document.getElementById('remainingUsage').textContent = data.remainingUsage;
-        localStorage.setItem('remainingUsage', data.remainingUsage);
+            fetch(`${API_BASE_URL}/api/virtual-fit/try-on`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
             })
-            .catch(error => {
-                console.error('Error:', error);
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(err => {
+                        throw new Error(err.description || 'Unknown error occurred');
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                window.resultUrl = data.url; // Save the result URL
+                localStorage.setItem('promoCode', promoCodeField.value); // Save promo code on success
                 document.getElementById('overlay').classList.add('hidden');
+                showResult(data.url, window.humanPhotoUrl, window.garmPhotoUrl, data.url);
+                document.getElementById('remainingUsageContainer').style.display = 'block';
+                document.getElementById('remainingUsage').textContent = data.remainingUsage;
+                localStorage.setItem('remainingUsage', data.remainingUsage);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        document.getElementById('overlay').classList.add('hidden');
 
-                // Display error message to user
-                const errorMessage = document.createElement('div');
-                errorMessage.textContent = error.message;
-                errorMessage.className = 'text-red-600 text-center mt-4 error-message';
-                mainContent.appendChild(errorMessage);
-            });
+                        // Display error message to user
+                        const errorMessage = document.createElement('div');
+                        errorMessage.textContent = error.message;
+                        errorMessage.className = 'text-red-600 text-center mt-4 error-message';
+                        mainContent.appendChild(errorMessage);
+                    });
         }
 
         function showResult(url, humanImgUrl, garmentImgUrl, resultImgUrl) {
@@ -293,6 +298,7 @@ function showHistory() {
     const promoCode = document.getElementById('promoCode').value;
     if (!promoCode) {
         alert('Promo code cannot be empty!');
+        document.getElementById('overlay').classList.add('hidden');
         return;
     }
 
