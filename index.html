@@ -6,7 +6,7 @@
     <title> Try on Clothes</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gradient-to-br from-gray-100 via-gray-200 to-gray-300 min-h-screen flex items-center justify-center items-start justify-start p-2">
+<body class="bg-gradient-to-br from-gray-100 via-gray-200 to-gray-300 min-h-screen flex items-center justify-center">
     <!--<body class="h-screen flex items-start justify-start bg-gray-100 p-2">-->
         <div id="mainContent" class="bg-white p-8 rounded-xl shadow-2xl w-full max-w-md">
             <button id="historyButton" class="w-full bg-gradient-to-r from-gray-500 to-gray-600 text-white font-semibold py-2 px-4 rounded-lg hover:from-gray-600 hover:to-gray-700 transition shadow-md hover:shadow-lg mb-6" onclick="showHistory()">History</button>
@@ -248,7 +248,7 @@
             buttons[0].onclick = () => (resultImage.src = humanImgUrl || window.humanPhotoUrl);
             buttons[1].onclick = () => (resultImage.src = garmentImgUrl || window.garmPhotoUrl);
             buttons[2].onclick = () => (resultImage.src = resultImgUrl || url);
-    }
+        }
 
         function showPreview(previewId) {
             const resultImage = document.getElementById('resultImage');
@@ -301,6 +301,8 @@ function showHistory() {
         localStorage.setItem('promoCode', promoCode);
     }
 
+    document.getElementById('overlay').classList.remove('hidden');
+
     const historyContent = document.getElementById('historyContent');
     const mainContent = document.getElementById('mainContent');
 
@@ -328,7 +330,7 @@ function showHistory() {
 
             [item.humanImgUrl, item.garmentImgUrl, item.resultImgUrl].forEach(imgUrl => {
                 const cell = document.createElement('td');
-                cell.className = 'border border-gray-200 p-1';
+                cell.className = 'border border-gray-200 p-2';
 
                 const img = document.createElement('img');
                 img.src = imgUrl;
@@ -344,18 +346,19 @@ function showHistory() {
             deleteCell.className = 'border border-gray-200 p-2 text-center';
 
             const deleteButton = document.createElement('button');
-            deleteButton.textContent = 'Delete';
+            deleteButton.textContent = 'Del';
             deleteButton.className = 'bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600';
             deleteButton.onclick = () => deleteRow(row, item.id); // Удаление строки
 
             deleteCell.appendChild(deleteButton);
             row.appendChild(deleteCell);
 
-            historyTableBody.appendChild(row);
+            historyTableBody.appendChild(row);            
         });
 
         mainContent.classList.add('hidden');
         historyContent.classList.remove('hidden');
+        document.getElementById('overlay').classList.add('hidden');
     })
     .catch(error => {
         console.error('Error:', error);
