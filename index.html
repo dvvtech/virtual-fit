@@ -101,7 +101,7 @@
 
         <script>
         const API_BASE_URL = 'https://a30944-8332.x.d-f.pw';
-        //const API_BASE_URL = 'https://localhost:7147';
+        //const API_BASE_URL = 'http://localhost:5023';
         document.addEventListener('DOMContentLoaded', () => {
             const promoCodeField = document.getElementById('promoCode');
             const savedPromoCode = localStorage.getItem('promoCode');
@@ -224,7 +224,7 @@
                 window.resultUrl = data.url; // Save the result URL
                 localStorage.setItem('promoCode', promoCodeField.value); // Save promo code on success
                 document.getElementById('overlay').classList.add('hidden');
-                showResult(data.url, window.humanPhotoUrl, window.garmPhotoUrl, data.url);
+                showResult(window.humanPhotoUrl, window.garmPhotoUrl, data.url);
                 document.getElementById('remainingUsageContainer').style.display = 'block';
                 document.getElementById('remainingUsage').textContent = data.remainingUsage;
                 localStorage.setItem('remainingUsage', data.remainingUsage);
