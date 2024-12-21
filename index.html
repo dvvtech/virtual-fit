@@ -222,7 +222,7 @@
             })
             .then(data => {
                 window.resultUrl = data.url; // Save the result URL
-                localStorage.setItem('promoCode', promoCodeField.value); // Save promo code on success
+                localStorage.setItem('promoCode', promoCodeField); // Save promo code on success
                 document.getElementById('overlay').classList.add('hidden');
                 showResult(window.humanPhotoUrl, window.garmPhotoUrl, data.url);
                 document.getElementById('remainingUsageContainer').style.display = 'block';
