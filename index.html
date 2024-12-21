@@ -457,6 +457,16 @@ function deleteRow(row, itemId) {
                 resultImage.src = url; // Устанавливаем src
                 document.getElementById('overlay').classList.add('hidden');                
             };
+
+            // Обработчик ошибки загрузки
+            img.onerror = () => {
+                console.error('Ошибка при загрузке изображения.');
+                alert('Не удалось загрузить изображение.');
+                document.getElementById('overlay').classList.add('hidden'); 
+            };
+
+            // Начинаем загрузку изображения
+            img.src = url;
         }
         
 </script>
