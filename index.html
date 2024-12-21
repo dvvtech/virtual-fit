@@ -246,16 +246,13 @@
             const resultViewer = document.getElementById('resultViewer');
             const resultImage = document.getElementById('resultImage');
             
-            // Set initial image
-            //resultImage.src = resultImgUrl;
             loadImageWithSpinner(resultImgUrl);
             resultViewer.classList.remove('hidden');
-
-            // Update buttons for switching images
+            
             const buttons = resultViewer.querySelectorAll('.bottom-buttons button');
-            buttons[0].onclick = () => (resultImage.src = humanImgUrl || window.humanPhotoUrl);
-            buttons[1].onclick = () => (resultImage.src = garmentImgUrl || window.garmPhotoUrl);
-            buttons[2].onclick = () => (resultImage.src = resultImgUrl);            
+            buttons[0].onclick = () => loadImageWithSpinner(humanImgUrl || window.humanPhotoUrl);
+            buttons[1].onclick = () => loadImageWithSpinner(garmentImgUrl || window.garmPhotoUrl);
+            buttons[2].onclick = () => loadImageWithSpinner(resultImgUrl);
         }
 
         function showPreview(previewId) {
