@@ -403,7 +403,7 @@ function deleteRow(row, itemId) {
             };
 
     // Дополнительно можно отправить запрос на сервер
-    fetch(`${API_BASE_URL}/api/virtual-fit/history/${itemId}`, {
+    fetch(`${API_BASE_URL}/api/virtual-fit/history`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json'
