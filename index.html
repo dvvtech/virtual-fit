@@ -245,10 +245,10 @@
 
             const resultViewer = document.getElementById('resultViewer');
             const resultImage = document.getElementById('resultImage');
-
             
             // Set initial image
-            resultImage.src = resultImgUrl;
+            //resultImage.src = resultImgUrl;
+            loadImageWithSpinner(resultImgUrl);
             resultViewer.classList.remove('hidden');
 
             // Update buttons for switching images
@@ -436,8 +436,7 @@ function deleteRow(row, itemId) {
             const resultViewer = document.getElementById('resultViewer');
             const resultImage = document.getElementById('resultImage');                        
 
-            // Set initial image
-            //resultImage.src = imgUrl;            
+            // Set initial image                    
             loadImageWithSpinner(imgUrl);
             resultViewer.classList.remove('hidden');
 
