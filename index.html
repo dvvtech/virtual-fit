@@ -254,8 +254,7 @@
             const buttons = resultViewer.querySelectorAll('.bottom-buttons button');
             buttons[0].onclick = () => (resultImage.src = humanImgUrl || window.humanPhotoUrl);
             buttons[1].onclick = () => (resultImage.src = garmentImgUrl || window.garmPhotoUrl);
-            buttons[2].onclick = () => (resultImage.src = resultImgUrl);
-            //buttons[2].onclick = () => (resultImage.src = resultImgUrl || url);
+            buttons[2].onclick = () => (resultImage.src = resultImgUrl);            
         }
 
         function showPreview(previewId) {
@@ -346,7 +345,7 @@ function showHistory() {
                 const img = document.createElement('img');
                 img.src = imgUrl;
                 img.className = 'w-full h-40 object-contain cursor-pointer';
-                img.onclick = () => showImageFullScreen(imgUrl, item.humanImgUrl, item.garmentImgUrl, item.resultImgUrl);
+                img.onclick = () => showImageFullScreen(item.humanImgUrl, item.garmentImgUrl, item.resultImgUrl);
 
                 cell.appendChild(img);
                 row.appendChild(cell);
@@ -432,12 +431,12 @@ function deleteRow(row, itemId) {
             mainContent.classList.remove('hidden');
         }
 
-        function showImageFullScreen(imgUrl, humanImgUrl, garmentImgUrl, resultImgUrl) {
+        function showImageFullScreen(humanImgUrl, garmentImgUrl, resultImgUrl) {
             const resultViewer = document.getElementById('resultViewer');
             const resultImage = document.getElementById('resultImage');                        
 
             // Set initial image
-            resultImage.src = imgUrl;            
+            resultImage.src = resultImgUrl;            
             resultViewer.classList.remove('hidden');
 
             // Update buttons for switching images
