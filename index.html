@@ -241,20 +241,21 @@
             });
         }
 
-        function showResult(url, humanImgUrl, garmentImgUrl, resultImgUrl) {
+        function showResult(humanImgUrl, garmentImgUrl, resultImgUrl) {
 
             const resultViewer = document.getElementById('resultViewer');
             const resultImage = document.getElementById('resultImage');
 
             // Set initial image
-            resultImage.src = url;
+            resultImage.src = resultImgUrl;
             resultViewer.classList.remove('hidden');
 
             // Update buttons for switching images
             const buttons = resultViewer.querySelectorAll('.bottom-buttons button');
             buttons[0].onclick = () => (resultImage.src = humanImgUrl || window.humanPhotoUrl);
             buttons[1].onclick = () => (resultImage.src = garmentImgUrl || window.garmPhotoUrl);
-            buttons[2].onclick = () => (resultImage.src = resultImgUrl || url);
+            buttons[2].onclick = () => (resultImage.src = resultImgUrl);
+            //buttons[2].onclick = () => (resultImage.src = resultImgUrl || url);
         }
 
         function showPreview(previewId) {
@@ -460,8 +461,8 @@ function deleteRow(row, itemId) {
 
             // Обработчик ошибки загрузки
             img.onerror = () => {
-                console.error('Ошибка при загрузке изображения.');
-                alert('Не удалось загрузить изображение.');
+                console.error('Error loading image');
+                alert('Failed to load image');
                 document.getElementById('overlay').classList.add('hidden'); 
             };
 
