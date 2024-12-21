@@ -324,6 +324,7 @@ function showHistory() {
     .then(response => {
         if (!response.ok) {
             return response.json().then(err => {
+                document.getElementById('overlay').classList.add('hidden');
                 throw new Error(err.description || 'Failed to fetch history');
             });
         }
@@ -373,6 +374,7 @@ function showHistory() {
         document.getElementById('overlay').classList.add('hidden');
     })
     .catch(error => {
+        document.getElementById('overlay').classList.add('hidden');
         console.error('Error:', error);
         alert(error.message);
     });
@@ -382,9 +384,24 @@ function deleteRow(row, itemId) {
     // Удаляем строку из DOM
     row.remove();
 
+    const promoCodeField = document.getElementById('promoCode').value;
+    if (!promoCodeField) {
+        alert('Promo code cannot be empty!');            
+        return;
+    }
+
+    const payload = {
+                Promocode: promocode,
+                FittingResultId: itemId
+            };
+
     // Дополнительно можно отправить запрос на сервер
     fetch(`${API_BASE_URL}/api/virtual-fit/history/${itemId}`, {
         method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
     })
     .then(response => {
         if (!response.ok) {
