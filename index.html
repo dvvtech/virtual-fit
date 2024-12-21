@@ -246,6 +246,7 @@
             const resultViewer = document.getElementById('resultViewer');
             const resultImage = document.getElementById('resultImage');
 
+            
             // Set initial image
             resultImage.src = resultImgUrl;
             resultViewer.classList.remove('hidden');
@@ -345,7 +346,7 @@ function showHistory() {
                 const img = document.createElement('img');
                 img.src = imgUrl;
                 img.className = 'w-full h-40 object-contain cursor-pointer';
-                img.onclick = () => showImageFullScreen(item.humanImgUrl, item.garmentImgUrl, item.resultImgUrl);
+                img.onclick = () => showImageFullScreen(imgUrl, item.humanImgUrl, item.garmentImgUrl, item.resultImgUrl);
 
                 cell.appendChild(img);
                 row.appendChild(cell);
@@ -431,12 +432,13 @@ function deleteRow(row, itemId) {
             mainContent.classList.remove('hidden');
         }
 
-        function showImageFullScreen(humanImgUrl, garmentImgUrl, resultImgUrl) {
+        function showImageFullScreen(imgUrl, humanImgUrl, garmentImgUrl, resultImgUrl) {
             const resultViewer = document.getElementById('resultViewer');
             const resultImage = document.getElementById('resultImage');                        
 
             // Set initial image
-            resultImage.src = resultImgUrl;            
+            //resultImage.src = imgUrl;            
+            loadImageWithSpinner(imgUrl);
             resultViewer.classList.remove('hidden');
 
             // Update buttons for switching images
