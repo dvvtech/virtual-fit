@@ -268,17 +268,17 @@
         }
 
         function closeResult() {
-    const resultViewer = document.getElementById('resultViewer');
-    resultViewer.classList.add('hidden');
+            const resultViewer = document.getElementById('resultViewer');
+            resultViewer.classList.add('hidden');
 
-    const historyContent = document.getElementById('historyContent');
-    const mainContent = document.getElementById('mainContent');
+            const historyContent = document.getElementById('historyContent');
+            const mainContent = document.getElementById('mainContent');
 
-    if (!historyContent.classList.contains('hidden')) {
-        historyContent.classList.remove('hidden');
-    } else {
-        mainContent.classList.remove('hidden');
-    }
+            if (!historyContent.classList.contains('hidden')) {
+                historyContent.classList.remove('hidden');
+            } else {
+                mainContent.classList.remove('hidden');
+        }
 }</script>
         <div id="historyContent" class="hidden bg-white p-8 rounded-xl shadow-2xl w-full max-w-5xl">
             <h2 class="text-2xl font-bold mb-6 text-gray-900 text-center">Fitting History</h2>
@@ -296,6 +296,7 @@
         </div>
 
         <script>
+
 function showHistory() {
     const promoCode = document.getElementById('promoCode').value;
     if (!promoCode) {
@@ -431,18 +432,18 @@ function deleteRow(row, itemId) {
         }
 
         function showImageFullScreen(imgUrl, humanImgUrl, garmentImgUrl, resultImgUrl) {
-    const resultViewer = document.getElementById('resultViewer');
-    const resultImage = document.getElementById('resultImage');
+            const resultViewer = document.getElementById('resultViewer');
+            const resultImage = document.getElementById('resultImage');
 
-    // Set initial image
-    resultImage.src = imgUrl;
-    resultViewer.classList.remove('hidden');
+            // Set initial image
+            resultImage.src = imgUrl;
+            resultViewer.classList.remove('hidden');
 
-    // Update buttons for switching images
-    const buttons = resultViewer.querySelectorAll('.bottom-buttons button');
-    buttons[0].onclick = () => (resultImage.src = humanImgUrl);
-    buttons[1].onclick = () => (resultImage.src = garmentImgUrl);
-    buttons[2].onclick = () => (resultImage.src = resultImgUrl);
+            // Update buttons for switching images
+            const buttons = resultViewer.querySelectorAll('.bottom-buttons button');
+            buttons[0].onclick = () => (resultImage.src = humanImgUrl);
+            buttons[1].onclick = () => (resultImage.src = garmentImgUrl);
+            buttons[2].onclick = () => (resultImage.src = resultImgUrl);
 }</script>
         <div id="collectionModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
             <div class="bg-white rounded-lg shadow-xl p-6 w-3/4 max-w-4xl">
