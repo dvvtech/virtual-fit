@@ -433,17 +433,32 @@ function deleteRow(row, itemId) {
 
         function showImageFullScreen(imgUrl, humanImgUrl, garmentImgUrl, resultImgUrl) {
             const resultViewer = document.getElementById('resultViewer');
-            const resultImage = document.getElementById('resultImage');
+            const resultImage = document.getElementById('resultImage');                        
 
             // Set initial image
-            resultImage.src = imgUrl;
+            resultImage.src = imgUrl;            
             resultViewer.classList.remove('hidden');
 
             // Update buttons for switching images
             const buttons = resultViewer.querySelectorAll('.bottom-buttons button');
-            buttons[0].onclick = () => (resultImage.src = humanImgUrl);
-            buttons[1].onclick = () => (resultImage.src = garmentImgUrl);
-            buttons[2].onclick = () => (resultImage.src = resultImgUrl);
+            buttons[0].onclick = () => loadImageWithSpinner(humanImgUrl);
+            buttons[1].onclick = () => loadImageWithSpinner(garmentImgUrl);
+            buttons[2].onclick = () => loadImageWithSpinner(resultImgUrl);
+        }
+
+        function loadImageWithSpinner(url) {
+            
+            document.getElementById('overlay').classList.remove('hidden');
+
+            // Создаем новый объект Image для предзагрузки
+            const img = new Image();
+            // Обработчик успешной загрузки
+            img.onload = () => {
+                resultImage.src = url; // Устанавливаем src
+                document.getElementById('overlay').classList.add('hidden');                
+            };
+        }
+        
 }</script>
         <div id="collectionModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
             <div class="bg-white rounded-lg shadow-xl p-6 w-3/4 max-w-4xl">
