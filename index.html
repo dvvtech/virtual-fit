@@ -391,8 +391,8 @@ function deleteRow(row, itemId) {
     // Удаляем строку из DOM
     row.remove();
 
-    const promoCodeField = document.getElementById('promoCode').value;
-    if (!promoCodeField) {
+    const promocode = document.getElementById('promoCode').value;
+    if (!promocode) {
         alert('Promo code cannot be empty!');            
         return;
     }
