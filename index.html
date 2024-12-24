@@ -123,14 +123,28 @@
         // Обработчик для кнопки "Поделиться"
         shareButton.onclick = () => {
             const resultImage = document.getElementById('resultImage');
-            navigator.clipboard.writeText(resultImage.src)
-            .then(() => {
-                //alert("Ссылка на изображение скопирована в буфер обмена!");
-            })
-            .catch(err => {
-                console.error("Ошибка при копировании ссылки: ", err);
-                //alert("Не удалось скопировать ссылку.");
-            });
+            if (navigator.share) {
+                try {
+                    navigator.share({
+                        title: 'Virtual Fit',
+                        text: 'Попробуй примерить одежду онлайн!',
+                        url: resultImage.src
+                    });
+                    console.log('Контент успешно поделён!');
+                } catch (error) {
+                    console.error('Ошибка при попытке поделиться:', error);
+                }
+            } else {
+                //alert('Ваш браузер не поддерживает Web Share API');
+                navigator.clipboard.writeText(resultImage.src)
+                .then(() => {
+                    //alert("Ссылка на изображение скопирована в буфер обмена!");
+                })
+                .catch(err => {
+                    console.error("Ошибка при копировании ссылки: ", err);
+                    //alert("Не удалось скопировать ссылку.");
+                });
+            }//end else            
         };
 
         function previewImage(event, previewId) {
