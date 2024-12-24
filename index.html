@@ -447,8 +447,9 @@ function deleteRow(row, itemId) {
             const resultViewer = document.getElementById('resultViewer');
             const resultImage = document.getElementById('resultImage');                        
 
+            const cleanImageLink = removeThumbnailSuffix(imgUrl);
             // Set initial image                    
-            loadImageWithSpinner(imgUrl);
+            loadImageWithSpinner(cleanImageLink);
             resultViewer.classList.remove('hidden');
 
             // Update buttons for switching images
