@@ -454,9 +454,9 @@ function deleteRow(row, itemId) {
 
             // Update buttons for switching images
             const buttons = resultViewer.querySelectorAll('.bottom-buttons button');
-            buttons[0].onclick = () => loadImageWithSpinner(humanImgUrl);
-            buttons[1].onclick = () => loadImageWithSpinner(garmentImgUrl);
-            buttons[2].onclick = () => loadImageWithSpinner(resultImgUrl);
+            buttons[0].onclick = () => loadImageWithSpinner(removeThumbnailSuffix(humanImgUrl));
+            buttons[1].onclick = () => loadImageWithSpinner(removeThumbnailSuffix(garmentImgUrl));
+            buttons[2].onclick = () => loadImageWithSpinner(removeThumbnailSuffix(resultImgUrl));
         }
 
         function loadImageWithSpinner(url) {
