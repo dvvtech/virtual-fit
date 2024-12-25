@@ -76,6 +76,7 @@
 
         <div id="resultViewer" class="hidden fixed inset-0 bg-black text-white flex flex-col items-center justify-center z-50">
             <img id="resultImage" src="" alt="Result" class="max-w-full max-h-screen">
+
             <div class="absolute bottom-10 flex gap-4 bottom-buttons">
                 <button class="bg-gray-800 px-4 py-2 rounded hover:bg-gray-700">Your photo</button>
                 <button class="bg-gray-800 px-4 py-2 rounded hover:bg-gray-700">Photo of clothes</button>
@@ -83,12 +84,12 @@
             </div>
 
             <!-- Кнопка Share -->
-            <button id="shareButton" class="absolute top-10 right-10 p-2 rounded-full hover:bg-blue-400 z-50">
-                <img src="share.png" />
+            <button id="shareButton" class="absolute top-10 right-4 p-2 rounded-full hover:bg-blue-400 z-50">
+                <img src="share.png" alt="Share">
             </button>
 
             <!-- Кнопка Close -->
-            <button class="absolute top-28 right-10 bg-red-600 px-4 py-2 rounded hover:bg-red-500 z-50" onclick="closeResult()">Close</button>
+            <button class="absolute top-28 right-4 bg-red-600 px-4 py-2 rounded hover:bg-red-500 z-50" onclick="closeResult()">Close</button>
         </div>
 
         <!-- Busy indicator -->
