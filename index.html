@@ -1,124 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> Try on Clothes</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="bg-gradient-to-br from-gray-100 via-gray-200 to-gray-300 min-h-screen flex items-center justify-center">
     <!--<body class="h-screen flex items-start justify-start bg-gray-100 p-2">-->
-        <div id="mainContent" class="bg-white p-8 rounded-xl shadow-2xl w-full max-w-md">
-            <button id="historyButton" class="w-full bg-gradient-to-r from-gray-500 to-gray-600 text-white font-semibold py-2 px-4 rounded-lg hover:from-gray-600 hover:to-gray-700 transition shadow-md hover:shadow-lg mb-6" onclick="showHistory()">History</button>
-            <h1 class="text-3xl font-bold mb-6 text-gray-900 text-center"> Try on Clothes</h1>
+    <div id="mainContent" class="bg-white p-8 rounded-xl shadow-2xl w-full max-w-md">
+        <button id="historyButton"
+            class="w-full bg-gradient-to-r from-gray-500 to-gray-600 text-white font-semibold py-2 px-4 rounded-lg hover:from-gray-600 hover:to-gray-700 transition shadow-md hover:shadow-lg mb-6"
+            onclick="showHistory()">History</button>
+        <h1 class="text-3xl font-bold mb-6 text-gray-900 text-center"> Try on Clothes</h1>
 
-            <div class="grid grid-cols-2 gap-6 mb-6">
-                <!-- Photo Upload 1 -->
-                <div class="relative group mb-2">
-                    <input type="file"
-                           accept="image/*"
-                           id="humanFile"
-                           class="hidden"
-                           onchange="previewImage(event, 'humanPreview')">
-                    <label for="humanFile" class="w-full h-40 border-2 border-dashed border-gray-300 flex items-center justify-center rounded-lg cursor-pointer transition group-hover:border-gray-400 group-hover:shadow-md">
-                        <span class="text-sm text-gray-500 group-hover:text-gray-700">Upload your photo</span>
-                    </label>
-                    <img id="humanPreview" src="" alt="" class="absolute inset-0 w-full h-40 object-contain rounded-lg hidden" onclick="document.getElementById('humanFile').click()">
-                    <button class="bg-blue-500 text-white text-xs font-semibold py-1 px-3 rounded-lg mt-2 w-full" onclick="openCollection(event, 'humanPreview')">Photo from the collection</button>
-                </div>
-
-                <!-- Photo Upload 2 -->
-                <div class="relative group mb-2">
-                    <input type="file"
-                           accept="image/*"
-                           id="garmFile"
-                           class="hidden"
-                           onchange="previewImage(event, 'garmPreview')">
-                    <label for="garmFile" class="w-full h-40 border-2 border-dashed border-gray-300 flex items-center justify-center rounded-lg cursor-pointer transition group-hover:border-gray-400 group-hover:shadow-md">
-                        <span class="text-sm text-gray-500 group-hover:text-gray-700">Upload photo of clothes</span>
-                    </label>
-                    <img id="garmPreview" src="" alt="" class="absolute inset-0 w-full h-40 object-contain rounded-lg hidden" onclick="document.getElementById('garmFile').click()">
-                    <button class="bg-blue-500 text-white text-xs font-semibold py-1 px-3 rounded-lg mt-2 w-full" onclick="openCollection(event, 'garmPreview')">Photo from the collection</button>
-                </div>
+        <div class="grid grid-cols-2 gap-6 mb-6">
+            <!-- Photo Upload 1 -->
+            <div class="relative group mb-2">
+                <input type="file" accept="image/*" id="humanFile" class="hidden"
+                    onchange="previewImage(event, 'humanPreview')">
+                <label for="humanFile"
+                    class="w-full h-40 border-2 border-dashed border-gray-300 flex items-center justify-center rounded-lg cursor-pointer transition group-hover:border-gray-400 group-hover:shadow-md">
+                    <span class="text-sm text-gray-500 group-hover:text-gray-700">Upload your photo</span>
+                </label>
+                <img id="humanPreview" src="" alt=""
+                    class="absolute inset-0 w-full h-40 object-contain rounded-lg hidden"
+                    onclick="document.getElementById('humanFile').click()">
+                <button class="bg-blue-500 text-white text-xs font-semibold py-1 px-3 rounded-lg mt-2 w-full"
+                    onclick="openCollection(event, 'humanPreview')">Photo from the collection</button>
             </div>
 
-            <!-- Dropdown -->
-            <div class="mb-6">
-                <label for="category" class="block text-sm font-medium text-gray-700 mb-2">Select Category</label>
-                <select id="category" class="w-full border border-gray-300 rounded-lg p-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                    <option value="upper_body">Upper</option>
-                    <option value="lower_body">Lower</option>
-                    <option value="dresses">Dresses</option>
-                </select>
-            </div>
-
-            <!-- Promo Code Input -->
-            <div class="mb-6">
-                <label for="promoCode" class="block text-sm font-medium text-gray-700 mb-2">Promo Code</label>
-                <input type="text"
-                       id="promoCode"
-                       placeholder="Enter promo code"
-                       autocapitalize="characters"
-                       style="text-transform: uppercase;"
-                       inputmode="alphanumeric"
-                       class="w-full border border-gray-300 rounded-lg p-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-            </div>
-
-            <!-- Remaining Usage -->
-            <div class="mb-6" id="remainingUsageContainer" style="display: none;">
-                <label class="text-sm font-medium text-gray-700">Remaining Usage:</label>
-                <span id="remainingUsage" class="text-gray-700 font-medium">0</span>
-            </div>
-
-            <!-- Try Button -->
-            <button id="tryOnButton" class="w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:from-blue-600 hover:to-blue-700 transition shadow-md hover:shadow-lg" onclick="tryOn()">Try On</button>
-        </div>
-
-        <div id="resultViewer" class="hidden fixed inset-0 bg-black text-white flex flex-col items-center justify-center z-50">
-            <img id="resultImage" src="" alt="Result" class="max-w-full max-h-screen">
-
-            <div class="absolute bottom-10 flex gap-4 bottom-buttons">
-                <button class="bg-gray-800 px-4 py-2 rounded hover:bg-gray-700">Your photo</button>
-                <button class="bg-gray-800 px-4 py-2 rounded hover:bg-gray-700">Photo of clothes</button>
-                <button class="bg-gray-800 px-4 py-2 rounded hover:bg-gray-700">Fitting result</button>
-            </div>
-
-            <!-- Кнопка Share -->
-            <button id="shareButton" class="absolute top-3 right-4 p-2 rounded-full hover:bg-blue-400 z-50">
-                <img src="share.png" alt="Share">
-            </button>
-
-            <!-- Кнопка Close -->
-            <button class="absolute top-20 right-6 z-50" onclick="closeResult()" title="Close">
-                <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 122.88" class="w-11 h-11">
-                    <defs>
-                        <style>
-                            .cls-1 {
-                                fill: #f44336;
-                                fill-rule: evenodd;
-                            }
-
-                            button:hover .cls-1 {
-                                fill: #e53935; /* Изменение цвета при наведении */
-                            }
-                        </style>
-                    </defs>
-                    <title>close-red</title>
-                    <path class="cls-1" d="M61.44,0A61.44,61.44,0,1,1,0,61.44,61.44,61.44,0,0,1,61.44,0ZM74.58,36.8c1.74-1.77,2.83-3.18,5-1l7,7.13c2.29,2.26,2.17,3.58,0,5.69L73.33,61.83,86.08,74.58c1.77,1.74,3.18,2.83,1,5l-7.13,7c-2.26,2.29-3.58,2.17-5.68,0L61.44,73.72,48.63,86.53c-2.1,2.15-3.42,2.27-5.68,0l-7.13-7c-2.2-2.15-.79-3.24,1-5l12.73-12.7L36.35,48.64c-2.15-2.11-2.27-3.43,0-5.69l7-7.13c2.15-2.2,3.24-.79,5,1L61.44,49.94,74.58,36.8Z" />
-                </svg>
-            </button>
-
-        </div>
-
-        <!-- Busy indicator -->
-        <div id="overlay" class="fixed inset-0 bg-white bg-opacity-80 hidden flex items-center justify-center z-50">
-            <div class="flex flex-col items-center">
-                <div class="h-16 w-16 border-4 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
-                <div class="mt-4 text-lg font-semibold text-gray-700">Please wait...</div>
+            <!-- Photo Upload 2 -->
+            <div class="relative group mb-2">
+                <input type="file" accept="image/*" id="garmFile" class="hidden"
+                    onchange="previewImage(event, 'garmPreview')">
+                <label for="garmFile"
+                    class="w-full h-40 border-2 border-dashed border-gray-300 flex items-center justify-center rounded-lg cursor-pointer transition group-hover:border-gray-400 group-hover:shadow-md">
+                    <span class="text-sm text-gray-500 group-hover:text-gray-700">Upload photo of clothes</span>
+                </label>
+                <img id="garmPreview" src="" alt=""
+                    class="absolute inset-0 w-full h-40 object-contain rounded-lg hidden"
+                    onclick="document.getElementById('garmFile').click()">
+                <button class="bg-blue-500 text-white text-xs font-semibold py-1 px-3 rounded-lg mt-2 w-full"
+                    onclick="openCollection(event, 'garmPreview')">Photo from the collection</button>
             </div>
         </div>
 
-        <script>
+        <!-- Dropdown -->
+        <div class="mb-6">
+            <label for="category" class="block text-sm font-medium text-gray-700 mb-2">Select Category</label>
+            <select id="category"
+                class="w-full border border-gray-300 rounded-lg p-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                <option value="upper_body">Upper</option>
+                <option value="lower_body">Lower</option>
+                <option value="dresses">Dresses</option>
+            </select>
+        </div>
+
+        <!-- Promo Code Input -->
+        <div class="mb-6">
+            <label for="promoCode" class="block text-sm font-medium text-gray-700 mb-2">Promo Code</label>
+            <input type="text" id="promoCode" placeholder="Enter promo code" autocapitalize="characters"
+                style="text-transform: uppercase;" inputmode="alphanumeric"
+                class="w-full border border-gray-300 rounded-lg p-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+        </div>
+
+        <!-- Remaining Usage -->
+        <div class="mb-6" id="remainingUsageContainer" style="display: none;">
+            <label class="text-sm font-medium text-gray-700">Remaining Usage:</label>
+            <span id="remainingUsage" class="text-gray-700 font-medium">0</span>
+        </div>
+
+        <!-- Try Button -->
+        <button id="tryOnButton"
+            class="w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:from-blue-600 hover:to-blue-700 transition shadow-md hover:shadow-lg"
+            onclick="tryOn()">Try On</button>
+    </div>
+
+    <div id="resultViewer"
+        class="hidden fixed inset-0 bg-black text-white flex flex-col items-center justify-center z-50">
+        <img id="resultImage" src="" alt="Result" class="max-w-full max-h-screen">
+
+        <div class="absolute bottom-10 flex gap-4 bottom-buttons">
+            <button class="bg-gray-800 px-4 py-2 rounded hover:bg-gray-700">Your photo</button>
+            <button class="bg-gray-800 px-4 py-2 rounded hover:bg-gray-700">Photo of clothes</button>
+            <button class="bg-gray-800 px-4 py-2 rounded hover:bg-gray-700">Fitting result</button>
+        </div>
+
+        <!-- Кнопка Share -->
+        <button id="shareButton" class="absolute top-3 right-4 p-2 rounded-full hover:bg-blue-400 z-50">
+            <img src="share.png" alt="Share">
+        </button>
+
+        <!-- Кнопка Close -->
+        <button class="absolute top-20 right-6 z-50" onclick="closeResult()" title="Close">
+            <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 122.88"
+                class="w-11 h-11">
+                <defs>
+                    <style>
+                        .cls-1 {
+                            fill: #f44336;
+                            fill-rule: evenodd;
+                        }
+
+                        button:hover .cls-1 {
+                            fill: #e53935;
+                            /* Изменение цвета при наведении */
+                        }
+                    </style>
+                </defs>
+                <title>close-red</title>
+                <path class="cls-1"
+                    d="M61.44,0A61.44,61.44,0,1,1,0,61.44,61.44,61.44,0,0,1,61.44,0ZM74.58,36.8c1.74-1.77,2.83-3.18,5-1l7,7.13c2.29,2.26,2.17,3.58,0,5.69L73.33,61.83,86.08,74.58c1.77,1.74,3.18,2.83,1,5l-7.13,7c-2.26,2.29-3.58,2.17-5.68,0L61.44,73.72,48.63,86.53c-2.1,2.15-3.42,2.27-5.68,0l-7.13-7c-2.2-2.15-.79-3.24,1-5l12.73-12.7L36.35,48.64c-2.15-2.11-2.27-3.43,0-5.69l7-7.13c2.15-2.2,3.24-.79,5,1L61.44,49.94,74.58,36.8Z" />
+            </svg>
+        </button>
+
+    </div>
+
+    <!-- Busy indicator -->
+    <div id="overlay" class="fixed inset-0 bg-white bg-opacity-80 hidden flex items-center justify-center z-50">
+        <div class="flex flex-col items-center">
+            <div class="h-16 w-16 border-4 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
+            <div class="mt-4 text-lg font-semibold text-gray-700">Please wait...</div>
+        </div>
+    </div>
+
+    <script>
+
+        //const url = "https://a30944-8332.x.d-f.pw/uploads/guid_xxx_v.png";
+        //const newUrl = replaceEndingToV(url);
+
         const API_BASE_URL = 'https://a30944-8332.x.d-f.pw';
         //const API_BASE_URL = 'http://localhost:5023';
         //const API_BASE_URL = 'https://localhost:7147';
@@ -157,13 +170,13 @@
             } else {
                 //alert('Ваш браузер не поддерживает Web Share API');
                 navigator.clipboard.writeText(resultImage.src)
-                .then(() => {
-                    //alert("Ссылка на изображение скопирована в буфер обмена!");
-                })
-                .catch(err => {
-                    console.error("Ошибка при копировании ссылки: ", err);
-                    //alert("Не удалось скопировать ссылку.");
-                });
+                    .then(() => {
+                        //alert("Ссылка на изображение скопирована в буфер обмена!");
+                    })
+                    .catch(err => {
+                        console.error("Ошибка при копировании ссылки: ", err);
+                        //alert("Не удалось скопировать ссылку.");
+                    });
             }//end else            
         };
 
@@ -175,15 +188,14 @@
             if (file) {
 
                 // Валидация типа файла (только изображения)
-                if (!file.type.startsWith('image/'))
-                {
+                if (!file.type.startsWith('image/')) {
                     alert('Please upload a valid image file.');
                     document.getElementById('overlay').classList.add('hidden');
                     return;
                 }
 
                 const reader = new FileReader();
-                reader.onload = function(e) {
+                reader.onload = function (e) {
                     preview.src = e.target.result;
                     preview.classList.remove('hidden');
                 };
@@ -197,29 +209,29 @@
                     method: 'POST',
                     body: formData,
                 })
-                .then(response => response.json())
-                .then(data => {
-                    const imageUrl = data.url;
-                    if (previewId === 'humanPreview') {
-                        window.humanPhotoUrl = imageUrl;
-                    } else {
-                        window.garmPhotoUrl = imageUrl;
-                    }
-                })
-                .catch(error => {
-                    console.error('Error uploading file:', error);
-                    alert('An error occurred while uploading the file.');
-                })
-                .finally(() => {
-                    document.getElementById('overlay').classList.add('hidden');
-                });
+                    .then(response => response.json())
+                    .then(data => {
+                        const imageUrl = data.url;
+                        if (previewId === 'humanPreview') {
+                            window.humanPhotoUrl = imageUrl;
+                        } else {
+                            window.garmPhotoUrl = imageUrl;
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error uploading file:', error);
+                        alert('An error occurred while uploading the file.');
+                    })
+                    .finally(() => {
+                        document.getElementById('overlay').classList.add('hidden');
+                    });
             }
         }
 
         function tryOn() {
             const promoCodeField = document.getElementById('promoCode').value;
             if (!promoCodeField) {
-                alert('Promo code cannot be empty!');            
+                alert('Promo code cannot be empty!');
                 return;
             }
 
@@ -229,7 +241,7 @@
             // Remove existing error messages
             const existingErrors = mainContent.querySelectorAll('.error-message');
             existingErrors.forEach(error => error.remove());
-        
+
             cat = document.getElementById('category').value;
 
             const payload = {
@@ -246,48 +258,82 @@
                 },
                 body: JSON.stringify(payload)
             })
-            .then(response => {
-                if (!response.ok) {
-                    return response.json().then(err => {
-                        throw new Error(err.description || 'Unknown error occurred');
-                    });
-                }
-                return response.json();
-            })
-            .then(data => {
-                window.resultUrl = data.url; // Save the result URL
-                localStorage.setItem('promoCode', promoCodeField); // Save promo code on success
-                document.getElementById('overlay').classList.add('hidden');
-                showResult(window.humanPhotoUrl, window.garmPhotoUrl, data.url);
-                document.getElementById('remainingUsageContainer').style.display = 'block';
-                document.getElementById('remainingUsage').textContent = data.remainingUsage;
-                localStorage.setItem('remainingUsage', data.remainingUsage);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                document.getElementById('overlay').classList.add('hidden');
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(err => {
+                            throw new Error(err.description || 'Unknown error occurred');
+                        });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    window.resultUrl = data.url; // Save the result URL
+                    localStorage.setItem('promoCode', promoCodeField); // Save promo code on success
+                    document.getElementById('overlay').classList.add('hidden');
+                    showResult(window.humanPhotoUrl, window.garmPhotoUrl, data.url);
+                    document.getElementById('remainingUsageContainer').style.display = 'block';
+                    document.getElementById('remainingUsage').textContent = data.remainingUsage;
+                    localStorage.setItem('remainingUsage', data.remainingUsage);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('overlay').classList.add('hidden');
 
-                // Display error message to user
-                const errorMessage = document.createElement('div');
-                errorMessage.textContent = error.message;
-                errorMessage.className = 'text-red-600 text-center mt-4 error-message';
-                mainContent.appendChild(errorMessage);
-            });
+                    // Display error message to user
+                    const errorMessage = document.createElement('div');
+                    errorMessage.textContent = error.message;
+                    errorMessage.className = 'text-red-600 text-center mt-4 error-message';
+                    mainContent.appendChild(errorMessage);
+                });
         }
 
         function showResult(humanImgUrl, garmentImgUrl, resultImgUrl) {
 
             const resultViewer = document.getElementById('resultViewer');
             const resultImage = document.getElementById('resultImage');
-            
+
             loadImageWithSpinner(resultImgUrl);
             resultViewer.classList.remove('hidden');
-            
+
+            humanImgUrl = replaceEndingToV(humanImgUrl);
+            garmentImgUrl = replaceEndingToV(garmentImgUrl);
+
             const buttons = resultViewer.querySelectorAll('.bottom-buttons button');
-            buttons[0].onclick = () => loadImageWithSpinner(humanImgUrl || window.humanPhotoUrl);
-            buttons[1].onclick = () => loadImageWithSpinner(garmentImgUrl || window.garmPhotoUrl);
+            buttons[0].onclick = () => loadImageWithSpinner(humanImgUrl);
+            buttons[1].onclick = () => loadImageWithSpinner(garmentImgUrl);
+            //buttons[0].onclick = () => loadImageWithSpinner(humanImgUrl || window.humanPhotoUrl);
+            //buttons[1].onclick = () => loadImageWithSpinner(garmentImgUrl || window.garmPhotoUrl);
             buttons[2].onclick = () => loadImageWithSpinner(resultImgUrl);
         }
+
+        function replaceEndingToV(input) {
+            // Регулярное выражение для замены _t на _v перед расширением файла
+            const regex = /_t(\.[^.]+)$/;
+            return input.replace(regex, '_v$1');
+        }
+
+        /*function replaceEndingToV(input, findStr) {
+            // Находим последнюю точку в строке
+            const lastDotIndex = input.lastIndexOf('.');
+
+            // Проверяем, есть ли расширение файла
+            if (lastDotIndex !== -1) {
+                // Отбрасываем расширение файла
+                const baseName = input.substring(0, lastDotIndex);
+                const extension = input.substring(lastDotIndex);
+
+                // Проверяем, заканчивается ли строка на "_r"
+                if (baseName.endsWith(findStr)) { //"_r"
+                    // Заменяем "_r" на "_v"
+                    const newBaseName = baseName.slice(0, -2) + "_v";
+                    // Возвращаем новую строку с расширением
+                    return newBaseName + extension;
+                }
+            }
+
+            // Если строка не заканчивается на "_r" или нет расширения, возвращаем исходную строку
+            return input;
+        }*/
 
         function showPreview(previewId) {
             const resultImage = document.getElementById('resultImage');
@@ -310,147 +356,148 @@
                 historyContent.classList.remove('hidden');
             } else {
                 mainContent.classList.remove('hidden');
-        }
-}</script>
-        <div id="historyContent" class="hidden bg-white p-8 rounded-xl shadow-2xl w-full max-w-5xl">
-            <h2 class="text-2xl font-bold mb-6 text-gray-900 text-center">Fitting History</h2>
-            <table class="table-auto w-full border-collapse border border-gray-200">
-                <thead>
-                    <tr>
-                        <th class="border border-gray-200 p-2">Your Photo</th>
-                        <th class="border border-gray-200 p-2">Clothes Photo</th>
-                        <th class="border border-gray-200 p-2">Result</th>
-                    </tr>
-                </thead>
-                <tbody id="historyTableBody"></tbody>
-            </table>
-            <button class="mt-6 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600" onclick="hideHistory()">Back</button>
-        </div>
+            }
+        }</script>
+    <div id="historyContent" class="hidden bg-white p-8 rounded-xl shadow-2xl w-full max-w-5xl">
+        <h2 class="text-2xl font-bold mb-6 text-gray-900 text-center">Fitting History</h2>
+        <table class="table-auto w-full border-collapse border border-gray-200">
+            <thead>
+                <tr>
+                    <th class="border border-gray-200 p-2">Your Photo</th>
+                    <th class="border border-gray-200 p-2">Clothes Photo</th>
+                    <th class="border border-gray-200 p-2">Result</th>
+                </tr>
+            </thead>
+            <tbody id="historyTableBody"></tbody>
+        </table>
+        <button class="mt-6 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+            onclick="hideHistory()">Back</button>
+    </div>
 
-        <script>
+    <script>
 
-function showHistory() {
-    const promoCode = document.getElementById('promoCode').value;
-    if (!promoCode) {
-        alert('Promo code cannot be empty!');
-        document.getElementById('overlay').classList.add('hidden');
-        return;
-    }
-
-    const savedPromoCode = localStorage.getItem('promoCode');
-    if (promoCode !== savedPromoCode) {
-        localStorage.setItem('promoCode', promoCode);
-    }
-
-    document.getElementById('overlay').classList.remove('hidden');
-
-    const historyContent = document.getElementById('historyContent');
-    const mainContent = document.getElementById('mainContent');
-
-    fetch(`${API_BASE_URL}/api/virtual-fit/history`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ promocode: promoCode })
-    })
-    .then(response => {
-        if (!response.ok) {
-            return response.json().then(err => {
+        function showHistory() {
+            const promoCode = document.getElementById('promoCode').value;
+            if (!promoCode) {
+                alert('Promo code cannot be empty!');
                 document.getElementById('overlay').classList.add('hidden');
-                throw new Error(err.description || 'Failed to fetch history');
-            });
+                return;
+            }
+
+            const savedPromoCode = localStorage.getItem('promoCode');
+            if (promoCode !== savedPromoCode) {
+                localStorage.setItem('promoCode', promoCode);
+            }
+
+            document.getElementById('overlay').classList.remove('hidden');
+
+            const historyContent = document.getElementById('historyContent');
+            const mainContent = document.getElementById('mainContent');
+
+            fetch(`${API_BASE_URL}/api/virtual-fit/history`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ promocode: promoCode })
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(err => {
+                            document.getElementById('overlay').classList.add('hidden');
+                            throw new Error(err.description || 'Failed to fetch history');
+                        });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const historyTableBody = document.getElementById('historyTableBody');
+                    historyTableBody.innerHTML = '';
+
+                    data.forEach(item => {
+                        const row = document.createElement('tr');
+
+                        [item.humanImgUrl, item.garmentImgUrl, item.resultImgUrl].forEach(imgUrl => {
+                            const cell = document.createElement('td');
+                            cell.className = 'border border-gray-200 p-0.5';
+
+                            const img = document.createElement('img');
+                            img.src = imgUrl;
+                            img.className = 'w-full h-40 object-contain cursor-pointer';
+                            img.onclick = () => showImageFullScreen(imgUrl, item.humanImgUrl, item.garmentImgUrl, item.resultImgUrl);
+
+                            cell.appendChild(img);
+                            row.appendChild(cell);
+                        });
+
+                        // Добавляем кнопку "Удалить"
+                        const deleteCell = document.createElement('td');
+                        deleteCell.className = 'border border-gray-200 p-2 text-center';
+
+                        const deleteButton = document.createElement('button');
+                        deleteButton.className = 'p-1';
+                        deleteButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 456 511.82" width="24" height="24" class="inline-block"><path fill="#FD3B3B" d="M48.42 140.13h361.99c17.36 0 29.82 9.78 28.08 28.17l-30.73 317.1c-1.23 13.36-8.99 26.42-25.3 26.42H76.34c-13.63-.73-23.74-9.75-25.09-24.14L20.79 168.99c-1.74-18.38 9.75-28.86 27.63-28.86zM24.49 38.15h136.47V28.1c0-15.94 10.2-28.1 27.02-28.1h81.28c17.3 0 27.65 11.77 27.65 28.01v10.14h138.66c.57 0 1.11.07 1.68.13 10.23.93 18.15 9.02 18.69 19.22.03.79.06 1.39.06 2.17v42.76c0 5.99-4.73 10.89-10.62 11.19-.54 0-1.09.03-1.63.03H11.22c-5.92 0-10.77-4.6-11.19-10.38 0-.72-.03-1.47-.03-2.23v-39.5c0-10.93 4.21-20.71 16.82-23.02 2.53-.45 5.09-.37 7.67-.37zm83.78 208.38c-.51-10.17 8.21-18.83 19.53-19.31 11.31-.49 20.94 7.4 21.45 17.57l8.7 160.62c.51 10.18-8.22 18.84-19.53 19.32-11.32.48-20.94-7.4-21.46-17.57l-8.69-160.63zm201.7-1.74c.51-10.17 10.14-18.06 21.45-17.57 11.32.48 20.04 9.14 19.53 19.31l-8.66 160.63c-.52 10.17-10.14 18.05-21.46 17.57-11.31-.48-20.04-9.14-19.53-19.32l8.67-160.62zm-102.94.87c0-10.23 9.23-18.53 20.58-18.53 11.34 0 20.58 8.3 20.58 18.53v160.63c0 10.23-9.24 18.53-20.58 18.53-11.35 0-20.58-8.3-20.58-18.53V245.66z"/></svg>`;
+
+                        deleteButton.onclick = () => deleteRow(row, item.id); // Удаление строки
+
+                        deleteCell.appendChild(deleteButton);
+                        row.appendChild(deleteCell);
+
+                        historyTableBody.appendChild(row);
+                    });
+
+                    mainContent.classList.add('hidden');
+                    historyContent.classList.remove('hidden');
+                    document.getElementById('overlay').classList.add('hidden');
+                })
+                .catch(error => {
+                    document.getElementById('overlay').classList.add('hidden');
+                    console.error('Error:', error);
+                    alert(error.message);
+                });
         }
-        return response.json();
-    })
-    .then(data => {
-        const historyTableBody = document.getElementById('historyTableBody');
-        historyTableBody.innerHTML = '';
 
-        data.forEach(item => {
-            const row = document.createElement('tr');
+        function deleteRow(row, itemId) {
 
-            [item.humanImgUrl, item.garmentImgUrl, item.resultImgUrl].forEach(imgUrl => {
-                const cell = document.createElement('td');
-                cell.className = 'border border-gray-200 p-0.5';
+            const isConfirmed = window.confirm('Are you sure you want to delete this entry?');
+            if (!isConfirmed) {
+                console.log('Deletion canceled by user');
+                return;
+            }
 
-                const img = document.createElement('img');
-                img.src = imgUrl;
-                img.className = 'w-full h-40 object-contain cursor-pointer';
-                img.onclick = () => showImageFullScreen(imgUrl, item.humanImgUrl, item.garmentImgUrl, item.resultImgUrl);
+            // Удаляем строку из DOM
+            row.remove();
 
-                cell.appendChild(img);
-                row.appendChild(cell);
-            });
+            const promocode = document.getElementById('promoCode').value;
+            if (!promocode) {
+                alert('Promo code cannot be empty!');
+                return;
+            }
 
-            // Добавляем кнопку "Удалить"
-            const deleteCell = document.createElement('td');
-            deleteCell.className = 'border border-gray-200 p-2 text-center';
-
-            const deleteButton = document.createElement('button');
-            deleteButton.className = 'p-1';
-            deleteButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 456 511.82" width="24" height="24" class="inline-block"><path fill="#FD3B3B" d="M48.42 140.13h361.99c17.36 0 29.82 9.78 28.08 28.17l-30.73 317.1c-1.23 13.36-8.99 26.42-25.3 26.42H76.34c-13.63-.73-23.74-9.75-25.09-24.14L20.79 168.99c-1.74-18.38 9.75-28.86 27.63-28.86zM24.49 38.15h136.47V28.1c0-15.94 10.2-28.1 27.02-28.1h81.28c17.3 0 27.65 11.77 27.65 28.01v10.14h138.66c.57 0 1.11.07 1.68.13 10.23.93 18.15 9.02 18.69 19.22.03.79.06 1.39.06 2.17v42.76c0 5.99-4.73 10.89-10.62 11.19-.54 0-1.09.03-1.63.03H11.22c-5.92 0-10.77-4.6-11.19-10.38 0-.72-.03-1.47-.03-2.23v-39.5c0-10.93 4.21-20.71 16.82-23.02 2.53-.45 5.09-.37 7.67-.37zm83.78 208.38c-.51-10.17 8.21-18.83 19.53-19.31 11.31-.49 20.94 7.4 21.45 17.57l8.7 160.62c.51 10.18-8.22 18.84-19.53 19.32-11.32.48-20.94-7.4-21.46-17.57l-8.69-160.63zm201.7-1.74c.51-10.17 10.14-18.06 21.45-17.57 11.32.48 20.04 9.14 19.53 19.31l-8.66 160.63c-.52 10.17-10.14 18.05-21.46 17.57-11.31-.48-20.04-9.14-19.53-19.32l8.67-160.62zm-102.94.87c0-10.23 9.23-18.53 20.58-18.53 11.34 0 20.58 8.3 20.58 18.53v160.63c0 10.23-9.24 18.53-20.58 18.53-11.35 0-20.58-8.3-20.58-18.53V245.66z"/></svg>`;
-            
-            deleteButton.onclick = () => deleteRow(row, item.id); // Удаление строки
-
-            deleteCell.appendChild(deleteButton);
-            row.appendChild(deleteCell);
-
-            historyTableBody.appendChild(row);            
-        });
-
-        mainContent.classList.add('hidden');
-        historyContent.classList.remove('hidden');
-        document.getElementById('overlay').classList.add('hidden');
-    })
-    .catch(error => {
-        document.getElementById('overlay').classList.add('hidden');
-        console.error('Error:', error);
-        alert(error.message);
-    });
-}
-
-function deleteRow(row, itemId) {
-
-    const isConfirmed = window.confirm('Are you sure you want to delete this entry?');
-    if (!isConfirmed) {
-        console.log('Deletion canceled by user');
-        return;
-    }
-
-    // Удаляем строку из DOM
-    row.remove();
-
-    const promocode = document.getElementById('promoCode').value;
-    if (!promocode) {
-        alert('Promo code cannot be empty!');            
-        return;
-    }
-
-    const payload = {
+            const payload = {
                 promocode: promocode,
                 fittingResultId: itemId
             };
 
-    // Дополнительно можно отправить запрос на сервер
-    fetch(`${API_BASE_URL}/api/virtual-fit/history`, {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(payload)
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Failed to delete item.');
+            // Дополнительно можно отправить запрос на сервер
+            fetch(`${API_BASE_URL}/api/virtual-fit/history`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to delete item.');
+                    }
+                    console.log('Item successfully deleted.');
+                })
+                .catch(error => {
+                    console.error('Error deleting item:', error);
+                    //alert('Failed to delete item.');
+                });
         }
-        console.log('Item successfully deleted.');
-    })
-    .catch(error => {
-        console.error('Error deleting item:', error);
-        //alert('Failed to delete item.');
-    });
-}
 
         function hideHistory() {
             const historyContent = document.getElementById('historyContent');
@@ -462,22 +509,24 @@ function deleteRow(row, itemId) {
 
         function showImageFullScreen(imgUrl, humanImgUrl, garmentImgUrl, resultImgUrl) {
             const resultViewer = document.getElementById('resultViewer');
-            const resultImage = document.getElementById('resultImage');                        
+            const resultImage = document.getElementById('resultImage');
 
-            const cleanImageLink = removeThumbnailSuffix(imgUrl);
+            const cleanImageLink = replaceEndingToV(imgUrl, "_t");
+            //const cleanImageLink = removeThumbnailSuffix(imgUrl);
+
             // Set initial image                    
             loadImageWithSpinner(cleanImageLink);
             resultViewer.classList.remove('hidden');
 
             // Update buttons for switching images
             const buttons = resultViewer.querySelectorAll('.bottom-buttons button');
-            buttons[0].onclick = () => loadImageWithSpinner(removeThumbnailSuffix(humanImgUrl));
-            buttons[1].onclick = () => loadImageWithSpinner(removeThumbnailSuffix(garmentImgUrl));
-            buttons[2].onclick = () => loadImageWithSpinner(removeThumbnailSuffix(resultImgUrl));
+            buttons[0].onclick = () => loadImageWithSpinner(replaceEndingToV(humanImgUrl, "_t"));
+            buttons[1].onclick = () => loadImageWithSpinner(replaceEndingToV(garmentImgUrl, "_t"));
+            buttons[2].onclick = () => loadImageWithSpinner(replaceEndingToV(resultImgUrl, "_t"));
         }
 
         function loadImageWithSpinner(url) {
-            
+
             document.getElementById('overlay').classList.remove('hidden');
 
             // Создаем новый объект Image для предзагрузки
@@ -485,157 +534,161 @@ function deleteRow(row, itemId) {
             // Обработчик успешной загрузки
             img.onload = () => {
                 resultImage.src = url; // Устанавливаем src
-                document.getElementById('overlay').classList.add('hidden');                
+                document.getElementById('overlay').classList.add('hidden');
             };
 
             // Обработчик ошибки загрузки
             img.onerror = () => {
                 console.error('Error loading image');
                 alert('Failed to load image');
-                document.getElementById('overlay').classList.add('hidden'); 
+                document.getElementById('overlay').classList.add('hidden');
             };
 
             // Начинаем загрузку изображения
             img.src = url;
         }
-        
-</script>
-        <div id="collectionModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div class="bg-white rounded-lg shadow-xl p-6 w-3/4 max-w-4xl">
-                <h2 class="text-xl font-bold mb-4">Select from Collection</h2>
-                <div class="flex border-b mb-4">
-                    <button id="tabMan" class="tab-button bg-gray-200 px-4 py-2 rounded-t active" onclick="showTab('man')">Man</button>
-                    <button id="tabWoman" class="tab-button bg-gray-200 px-4 py-2 rounded-t" onclick="showTab('woman')">Woman</button>
-                </div>
-                <div id="collectionGridMan" class="collection-grid grid grid-cols-3 gap-4 overflow-y-auto max-h-96" style="-webkit-overflow-scrolling: touch;"></div>
-                <div id="collectionGridWoman" class="collection-grid hidden grid grid-cols-3 gap-4 overflow-y-auto max-h-96" style="-webkit-overflow-scrolling: touch;"></div>
-                <button class="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600" onclick="closeCollection()">Close</button>
+
+    </script>
+    <div id="collectionModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg shadow-xl p-6 w-3/4 max-w-4xl">
+            <h2 class="text-xl font-bold mb-4">Select from Collection</h2>
+            <div class="flex border-b mb-4">
+                <button id="tabMan" class="tab-button bg-gray-200 px-4 py-2 rounded-t active"
+                    onclick="showTab('man')">Man</button>
+                <button id="tabWoman" class="tab-button bg-gray-200 px-4 py-2 rounded-t"
+                    onclick="showTab('woman')">Woman</button>
             </div>
+            <div id="collectionGridMan" class="collection-grid grid grid-cols-3 gap-4 overflow-y-auto max-h-96"
+                style="-webkit-overflow-scrolling: touch;"></div>
+            <div id="collectionGridWoman" class="collection-grid hidden grid grid-cols-3 gap-4 overflow-y-auto max-h-96"
+                style="-webkit-overflow-scrolling: touch;"></div>
+            <button class="mt-4 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                onclick="closeCollection()">Close</button>
         </div>
+    </div>
 
 
-        <script>
-function openCollection(event, previewId) {
-    event.stopPropagation();
-    const collectionModal = document.getElementById('collectionModal');
-    const collectionGridMan = document.getElementById('collectionGridMan');
-    const collectionGridWoman = document.getElementById('collectionGridWoman');
+    <script>
+        function openCollection(event, previewId) {
+            event.stopPropagation();
+            const collectionModal = document.getElementById('collectionModal');
+            const collectionGridMan = document.getElementById('collectionGridMan');
+            const collectionGridWoman = document.getElementById('collectionGridWoman');
 
-    document.getElementById('overlay').classList.remove('hidden');
+            document.getElementById('overlay').classList.remove('hidden');
 
-    // Clear previous content
-    collectionGridMan.innerHTML = '';
-    collectionGridWoman.innerHTML = '';
+            // Clear previous content
+            collectionGridMan.innerHTML = '';
+            collectionGridWoman.innerHTML = '';
 
-    // Fetch collection from API
-    fetch(`${API_BASE_URL}/api/virtual-fit/clothing-collection`)
-        .then(response => response.json())
-        .then(data => {
-            if(previewId === "garmPreview")
-            {
-                data.manСlothingItems.forEach(item => {
-                    const img = document.createElement('img');
-                    img.src = item.link;
-                    img.alt = item.category;
-                    img.className = 'w-full h-40 object-contain rounded cursor-pointer hover:opacity-75';
-                    img.onclick = () => selectFromCollection(item.link, previewId);
-                    collectionGridMan.appendChild(img);
+            // Fetch collection from API
+            fetch(`${API_BASE_URL}/api/virtual-fit/clothing-collection`)
+                .then(response => response.json())
+                .then(data => {
+                    if (previewId === "garmPreview") {
+                        data.manСlothingItems.forEach(item => {
+                            const img = document.createElement('img');
+                            img.src = item.link;
+                            img.alt = item.category;
+                            img.className = 'w-full h-40 object-contain rounded cursor-pointer hover:opacity-75';
+                            img.onclick = () => selectFromCollection(item.link, previewId);
+                            collectionGridMan.appendChild(img);
+                        });
+                    }
+                    data.man.forEach(item => {
+                        const img = document.createElement('img');
+                        img.src = item.link;
+                        img.alt = item.category;
+                        img.className = 'w-full h-40 object-contain rounded cursor-pointer hover:opacity-75';
+                        img.onclick = () => selectFromCollection(item.link, previewId);
+                        collectionGridMan.appendChild(img);
+                    });
+
+                    if (previewId === "garmPreview") {
+                        data.womanСlothingItems.forEach(item => {
+                            const img = document.createElement('img');
+                            img.src = item.link;
+                            img.alt = item.category;
+                            img.className = 'w-full h-40 object-contain rounded cursor-pointer hover:opacity-75';
+                            img.onclick = () => selectFromCollection(item.link, previewId);
+                            collectionGridWoman.appendChild(img);
+                        });
+                    }
+                    data.woman.forEach(item => {
+                        const img = document.createElement('img');
+                        img.src = item.link;
+                        img.alt = item.category;
+                        img.className = 'w-full h-40 object-contain rounded cursor-pointer hover:opacity-75';
+                        img.onclick = () => selectFromCollection(item.link, previewId);
+                        collectionGridWoman.appendChild(img);
+                    });
+
+                    collectionModal.classList.remove('hidden');
+                    showTab('man');
+                    document.getElementById('overlay').classList.add('hidden');
+                })
+                .catch(error => {
+                    console.error('Error fetching collection:', error);
+                    document.getElementById('overlay').classList.add('hidden');
                 });
-            }
-            data.man.forEach(item => {
-                const img = document.createElement('img');
-                img.src = item.link;
-                img.alt = item.category;
-                img.className = 'w-full h-40 object-contain rounded cursor-pointer hover:opacity-75';
-                img.onclick = () => selectFromCollection(item.link, previewId);
-                collectionGridMan.appendChild(img);
-            });
-
-            if(previewId === "garmPreview")
-            {
-                data.womanСlothingItems.forEach(item => {
-                    const img = document.createElement('img');
-                    img.src = item.link;
-                    img.alt = item.category;
-                    img.className = 'w-full h-40 object-contain rounded cursor-pointer hover:opacity-75';
-                    img.onclick = () => selectFromCollection(item.link, previewId);
-                    collectionGridWoman.appendChild(img);
-                });
-            }
-            data.woman.forEach(item => {
-                const img = document.createElement('img');
-                img.src = item.link;
-                img.alt = item.category;
-                img.className = 'w-full h-40 object-contain rounded cursor-pointer hover:opacity-75';
-                img.onclick = () => selectFromCollection(item.link, previewId);
-                collectionGridWoman.appendChild(img);
-            });
-
-            collectionModal.classList.remove('hidden');
-            showTab('man');
-            document.getElementById('overlay').classList.add('hidden');
-        })
-        .catch(error => {
-            console.error('Error fetching collection:', error);
-            document.getElementById('overlay').classList.add('hidden');
-        });
-}
-
-function showTab(tab) {
-    const manGrid = document.getElementById('collectionGridMan');
-    const womanGrid = document.getElementById('collectionGridWoman');
-    const tabMan = document.getElementById('tabMan');
-    const tabWoman = document.getElementById('tabWoman');
-
-    if (tab === 'man') {
-        manGrid.classList.remove('hidden');
-        womanGrid.classList.add('hidden');
-        tabMan.classList.add('active');
-        tabWoman.classList.remove('active');
-    } else {
-        womanGrid.classList.remove('hidden');
-        manGrid.classList.add('hidden');
-        tabWoman.classList.add('active');
-        tabMan.classList.remove('active');
-    }
-}
-
-    function selectFromCollection(imageLink, previewId) {
-        const preview = document.getElementById(previewId);
-        const cleanImageLink = removeThumbnailSuffix(imageLink);
-        preview.src = imageLink;
-        preview.classList.remove('hidden');
-
-        if (previewId === 'humanPreview') {
-            window.humanPhotoUrl = cleanImageLink;
-        }
-        else {
-            window.garmPhotoUrl = cleanImageLink;
         }
 
-        closeCollection();
-    }
+        function showTab(tab) {
+            const manGrid = document.getElementById('collectionGridMan');
+            const womanGrid = document.getElementById('collectionGridWoman');
+            const tabMan = document.getElementById('tabMan');
+            const tabWoman = document.getElementById('tabWoman');
 
-    function closeCollection() {
-        const collectionModal = document.getElementById('collectionModal');
-        collectionModal.classList.add('hidden');
-    }
+            if (tab === 'man') {
+                manGrid.classList.remove('hidden');
+                womanGrid.classList.add('hidden');
+                tabMan.classList.add('active');
+                tabWoman.classList.remove('active');
+            } else {
+                womanGrid.classList.remove('hidden');
+                manGrid.classList.add('hidden');
+                tabWoman.classList.add('active');
+                tabMan.classList.remove('active');
+            }
+        }
 
+        function selectFromCollection(imageLink, previewId) {
+            const preview = document.getElementById(previewId);
+            const cleanImageLink = removeThumbnailSuffix(imageLink);
+            preview.src = imageLink;
+            preview.classList.remove('hidden');
 
-function removeThumbnailSuffix(link) {
-    return link.replace(/_t(\.[a-z]+)$/, '$1');
-}
-
-        </script>
-        <style>
-            .tab-button.active {
-                background-color: white;
-                border-bottom: 2px solid blue;
+            if (previewId === 'humanPreview') {
+                window.humanPhotoUrl = cleanImageLink;
+            }
+            else {
+                window.garmPhotoUrl = cleanImageLink;
             }
 
-            .collection-grid {
-                transition: all 0.3s ease;
-            }
-        </style>
-    </body>
-</html >
+            closeCollection();
+        }
+
+        function closeCollection() {
+            const collectionModal = document.getElementById('collectionModal');
+            collectionModal.classList.add('hidden');
+        }
+
+
+        function removeThumbnailSuffix(link) {
+            return link.replace(/_t(\.[a-z]+)$/, '$1');
+        }
+
+    </script>
+    <style>
+        .tab-button.active {
+            background-color: white;
+            border-bottom: 2px solid blue;
+        }
+
+        .collection-grid {
+            transition: all 0.3s ease;
+        }
+    </style>
+</body>
+
+</html>
