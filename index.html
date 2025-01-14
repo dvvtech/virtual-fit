@@ -654,15 +654,15 @@
 
         function selectFromCollection(imageLink, previewId) {
             const preview = document.getElementById(previewId);
-            const cleanImageLink = removeThumbnailSuffix(imageLink);
+            //const cleanImageLink = removeThumbnailSuffix(imageLink);
             preview.src = imageLink;
             preview.classList.remove('hidden');
 
             if (previewId === 'humanPreview') {
-                window.humanPhotoUrl = cleanImageLink;
+                window.humanPhotoUrl = imageLink;
             }
             else {
-                window.garmPhotoUrl = cleanImageLink;
+                window.garmPhotoUrl = imageLink;
             }
 
             closeCollection();
