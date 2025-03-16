@@ -245,15 +245,21 @@
             fetch(`${API_BASE_URL}/api/vk-authorize`)
                 .then(response => {
                     if (!response.ok) {
-                        throw new Error('Ошибка сети');
+                        throw new Error('Ошибка при получении URL для авторизации');
                     }
-                    return response.json(); // Парсим ответ в формате JSON
+                    return response.json(); // Предполагаем, что сервер возвращает JSON с URL
                 })
                 .then(data => {
-                    console.log(data); // Выводим данные в консоль
+                    const redirectUrl = data.url; // Предполагаем, что URL находится в поле `url`
+                    if (redirectUrl) {
+                        window.location.href = redirectUrl; // Перенаправляем пользователя
+                    } else {
+                        throw new Error('URL для перенаправления не найден в ответе');
+                    }
                 })
                 .catch(error => {
                     console.error('Произошла ошибка:', error);
+                    // Можно добавить уведомление пользователя об ошибке
                 });
         }
 
