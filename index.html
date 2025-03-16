@@ -247,12 +247,11 @@
                     if (!response.ok) {
                         throw new Error('Ошибка при получении URL для авторизации');
                     }
-                    return response.json(); // Предполагаем, что сервер возвращает JSON с URL
+                    return response.text(); // Получаем ответ как plain text
                 })
-                .then(data => {
-                    const redirectUrl = data.url; // Предполагаем, что URL находится в поле `url`
-                    if (redirectUrl) {
-                        window.location.href = redirectUrl; // Перенаправляем пользователя
+                .then(url => {
+                    if (url) {
+                        window.location.href = url; // Перенаправляем пользователя
                     } else {
                         throw new Error('URL для перенаправления не найден в ответе');
                     }
