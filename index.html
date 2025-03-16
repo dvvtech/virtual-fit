@@ -129,6 +129,13 @@
 
     <script>
 
+        // Извлекаем токены из URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const accessToken = urlParams.get('accessToken');
+        if(accessToken){
+            alert("access token: " + accessToken);
+        }
+
         //const url = "https://a30944-8332.x.d-f.pw/uploads/guid_xxx_v.png";
         //const newUrl = replaceEndingToV(url);
 
