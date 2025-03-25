@@ -78,9 +78,13 @@
             class="w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:from-blue-600 hover:to-blue-700 transition shadow-md hover:shadow-lg"
             onclick="tryOn()">Try On</button>
 
-        <button id="tryAuth"
+        <button id="tryVkAuth"
             class="w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:from-blue-600 hover:to-blue-700 transition shadow-md hover:shadow-lg"
-            onclick="tryAuth()">Login</button>
+            onclick="tryVkAuth()">Login vk</button>
+
+        <button id="tryGoogleAuth"
+            class="w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:from-blue-600 hover:to-blue-700 transition shadow-md hover:shadow-lg"
+            onclick="tryGoogleAuth()">Login google</button>
     </div>
 
     <div id="resultViewer"
@@ -137,14 +141,17 @@
         // Извлекаем токены из URL
         const urlParams = new URLSearchParams(window.location.search);
         const accessToken = urlParams.get('accessToken');
+        const refreshToken = urlParams.get('refreshToken');
         if (accessToken) {
             alert("access token: " + accessToken);
+            alert("refresh token: " + refreshToken);
         }
 
         //const url = "https://a30944-8332.x.d-f.pw/uploads/guid_xxx_v.png";
         //const newUrl = replaceEndingToV(url);
 
-        const API_BASE_URL = 'https://a30944-8332.x.d-f.pw';
+        //'https://a30944-8332.x.d-f.pw';
+        const API_BASE_URL = 'https://a33140-9deb.k.d-f.pw';
         //const API_BASE_URL = 'http://localhost:5023';
         //const API_BASE_URL = 'https://localhost:7147';
         document.addEventListener('DOMContentLoaded', () => {
@@ -240,9 +247,31 @@
             }
         }
 
-        function tryAuth() {
+        function tryGoogleAuth() {
 
-            fetch(`${API_BASE_URL}/api/vk-authorize`)
+            fetch(`${API_BASE_URL}/api/google-auth`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Ошибка при получении URL для авторизации');
+                    }
+                    return response.text(); // Получаем ответ как plain text
+                })
+                .then(url => {
+                    if (url) {
+                        window.location.href = url; // Перенаправляем пользователя
+                    } else {
+                        throw new Error('URL для перенаправления не найден в ответе');
+                    }
+                })
+                .catch(error => {
+                    console.error('Произошла ошибка:', error);
+                    // Можно добавить уведомление пользователя об ошибке
+                });
+        }
+
+        function tryVkAuth() {
+
+            fetch(`${API_BASE_URL}/api/vk-auth`)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Ошибка при получении URL для авторизации');
