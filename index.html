@@ -153,8 +153,8 @@
             localStorage.setItem('refreshToken', refreshToken);
 
             //Очищаем URL от токенов (без перезагрузки)
-            url.searchParams.delete('accessToken');
-            url.searchParams.delete('refreshToken');
+            urlParams.delete('accessToken');
+            urlParams.delete('refreshToken');
             window.history.replaceState({}, '', url);
         }
 
