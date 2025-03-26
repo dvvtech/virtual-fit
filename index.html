@@ -359,19 +359,29 @@
                 },
                 body: JSON.stringify(payload)
             })
-                .then(response => {
+                .then(async response => {
                     if (!response.ok) {
-                        return response.json().then(err => {
-                            // Проверяем статус ошибки
+                        try {
+                            // Пытаемся прочитать тело ответа как JSON
+                            const err = await response.json().catch(() => null);
+
                             if (response.status === 401) {
                                 throw new Error('Не авторизован. Пожалуйста, войдите в систему.');
                             } else {
-                                throw new Error(err.description || 'Произошла неизвестная ошибка');
+                                throw new Error(err?.description || `Ошибка сервера: ${response.status} ${response.statusText}`);
                             }
-                        });
+                        } catch (e) {
+                            // Если не удалось распарсить JSON, используем стандартное сообщение
+                            if (response.status === 401) {
+                                throw new Error('Не авторизован. Пожалуйста, войдите в систему.');
+                            } else {
+                                throw new Error(`Ошибка сервера: ${response.status} ${response.statusText}`);
+                            }
+                        }
                     }
                     return response.json();
                 })
+
                 .then(data => {
                     window.resultUrl = data.url; // Save the result URL
                     localStorage.setItem('promoCode', promoCodeField); // Save promo code on success
