@@ -166,7 +166,7 @@
         //const API_BASE_URL = 'http://localhost:5023';
         //const API_BASE_URL = 'https://localhost:7147';
         document.addEventListener('DOMContentLoaded', () => {
-            
+
             checkAuthState();
 
             const promoCodeField = document.getElementById('promoCode');
@@ -362,7 +362,12 @@
                 .then(response => {
                     if (!response.ok) {
                         return response.json().then(err => {
-                            throw new Error(err.description || 'Unknown error occurred');
+                            // Проверяем статус ошибки
+                            if (response.status === 401) {
+                                throw new Error('Не авторизован. Пожалуйста, войдите в систему.');
+                            } else {
+                                throw new Error(err.description || 'Произошла неизвестная ошибка');
+                            }
                         });
                     }
                     return response.json();
