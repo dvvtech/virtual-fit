@@ -155,7 +155,7 @@
             //Очищаем URL от токенов (без перезагрузки)
             urlParams.delete('accessToken');
             urlParams.delete('refreshToken');
-            window.history.replaceState({}, '', url);
+            window.history.replaceState({}, '', urlParams);
         }
 
         //const url = "https://a30944-8332.x.d-f.pw/uploads/guid_xxx_v.png";
