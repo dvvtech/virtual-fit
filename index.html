@@ -448,23 +448,23 @@
                 category: cat
             };
 
-            //const accessToken = localStorage.getItem('accessToken');
+            const accessToken = localStorage.getItem('accessToken');
 
-            /*fetch(`${API_BASE_URL}/api/virtual-fit/try-on`, {
+            fetch(`${API_BASE_URL}/api/virtual-fit/try-on`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${accessToken}`
                 },
                 body: JSON.stringify(payload)
-            })*/
-            makeAuthenticatedRequest(`${API_BASE_URL}/api/virtual-fit/try-on`, {
+            })
+            /*makeAuthenticatedRequest(`${API_BASE_URL}/api/virtual-fit/try-on`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(payload)
-            })
+            })*/
                 .then(async response => {
                     if (!response.ok) {
                         try {
