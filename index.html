@@ -217,6 +217,20 @@
             }//end else            
         };
 
+        function showAuthSuccess() {
+            const toast = document.getElementById('authSuccessToast');
+
+            // Показываем сообщение
+            toast.classList.remove('hidden');
+            toast.classList.add('toast-animation');
+
+            // Убираем через 3 секунды
+            setTimeout(() => {
+                toast.classList.add('hidden');
+                toast.classList.remove('toast-animation');
+            }, 3000);
+        }
+
         function tryLogout() {
             localStorage.removeItem('accessToken');
             localStorage.removeItem('refreshToken');
@@ -865,21 +879,7 @@
 
         function removeThumbnailSuffix(link) {
             return link.replace(/_t(\.[a-z]+)$/, '$1');
-        }
-
-        function showAuthSuccess() {
-            const toast = document.getElementById('authSuccessToast');
-
-            // Показываем сообщение
-            toast.classList.remove('hidden');
-            toast.classList.add('toast-animation');
-
-            // Убираем через 3 секунды
-            setTimeout(() => {
-                toast.classList.add('hidden');
-                toast.classList.remove('toast-animation');
-            }, 3000);
-        }
+        }        
 
     </script>
 
