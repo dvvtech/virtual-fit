@@ -156,10 +156,10 @@
             //Очищаем URL от токенов (без перезагрузки)
             urlParams.delete('accessToken');
             urlParams.delete('refreshToken');
-            window.history.replaceState({}, '', urlParams);
-
+            window.history.replaceState({}, '', urlParams); 
+            
             //вывести сообщение чтоб авторизация прошла успешно
-            showAuthSuccess();
+            //showAuthSuccess();
         }
 
         //const url = "https://a30944-8332.x.d-f.pw/uploads/guid_xxx_v.png";
