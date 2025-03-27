@@ -450,26 +450,26 @@
 
             const accessToken = localStorage.getItem('accessToken');
 
-            fetch(`${API_BASE_URL}/api/virtual-fit/try-on`, {
+            /*fetch(`${API_BASE_URL}/api/virtual-fit/try-on`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${accessToken}`
                 },
                 body: JSON.stringify(payload)
-            })
-            /*makeAuthenticatedRequest(`${API_BASE_URL}/api/virtual-fit/try-on`, {
+            })*/
+            makeAuthenticatedRequest(`${API_BASE_URL}/api/virtual-fit/try-on`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(payload)
-            })*/
-                .then(async response => {
+            })
+                .then( response => {
                     if (!response.ok) {
                         try {
                             // Пытаемся прочитать тело ответа как JSON
-                            const err = await response.json().catch(() => null);
+                            const err = response.json().catch(() => null);
 
                             if (response.status === 401) {
                                 throw new Error('Не авторизован. Пожалуйста, войдите в систему.');
