@@ -372,6 +372,9 @@
             const accessToken = localStorage.getItem('accessToken');
             const refreshToken = localStorage.getItem('refreshToken');
 
+            console.log("accessToken");
+            console.log(accessToken);
+
             let response = await fetch(url, {
                 ...options,
                 headers: {
