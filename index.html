@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> Try on Clothes</title>
+    <link rel="stylesheet" href="style.css">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
@@ -156,6 +157,9 @@
             urlParams.delete('accessToken');
             urlParams.delete('refreshToken');
             window.history.replaceState({}, '', urlParams);
+
+            //вывести сообщение чтоб авторизация прошла успешно
+            showAuthSuccess();
         }
 
         //const url = "https://a30944-8332.x.d-f.pw/uploads/guid_xxx_v.png";
@@ -329,7 +333,62 @@
                 });
         }
 
+        async function makeAuthenticatedRequest(url, options) {
+
+            const accessToken = localStorage.getItem('accessToken');
+            const refreshToken = localStorage.getItem('refreshToken');
+
+            let response = await fetch(url, {
+                ...options,
+                headers: {
+                    ...options.headers,
+                    'Authorization': `Bearer ${accessToken}`
+                }
+            });
+
+            // Если токен истек (401) и есть refresh token
+            if (response.status === 401 && refreshToken) {
+                try {
+                    // Запрос на обновление токена
+                    const refreshResponse = await fetch(`${API_BASE_URL}/api/auth/refresh-token`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ refreshToken })
+                    });
+
+                    if (refreshResponse.ok) {
+                        const { token: newToken, refreshToken: newRefreshToken } = await refreshResponse.json();
+
+                        // Сохраняем новые токены
+                        localStorage.setItem('accessToken', newToken);
+                        if (newRefreshToken) {
+                            localStorage.setItem('refreshToken', newRefreshToken);
+                        }
+
+                        // Повторяем исходный запрос с новым токеном
+                        response = await fetch(url, {
+                            ...options,
+                            headers: {
+                                ...options.headers,
+                                'Authorization': `Bearer ${newToken}`
+                            }
+                        });
+                    } else {
+                        // Если обновление не удалось - разлогиниваем
+                        tryLogout();
+                    }
+                } catch (error) {
+                    tryLogout();
+                }
+            }
+
+            return response;
+        }
+
         function tryOn() {
+
             const promoCodeField = document.getElementById('promoCode').value;
             if (!promoCodeField) {
                 alert('Promo code cannot be empty!');
@@ -352,13 +411,20 @@
                 category: cat
             };
 
-            const accessToken = localStorage.getItem('accessToken');            
+            //const accessToken = localStorage.getItem('accessToken');
 
-            fetch(`${API_BASE_URL}/api/virtual-fit/try-on`, {
+            /*fetch(`${API_BASE_URL}/api/virtual-fit/try-on`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${accessToken}`
+                },
+                body: JSON.stringify(payload)
+            })*/
+            makeAuthenticatedRequest(`${API_BASE_URL}/api/virtual-fit/try-on`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(payload)
             })
@@ -801,17 +867,32 @@
             return link.replace(/_t(\.[a-z]+)$/, '$1');
         }
 
-    </script>
-    <style>
-        .tab-button.active {
-            background-color: white;
-            border-bottom: 2px solid blue;
+        function showAuthSuccess() {
+            const toast = document.getElementById('authSuccessToast');
+
+            // Показываем сообщение
+            toast.classList.remove('hidden');
+            toast.classList.add('toast-animation');
+
+            // Убираем через 3 секунды
+            setTimeout(() => {
+                toast.classList.add('hidden');
+                toast.classList.remove('toast-animation');
+            }, 3000);
         }
 
-        .collection-grid {
-            transition: all 0.3s ease;
-        }
-    </style>
+    </script>
+
+
+    <div id="authSuccessToast" class="fixed inset-0 flex items-center justify-center pointer-events-none hidden z-50">
+        <div class="bg-white rounded-lg shadow-xl p-6 flex flex-col items-center max-w-sm mx-4">
+            <svg class="w-12 h-12 text-green-500 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            <p class="text-gray-800 text-lg font-medium text-center">Авторизация прошла успешно!</p>
+        </div>
+    </div>
+
 </body>
 
 </html>

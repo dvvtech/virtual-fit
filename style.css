@@ -1,0 +1,30 @@
+/* Анимация для toast-уведомления */
+@keyframes fadeInOut {
+
+  0%,
+  100% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  10%,
+  90% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.toast-animation {
+  animation: fadeInOut 3s ease-in-out forwards;
+  pointer-events: none;
+}
+
+
+.tab-button.active {
+  background-color: white;
+  border-bottom: 2px solid blue;
+}
+
+.collection-grid {
+  transition: all 0.3s ease;
+}
