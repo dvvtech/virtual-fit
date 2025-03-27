@@ -148,6 +148,7 @@
         const urlParams = new URLSearchParams(window.location.search);
         const accessToken = urlParams.get('accessToken');
         const refreshToken = urlParams.get('refreshToken');
+
         if (accessToken && refreshToken) {
 
             localStorage.setItem('accessToken', accessToken);
@@ -156,8 +157,15 @@
             //Очищаем URL от токенов (без перезагрузки)
             urlParams.delete('accessToken');
             urlParams.delete('refreshToken');
-            window.history.replaceState({}, '', urlParams); 
+
+            // Формируем новый URL
+            const newUrl = urlParams.toString() 
+                ? `${window.location.pathname}?${urlParams.toString()}`
+                : window.location.pathname;
             
+            window.history.replaceState({}, '', newUrl);
+            //window.history.replaceState({}, '', urlParams);
+
             //вывести сообщение чтоб авторизация прошла успешно
             //showAuthSuccess();
         }
@@ -218,6 +226,18 @@
         };
 
         function showAuthSuccess() {
+            const toast = document.createElement('div');
+            toast.innerHTML = `
+        <div class="toast-success">
+            <svg>...</svg>
+            <p>Авторизация прошла успешно!</p>
+        </div>
+    `;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        /*function showAuthSuccess() {
             const toast = document.getElementById('authSuccessToast');
 
             // Показываем сообщение
@@ -229,7 +249,7 @@
                 toast.classList.add('hidden');
                 toast.classList.remove('toast-animation');
             }, 3000);
-        }
+        }*/
 
         function tryLogout() {
             localStorage.removeItem('accessToken');
@@ -879,7 +899,7 @@
 
         function removeThumbnailSuffix(link) {
             return link.replace(/_t(\.[a-z]+)$/, '$1');
-        }        
+        }
 
     </script>
 
