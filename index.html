@@ -159,10 +159,10 @@
             urlParams.delete('refreshToken');
 
             // Формируем новый URL
-            const newUrl = urlParams.toString() 
+            const newUrl = urlParams.toString()
                 ? `${window.location.pathname}?${urlParams.toString()}`
                 : window.location.pathname;
-            
+
             window.history.replaceState({}, '', newUrl);
             //window.history.replaceState({}, '', urlParams);
 
@@ -370,10 +370,10 @@
         async function makeAuthenticatedRequest(url, options) {
 
             const accessToken = localStorage.getItem('accessToken');
-            const refreshToken = localStorage.getItem('refreshToken');
-
-            console.log("accessToken");
-            console.log(accessToken);
+            if (!accessToken) {
+                tryLogout();
+                throw new Error('Session expired. Please login again.');
+            }
 
             let response = await fetch(url, {
                 ...options,
@@ -383,48 +383,53 @@
                 }
             });
 
-            // Если токен истек (401) и есть refresh token
-            if (response.status === 401 && refreshToken) {
+            if (response.status === 401) {
+                const refreshToken = localStorage.getItem('refreshToken');
+                if (!refreshToken) {
+                    tryLogout();
+                    throw new Error('Session expired. Please login again.');
+                }
+
                 try {
-                    // Запрос на обновление токена
-                    const refreshResponse = await fetch(`${API_BASE_URL}/api/auth/refresh-token`, {
-                        method: 'POST',
+                    const newTokens = await refreshAccessToken(refreshToken);
+                    response = await fetch(url, {
+                        ...options,
                         headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ refreshToken })
-                    });
-
-                    if (refreshResponse.ok) {
-                        const { token: newToken, refreshToken: newRefreshToken } = await refreshResponse.json();
-
-                        // Сохраняем новые токены
-                        localStorage.setItem('accessToken', newToken);
-                        if (newRefreshToken) {
-                            localStorage.setItem('refreshToken', newRefreshToken);
+                            ...options.headers,
+                            'Authorization': `Bearer ${newTokens.accessToken}`
                         }
-
-                        // Повторяем исходный запрос с новым токеном
-                        response = await fetch(url, {
-                            ...options,
-                            headers: {
-                                ...options.headers,
-                                'Authorization': `Bearer ${newToken}`
-                            }
-                        });
-                    } else {
-                        // Если обновление не удалось - разлогиниваем
-                        tryLogout();
-                    }
+                    });
                 } catch (error) {
                     tryLogout();
+                    throw error;
                 }
             }
 
             return response;
         }
 
-        function tryOn() {
+        async function refreshAccessToken(refreshToken) {
+            const response = await fetch(`${API_BASE_URL}/api/auth/refresh-token`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ refreshToken })
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to refresh token');
+            }
+
+            const { token: accessToken, refreshToken: newRefreshToken } = await response.json();
+
+            localStorage.setItem('accessToken', accessToken);
+            if (newRefreshToken) {
+                localStorage.setItem('refreshToken', newRefreshToken);
+            }
+
+            return { accessToken, refreshToken: newRefreshToken };
+        }
+
+        async function tryOn() {
 
             const promoCodeField = document.getElementById('promoCode').value;
             if (!promoCodeField) {
@@ -439,7 +444,7 @@
             const existingErrors = mainContent.querySelectorAll('.error-message');
             existingErrors.forEach(error => error.remove());
 
-            cat = document.getElementById('category').value;
+            const cat = document.getElementById('category').value;
 
             const payload = {
                 garmImg: window.garmPhotoUrl,
@@ -458,59 +463,118 @@
                 },
                 body: JSON.stringify(payload)
             })*/
-            makeAuthenticatedRequest(`${API_BASE_URL}/api/virtual-fit/try-on`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(payload)
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        try {
-                            // Пытаемся прочитать тело ответа как JSON
-                            const err = response.json().catch(() => null);
 
-                            if (response.status === 401) {
-                                throw new Error('Не авторизован. Пожалуйста, войдите в систему.');
-                            } else {
-                                throw new Error(err?.description || `Ошибка сервера: ${response.status} ${response.statusText}`);
-                            }
-                        } catch (e) {
-                            // Если не удалось распарсить JSON, используем стандартное сообщение
-                            if (response.status === 401) {
-                                throw new Error('Не авторизован. Пожалуйста, войдите в систему.');
-                            } else {
-                                throw new Error(`Ошибка сервера: ${response.status} ${response.statusText}`);
-                            }
-                        }
-                    }
-                    return response.json();
-                })
+            try {
 
-                .then(data => {
-                    window.resultUrl = data.url; // Save the result URL
-                    localStorage.setItem('promoCode', promoCodeField); // Save promo code on success
-                    document.getElementById('overlay').classList.add('hidden');
-                    showResult(window.humanPhotoUrl, window.garmPhotoUrl, data.url);
-                    document.getElementById('remainingUsageContainer').style.display = 'block';
-                    document.getElementById('remainingUsage').textContent = data.remainingUsage;
-                    localStorage.setItem('remainingUsage', data.remainingUsage);
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    document.getElementById('overlay').classList.add('hidden');
-
-                    // Очищаем предыдущие сообщения об ошибках
-                    const existingErrors = document.querySelectorAll('.error-message');
-                    existingErrors.forEach(el => el.remove());
-
-                    // Display error message to user
-                    const errorMessage = document.createElement('div');
-                    errorMessage.textContent = error.message;
-                    errorMessage.className = 'text-red-600 text-center mt-4 error-message';
-                    mainContent.appendChild(errorMessage);
+                const response = await makeAuthenticatedRequest(`${API_BASE_URL}/api/virtual-fit/try-on`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
                 });
+
+                if (!response.ok) {
+                    await handleErrorResponse(response);
+                    return;
+                }
+
+                const data = await response.json();
+                handleSuccess(data, promoCodeField);
+
+            } catch (error) {
+                console.error('Error:', error);
+                showError(error.message);
+            } finally {
+                overlay.classList.add('hidden');
+            }
+
+            /*if (!response.ok) {
+                try {
+                    // Пытаемся прочитать тело ответа как JSON
+                    const err = response.json().catch(() => null);
+
+                    if (response.status === 401) {
+                        throw new Error('Не авторизован. Пожалуйста, войдите в систему.');
+                    } else {
+                        throw new Error(err?.description || `Ошибка сервера: ${response.status} ${response.statusText}`);
+                    }
+                } catch (e) {
+                    // Если не удалось распарсить JSON, используем стандартное сообщение
+                    if (response.status === 401) {
+                        throw new Error('Не авторизован. Пожалуйста, войдите в систему.');
+                    } else {
+                        throw new Error(`Ошибка сервера: ${response.status} ${response.statusText}`);
+                    }
+                }
+            }
+            return response.json();
+        
+
+        .then(data => {
+            window.resultUrl = data.url; // Save the result URL
+            localStorage.setItem('promoCode', promoCodeField); // Save promo code on success
+            document.getElementById('overlay').classList.add('hidden');
+            showResult(window.humanPhotoUrl, window.garmPhotoUrl, data.url);
+            document.getElementById('remainingUsageContainer').style.display = 'block';
+            document.getElementById('remainingUsage').textContent = data.remainingUsage;
+            localStorage.setItem('remainingUsage', data.remainingUsage);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            document.getElementById('overlay').classList.add('hidden');
+
+            // Очищаем предыдущие сообщения об ошибках
+            const existingErrors = document.querySelectorAll('.error-message');
+            existingErrors.forEach(el => el.remove());
+
+            // Display error message to user
+            const errorMessage = document.createElement('div');
+            errorMessage.textContent = error.message;
+            errorMessage.className = 'text-red-600 text-center mt-4 error-message';
+            mainContent.appendChild(errorMessage);
+        });*/
+        }
+
+        function handleSuccess(data, promoCode) {
+            window.resultUrl = data.url;
+            localStorage.setItem('promoCode', promoCode);
+            showResult(window.humanPhotoUrl, window.garmPhotoUrl, data.url);
+
+            const remainingUsageEl = document.getElementById('remainingUsage');
+            remainingUsageEl.textContent = data.remainingUsage;
+            localStorage.setItem('remainingUsage', data.remainingUsage);
+
+            document.getElementById('remainingUsageContainer').style.display = 'block';
+        }
+
+        async function handleErrorResponse(response) {
+            let errorMessage;
+            try {
+                const err = await response.json();
+                errorMessage = err.description || `Server error: ${response.status}`;
+            } catch {
+                errorMessage = `Server error: ${response.status} ${response.statusText}`;
+            }
+
+            if (response.status === 401) {
+                errorMessage = 'Session expired. Please login again.';
+            }
+
+            throw new Error(errorMessage);
+        }
+
+        function showError(message) {
+            clearErrorMessages();
+            const errorMessage = document.createElement('div');
+            errorMessage.textContent = message;
+            errorMessage.className = 'text-red-600 text-center mt-4 error-message';
+            document.getElementById('mainContent').appendChild(errorMessage);
+        }
+
+        function clearErrorMessages() {
+            // Очищаем предыдущие сообщения об ошибках
+            document.querySelectorAll('.error-message').forEach(el => el.remove());
         }
 
         function showResult(humanImgUrl, garmentImgUrl, resultImgUrl) {
