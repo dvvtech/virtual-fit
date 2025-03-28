@@ -367,7 +367,7 @@
                 });
         }
 
-        function makeAuthenticatedRequest(url, options) {
+        async function makeAuthenticatedRequest(url, options) {
 
             const accessToken = localStorage.getItem('accessToken');
             const refreshToken = localStorage.getItem('refreshToken');
@@ -375,7 +375,7 @@
             console.log("accessToken");
             console.log(accessToken);
 
-            let response = fetch(url, {
+            let response = await fetch(url, {
                 ...options,
                 headers: {
                     ...options.headers,
@@ -387,7 +387,7 @@
             if (response.status === 401 && refreshToken) {
                 try {
                     // Запрос на обновление токена
-                    const refreshResponse = fetch(`${API_BASE_URL}/api/auth/refresh-token`, {
+                    const refreshResponse = await fetch(`${API_BASE_URL}/api/auth/refresh-token`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -396,7 +396,7 @@
                     });
 
                     if (refreshResponse.ok) {
-                        const { token: newToken, refreshToken: newRefreshToken } = refreshResponse.json();
+                        const { token: newToken, refreshToken: newRefreshToken } = await refreshResponse.json();
 
                         // Сохраняем новые токены
                         localStorage.setItem('accessToken', newToken);
@@ -405,7 +405,7 @@
                         }
 
                         // Повторяем исходный запрос с новым токеном
-                        response = fetch(url, {
+                        response = await fetch(url, {
                             ...options,
                             headers: {
                                 ...options.headers,
@@ -465,7 +465,7 @@
                 },
                 body: JSON.stringify(payload)
             })
-                .then( response => {
+                .then(response => {
                     if (!response.ok) {
                         try {
                             // Пытаемся прочитать тело ответа как JSON
