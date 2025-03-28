@@ -28,3 +28,106 @@
 .collection-grid {
   transition: all 0.3s ease;
 }
+
+
+.google-auth-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background: #fff;
+  border: 1px solid #dadce0;
+  border-radius: 24px;
+  padding: 10px 24px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #3c4043;
+  cursor: pointer;
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.google-auth-btn:hover {
+  background: #f8f9fa;
+  box-shadow: 0 1px 3px 1px rgba(66, 64, 67, 0.15);
+}
+
+.google-auth-btn:active {
+  background: #f1f3f4;
+}
+
+.google-icon {
+  width: 18px;
+  height: 18px;
+}
+
+
+.VkIdWebSdk__button_reset {
+  border: none;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  overflow: visible;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  line-height: normal;
+  -webkit-font-smoothing: inherit;
+  -moz-osx-font-smoothing: inherit;
+  -webkit-appearance: none;
+}
+
+.VkIdWebSdk__button {
+  background: #0077ff;
+  cursor: pointer;
+  transition: all .1s ease-out;
+}
+
+.VkIdWebSdk__button:hover{
+  opacity: 0.8;
+}
+
+.VkIdWebSdk__button:active {
+  opacity: .7;
+  transform: scale(.97);
+}
+
+.VkIdWebSdk__button {
+  border-radius: 8px;
+  width: 100%;
+  min-height: 44px;
+}
+
+.VkIdWebSdk__button_container {
+  display: flex;
+  align-items: center;
+  padding: 8px 10px;
+}
+
+.VkIdWebSdk__button_icon + .VkIdWebSdk__button_text {
+  margin-left: -28px;
+}
+
+.VkIdWebSdk__button_text {
+  display: flex;
+  font-family: -apple-system, system-ui, "Helvetica Neue", Roboto, sans-serif;
+  flex: 1;
+  justify-content: center;
+  color: #ffffff;
+}
+
+
+#authButtons {
+  display: flex;
+  flex-direction: column;
+  
+  margin: 0 auto; /* Центрирование */
+}
+
+#VKIDSDKAuthButton {
+  margin-top: 16px; /* Добавляем отступ снизу кнопки VK */
+}
+
+.google-auth-btn {
+  margin-top: 16px; /* Добавляем отступ сверху кнопки Google */
+}

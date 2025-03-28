@@ -80,17 +80,43 @@
             onclick="tryOn()">Try On</button>
 
         <div id="authButtons">
-            <button id="tryVkAuth"
-                class="w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:from-blue-600 hover:to-blue-700 transition shadow-md hover:shadow-lg"
-                onclick="tryVkAuth()">Login vk</button>
+            
+            <button id="VKIDSDKAuthButton" onclick="tryVkAuth()" class="VkIdWebSdk__button VkIdWebSdk__button_reset">
+                <div class="VkIdWebSdk__button_container">
+                    <div class="VkIdWebSdk__button_icon">
+                        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M4.54648 4.54648C3 6.09295 3 8.58197 3 13.56V14.44C3 19.418 3 21.907 4.54648 23.4535C6.09295 25 8.58197 25 13.56 25H14.44C19.418 25 21.907 25 23.4535 23.4535C25 21.907 25
+                           19.418 25 14.44V13.56C25 8.58197 25 6.09295 23.4535 4.54648C21.907 3 19.418 3 14.44 3H13.56C8.58197 3 6.09295 3 4.54648 4.54648ZM6.79999 10.15C6.91798 15.8728 9.92951 19.31 14.8932 19.31H15.1812V16.05C16.989 16.2332 18.3371
+                           17.5682 18.8875 19.31H21.4939C20.7869 16.7044 18.9535 15.2604 17.8141 14.71C18.9526 14.0293 20.5641 12.3893 20.9436 10.15H18.5722C18.0747 11.971 16.5945 13.6233 15.1803 13.78V10.15H12.7711V16.5C11.305 16.1337 9.39237 14.3538 9.314 10.15H6.79999Z"
+                                fill="white" />
+                        </svg>
+                    </div>
+                    <div class="VkIdWebSdk__button_text">
+                        Sign in with VK ID
+                    </div>
+                </div>
+            </button>
 
-            <button id="tryGoogleAuth"
-                class="w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:from-blue-600 hover:to-blue-700 transition shadow-md hover:shadow-lg"
-                onclick="tryGoogleAuth()">Login google</button>
+            <button class="google-auth-btn" onclick="tryGoogleAuth()">
+                <svg class="google-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="24" height="24">
+                    <path fill="#EA4335"
+                        d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z" />
+                    <path fill="#4285F4"
+                        d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z" />
+                    <path fill="#FBBC05"
+                        d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z" />
+                    <path fill="#34A853"
+                        d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z" />
+                    <path fill="none" d="M0 0h48v48H0z" />
+                </svg>
+                <span>Sign in with Google</span>
+            </button>
         </div>
         <button id="logoutBtn"
             class="w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:from-blue-600 hover:to-blue-700 transition shadow-md hover:shadow-lg"
             onclick="tryLogout()">Log out</button>
+
     </div>
 
     <div id="resultViewer"
