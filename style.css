@@ -131,3 +131,7 @@
 .google-auth-btn {
   margin-top: 16px; /* Добавляем отступ сверху кнопки Google */
 }
+
+#logoutBtn {
+  margin-top: 16px; /* Добавляем отступ снизу кнопки VK */
+}
