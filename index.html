@@ -445,7 +445,7 @@
                 throw new Error('Failed to refresh token');
             }
 
-            const { token: accessToken, refreshToken: newRefreshToken } = await response.json();
+            const { accessToken: accessToken, refreshToken: newRefreshToken } = await response.json();
 
             localStorage.setItem('accessToken', accessToken);
             if (newRefreshToken) {
