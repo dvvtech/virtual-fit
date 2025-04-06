@@ -60,14 +60,6 @@
             </select>
         </div>
 
-        <!-- Promo Code Input -->
-        <div class="mb-6">
-            <label for="promoCode" class="block text-sm font-medium text-gray-700 mb-2">Promo Code</label>
-            <input type="text" id="promoCode" placeholder="Enter promo code" autocapitalize="characters"
-                style="text-transform: uppercase;" inputmode="alphanumeric"
-                class="w-full border border-gray-300 rounded-lg p-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-        </div>
-
         <!-- Remaining Usage -->
         <div class="mb-6" id="remainingUsageContainer" style="display: none;">
             <label class="text-sm font-medium text-gray-700">Remaining Usage:</label>
@@ -206,13 +198,6 @@
         document.addEventListener('DOMContentLoaded', () => {
 
             checkAuthState();
-
-            const promoCodeField = document.getElementById('promoCode');
-            const savedPromoCode = localStorage.getItem('promoCode');
-
-            if (savedPromoCode) {
-                promoCodeField.value = savedPromoCode;
-            }
 
             const savedRemainingUsage = localStorage.getItem('remainingUsage');
             if (savedRemainingUsage) {
@@ -456,13 +441,7 @@
         }
 
         async function tryOn() {
-
-            const promoCodeField = document.getElementById('promoCode').value;
-            if (!promoCodeField) {
-                alert('Promo code cannot be empty!');
-                return;
-            }
-
+            
             const mainContent = document.getElementById('mainContent');
             document.getElementById('overlay').classList.remove('hidden');
 
@@ -474,8 +453,7 @@
 
             const payload = {
                 garmImg: window.garmPhotoUrl,
-                humanImg: window.humanPhotoUrl,
-                promocode: promoCodeField,
+                humanImg: window.humanPhotoUrl,                
                 category: cat
             };
 
@@ -506,7 +484,7 @@
                 }
 
                 const data = await response.json();
-                handleSuccess(data, promoCodeField);
+                handleSuccess(data);
 
             } catch (error) {
                 console.error('Error:', error);
@@ -562,9 +540,8 @@
         });*/
         }
 
-        function handleSuccess(data, promoCode) {
-            window.resultUrl = data.url;
-            localStorage.setItem('promoCode', promoCode);
+        function handleSuccess(data) {
+            window.resultUrl = data.url;            
             showResult(window.humanPhotoUrl, window.garmPhotoUrl, data.url);
 
             const remainingUsageEl = document.getElementById('remainingUsage');
@@ -693,18 +670,7 @@
     <script>
 
         function showHistory() {
-            const promoCode = document.getElementById('promoCode').value;
-            if (!promoCode) {
-                alert('Promo code cannot be empty!');
-                document.getElementById('overlay').classList.add('hidden');
-                return;
-            }
-
-            const savedPromoCode = localStorage.getItem('promoCode');
-            if (promoCode !== savedPromoCode) {
-                localStorage.setItem('promoCode', promoCode);
-            }
-
+            
             document.getElementById('overlay').classList.remove('hidden');
 
             const historyContent = document.getElementById('historyContent');
@@ -714,8 +680,7 @@
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ promocode: promoCode })
+                }                
             })
                 .then(response => {
                     if (!response.ok) {
@@ -784,14 +749,7 @@
             // Удаляем строку из DOM
             row.remove();
 
-            const promocode = document.getElementById('promoCode').value;
-            if (!promocode) {
-                alert('Promo code cannot be empty!');
-                return;
-            }
-
-            const payload = {
-                promocode: promocode,
+            const payload = {                
                 fittingResultId: itemId
             };
 
