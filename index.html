@@ -378,7 +378,7 @@
                 });
         }
 
-        async function makeAuthenticatedRequest(url, options) {
+       async function makeAuthenticatedRequest(url, options) {
 
             const accessToken = localStorage.getItem('accessToken');
             if (!accessToken) {
@@ -459,15 +459,6 @@
 
             const accessToken = localStorage.getItem('accessToken');
 
-            /*fetch(`${API_BASE_URL}/api/virtual-fit/try-on`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${accessToken}`
-                },
-                body: JSON.stringify(payload)
-            })*/
-
             try {
 
                 const response = await makeAuthenticatedRequest(`${API_BASE_URL}/api/virtual-fit/try-on`, {
@@ -484,63 +475,17 @@
                 }
 
                 const data = await response.json();
-                handleSuccess(data);
+                handleSuccessTryOn(data);
 
             } catch (error) {
                 console.error('Error:', error);
                 showError(error.message);
             } finally {
                 overlay.classList.add('hidden');
-            }
-
-            /*if (!response.ok) {
-                try {
-                    // Пытаемся прочитать тело ответа как JSON
-                    const err = response.json().catch(() => null);
-
-                    if (response.status === 401) {
-                        throw new Error('Не авторизован. Пожалуйста, войдите в систему.');
-                    } else {
-                        throw new Error(err?.description || `Ошибка сервера: ${response.status} ${response.statusText}`);
-                    }
-                } catch (e) {
-                    // Если не удалось распарсить JSON, используем стандартное сообщение
-                    if (response.status === 401) {
-                        throw new Error('Не авторизован. Пожалуйста, войдите в систему.');
-                    } else {
-                        throw new Error(`Ошибка сервера: ${response.status} ${response.statusText}`);
-                    }
-                }
-            }
-            return response.json();
-        
-
-        .then(data => {
-            window.resultUrl = data.url; // Save the result URL
-            localStorage.setItem('promoCode', promoCodeField); // Save promo code on success
-            document.getElementById('overlay').classList.add('hidden');
-            showResult(window.humanPhotoUrl, window.garmPhotoUrl, data.url);
-            document.getElementById('remainingUsageContainer').style.display = 'block';
-            document.getElementById('remainingUsage').textContent = data.remainingUsage;
-            localStorage.setItem('remainingUsage', data.remainingUsage);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            document.getElementById('overlay').classList.add('hidden');
-
-            // Очищаем предыдущие сообщения об ошибках
-            const existingErrors = document.querySelectorAll('.error-message');
-            existingErrors.forEach(el => el.remove());
-
-            // Display error message to user
-            const errorMessage = document.createElement('div');
-            errorMessage.textContent = error.message;
-            errorMessage.className = 'text-red-600 text-center mt-4 error-message';
-            mainContent.appendChild(errorMessage);
-        });*/
+            }            
         }
 
-        function handleSuccess(data) {
+        function handleSuccessTryOn(data) {
             window.resultUrl = data.url;            
             showResult(window.humanPhotoUrl, window.garmPhotoUrl, data.url);
 
@@ -604,29 +549,6 @@
             const regex = /_t(\.[^.]+)$/;
             return input.replace(regex, '_v$1');
         }
-
-        /*function replaceEndingToV(input, findStr) {
-            // Находим последнюю точку в строке
-            const lastDotIndex = input.lastIndexOf('.');
-
-            // Проверяем, есть ли расширение файла
-            if (lastDotIndex !== -1) {
-                // Отбрасываем расширение файла
-                const baseName = input.substring(0, lastDotIndex);
-                const extension = input.substring(lastDotIndex);
-
-                // Проверяем, заканчивается ли строка на "_r"
-                if (baseName.endsWith(findStr)) { //"_r"
-                    // Заменяем "_r" на "_v"
-                    const newBaseName = baseName.slice(0, -2) + "_v";
-                    // Возвращаем новую строку с расширением
-                    return newBaseName + extension;
-                }
-            }
-
-            // Если строка не заканчивается на "_r" или нет расширения, возвращаем исходную строку
-            return input;
-        }*/
 
         function showPreview(previewId) {
             const resultImage = document.getElementById('resultImage');
@@ -732,76 +654,17 @@
                     });
 
                     mainContent.classList.add('hidden');
-                    historyContent.classList.remove('hidden');
-                    document.getElementById('overlay').classList.add('hidden');
+                    historyContent.classList.remove('hidden');                    
 
             } catch (error) {
                 //console.error('Error:', error);
-                //showError(error.message);
-            } finally {
-                //overlay.classList.add('hidden');
-            }
-/*
-            fetch(`${API_BASE_URL}/api/virtual-fit/history`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                }                
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        return response.json().then(err => {
-                            document.getElementById('overlay').classList.add('hidden');
-                            throw new Error(err.description || 'Failed to fetch history');
-                        });
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    const historyTableBody = document.getElementById('historyTableBody');
-                    historyTableBody.innerHTML = '';
-
-                    data.forEach(item => {
-                        const row = document.createElement('tr');
-
-                        [item.humanImgUrl, item.garmentImgUrl, item.resultImgUrl].forEach(imgUrl => {
-                            const cell = document.createElement('td');
-                            cell.className = 'border border-gray-200 p-0.5';
-
-                            const img = document.createElement('img');
-                            img.src = imgUrl;
-                            img.className = 'w-full h-40 object-contain cursor-pointer';
-                            img.onclick = () => showImageFullScreen(imgUrl, item.humanImgUrl, item.garmentImgUrl, item.resultImgUrl);
-
-                            cell.appendChild(img);
-                            row.appendChild(cell);
-                        });
-
-                        // Добавляем кнопку "Удалить"
-                        const deleteCell = document.createElement('td');
-                        deleteCell.className = 'border border-gray-200 p-2 text-center';
-
-                        const deleteButton = document.createElement('button');
-                        deleteButton.className = 'p-1';
-                        deleteButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 456 511.82" width="24" height="24" class="inline-block"><path fill="#FD3B3B" d="M48.42 140.13h361.99c17.36 0 29.82 9.78 28.08 28.17l-30.73 317.1c-1.23 13.36-8.99 26.42-25.3 26.42H76.34c-13.63-.73-23.74-9.75-25.09-24.14L20.79 168.99c-1.74-18.38 9.75-28.86 27.63-28.86zM24.49 38.15h136.47V28.1c0-15.94 10.2-28.1 27.02-28.1h81.28c17.3 0 27.65 11.77 27.65 28.01v10.14h138.66c.57 0 1.11.07 1.68.13 10.23.93 18.15 9.02 18.69 19.22.03.79.06 1.39.06 2.17v42.76c0 5.99-4.73 10.89-10.62 11.19-.54 0-1.09.03-1.63.03H11.22c-5.92 0-10.77-4.6-11.19-10.38 0-.72-.03-1.47-.03-2.23v-39.5c0-10.93 4.21-20.71 16.82-23.02 2.53-.45 5.09-.37 7.67-.37zm83.78 208.38c-.51-10.17 8.21-18.83 19.53-19.31 11.31-.49 20.94 7.4 21.45 17.57l8.7 160.62c.51 10.18-8.22 18.84-19.53 19.32-11.32.48-20.94-7.4-21.46-17.57l-8.69-160.63zm201.7-1.74c.51-10.17 10.14-18.06 21.45-17.57 11.32.48 20.04 9.14 19.53 19.31l-8.66 160.63c-.52 10.17-10.14 18.05-21.46 17.57-11.31-.48-20.04-9.14-19.53-19.32l8.67-160.62zm-102.94.87c0-10.23 9.23-18.53 20.58-18.53 11.34 0 20.58 8.3 20.58 18.53v160.63c0 10.23-9.24 18.53-20.58 18.53-11.35 0-20.58-8.3-20.58-18.53V245.66z"/></svg>`;
-
-                        deleteButton.onclick = () => deleteRow(row, item.id); // Удаление строки
-
-                        deleteCell.appendChild(deleteButton);
-                        row.appendChild(deleteCell);
-
-                        historyTableBody.appendChild(row);
-                    });
-
-                    mainContent.classList.add('hidden');
-                    historyContent.classList.remove('hidden');
-                    document.getElementById('overlay').classList.add('hidden');
-                })
-                .catch(error => {
-                    document.getElementById('overlay').classList.add('hidden');
+                showError(error.message);
+                /*document.getElementById('overlay').classList.add('hidden');
                     console.error('Error:', error);
-                    alert(error.message);
-                });*/
+                    alert(error.message);*/
+            } finally {
+                document.getElementById('overlay').classList.add('hidden');
+            }            
         }
 
         function deleteRow(row, itemId) {
