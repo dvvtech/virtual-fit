@@ -1,0 +1,155 @@
+//for upload image
+async function previewImage(event, previewId) {
+
+    const file = event.target.files[0];
+    const preview = document.getElementById(previewId);
+    document.getElementById('overlay').classList.remove('hidden');
+
+    if (file) {
+
+        // Валидация типа файла (только изображения)
+        if (!file.type.startsWith('image/')) {
+            alert('Please upload a valid image file.');
+            document.getElementById('overlay').classList.add('hidden');
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            preview.src = e.target.result;
+            preview.classList.remove('hidden');
+        };
+        reader.readAsDataURL(file);
+
+        // Upload file to server
+        const formData = new FormData();
+        formData.append('file', file);
+
+        try {
+
+            const response = await makeAuthenticatedRequest(`${API_BASE_URL}/api/uploads`, {
+                method: 'POST',                        
+                body: formData
+            });
+
+            if (!response.ok) {
+                throw new Error(err.description || 'Error uploading file');
+            }
+
+            const data = await response.json();
+            const imageUrl = data.url;
+                if (previewId === 'humanPreview') {
+                    window.humanPhotoUrl = imageUrl;
+                } else {
+                    window.garmPhotoUrl = imageUrl;
+                }
+        }
+        catch (error) {
+            showError(error.message);
+        }
+        finally
+        {
+            document.getElementById('overlay').classList.add('hidden');
+        }                
+    }
+}
+
+async function tryOn() {
+
+    const mainContent = document.getElementById('mainContent');
+    document.getElementById('overlay').classList.remove('hidden');
+
+    // Remove existing error messages
+    const existingErrors = mainContent.querySelectorAll('.error-message');
+    existingErrors.forEach(error => error.remove());
+
+    const cat = document.getElementById('category').value;
+
+    const payload = {
+        garmImg: window.garmPhotoUrl,
+        humanImg: window.humanPhotoUrl,
+        category: cat
+    };
+
+    try {
+
+        const response = await makeAuthenticatedRequest(`${API_BASE_URL}/api/virtual-fit/try-on`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+            await handleErrorResponse(response);
+            return;
+        }
+
+        const data = await response.json();
+        handleSuccessTryOn(data);
+
+    } catch (error) {
+        console.error('Error:', error);
+        showError(error.message);
+    } finally {
+        overlay.classList.add('hidden');
+    }
+}
+
+function handleSuccessTryOn(data) {
+
+    window.resultUrl = data.url;
+    showResult(window.humanPhotoUrl, window.garmPhotoUrl, data.url);
+
+    const remainingUsageEl = document.getElementById('remainingUsage');
+    remainingUsageEl.textContent = data.remainingUsage;
+    localStorage.setItem('remainingUsage', data.remainingUsage);
+
+    document.getElementById('remainingUsageContainer').style.display = 'block';
+}
+
+async function handleErrorResponse(response) {
+
+    let errorMessage;
+    try {
+        const err = await response.json();
+        errorMessage = err.description || `Server error: ${response.status}`;
+    } catch {
+        errorMessage = `Server error: ${response.status} ${response.statusText}`;
+    }
+
+    if (response.status === 401) {
+        errorMessage = 'Session expired. Please login again.';
+    }
+
+    throw new Error(errorMessage);
+}
+
+function showError(message) {
+    clearErrorMessages();
+    const errorMessage = document.createElement('div');
+    errorMessage.textContent = message;
+    errorMessage.className = 'text-red-600 text-center mt-4 error-message';
+    document.getElementById('mainContent').appendChild(errorMessage);
+}
+
+function clearErrorMessages() {
+    // Очищаем предыдущие сообщения об ошибках
+    document.querySelectorAll('.error-message').forEach(el => el.remove());
+}
+
+function closeResult() {
+
+    const resultViewer = document.getElementById('resultViewer');
+    resultViewer.classList.add('hidden');
+
+    const historyContent = document.getElementById('historyContent');
+    const mainContent = document.getElementById('mainContent');
+
+    if (!historyContent.classList.contains('hidden')) {
+        historyContent.classList.remove('hidden');
+    } else {
+        mainContent.classList.remove('hidden');
+    }
+}
