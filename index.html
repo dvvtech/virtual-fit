@@ -287,6 +287,7 @@
         }
 
         function previewImage(event, previewId) {
+
             const file = event.target.files[0];
             const preview = document.getElementById(previewId);
             document.getElementById('overlay').classList.remove('hidden');
@@ -311,7 +312,7 @@
                 const formData = new FormData();
                 formData.append('file', file);
 
-                fetch(`${API_BASE_URL}/api/virtual-fit/upload`, {
+                fetch(`${API_BASE_URL}/api/uploads`, {
                     method: 'POST',
                     body: formData,
                 })
@@ -486,6 +487,7 @@
         }
 
         function handleSuccessTryOn(data) {
+
             window.resultUrl = data.url;            
             showResult(window.humanPhotoUrl, window.garmPhotoUrl, data.url);
 
@@ -497,6 +499,7 @@
         }
 
         async function handleErrorResponse(response) {
+
             let errorMessage;
             try {
                 const err = await response.json();
@@ -561,6 +564,7 @@
         }
 
         function closeResult() {
+
             const resultViewer = document.getElementById('resultViewer');
             resultViewer.classList.add('hidden');
 
@@ -682,7 +686,7 @@
                 fittingResultId: itemId
             };
 
-            try{
+            try {
 
                 const response = await makeAuthenticatedRequest(`${API_BASE_URL}/api/virtual-fit/history`, {
                     method: 'DELETE',
@@ -699,28 +703,11 @@
             catch(error)
             {
                 showError(error.message);
-            }
-            
-            /*fetch(`${API_BASE_URL}/api/virtual-fit/history`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(payload)
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Failed to delete item.');
-                    }
-                    console.log('Item successfully deleted.');
-                })
-                .catch(error => {
-                    console.error('Error deleting item:', error);
-                    //alert('Failed to delete item.');
-                });*/
+            }                        
         }
 
         function hideHistory() {
+
             const historyContent = document.getElementById('historyContent');
             const mainContent = document.getElementById('mainContent');
 
@@ -729,6 +716,7 @@
         }
 
         function showImageFullScreen(imgUrl, humanImgUrl, garmentImgUrl, resultImgUrl) {
+
             const resultViewer = document.getElementById('resultViewer');
             const resultImage = document.getElementById('resultImage');
 
@@ -791,6 +779,7 @@
 
     <script>
         function openCollection(event, previewId) {
+
             event.stopPropagation();
             const collectionModal = document.getElementById('collectionModal');
             const collectionGridMan = document.getElementById('collectionGridMan');
@@ -855,17 +844,20 @@
         }
 
         function showTab(tab) {
+
             const manGrid = document.getElementById('collectionGridMan');
             const womanGrid = document.getElementById('collectionGridWoman');
             const tabMan = document.getElementById('tabMan');
             const tabWoman = document.getElementById('tabWoman');
 
             if (tab === 'man') {
+
                 manGrid.classList.remove('hidden');
                 womanGrid.classList.add('hidden');
                 tabMan.classList.add('active');
                 tabWoman.classList.remove('active');
             } else {
+
                 womanGrid.classList.remove('hidden');
                 manGrid.classList.add('hidden');
                 tabWoman.classList.add('active');
