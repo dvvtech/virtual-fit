@@ -153,3 +153,28 @@ function closeResult() {
         mainContent.classList.remove('hidden');
     }
 }
+
+function showResult(humanImgUrl, garmentImgUrl, resultImgUrl) {
+
+    const resultViewer = document.getElementById('resultViewer');
+    const resultImage = document.getElementById('resultImage');
+
+    loadImageWithSpinner(resultImgUrl);
+    resultViewer.classList.remove('hidden');
+
+    humanImgUrl = replaceEndingToV(humanImgUrl);
+    garmentImgUrl = replaceEndingToV(garmentImgUrl);
+
+    const buttons = resultViewer.querySelectorAll('.bottom-buttons button');
+    buttons[0].onclick = () => loadImageWithSpinner(humanImgUrl);
+    buttons[1].onclick = () => loadImageWithSpinner(garmentImgUrl);
+    //buttons[0].onclick = () => loadImageWithSpinner(humanImgUrl || window.humanPhotoUrl);
+    //buttons[1].onclick = () => loadImageWithSpinner(garmentImgUrl || window.garmPhotoUrl);
+    buttons[2].onclick = () => loadImageWithSpinner(resultImgUrl);
+}
+
+function replaceEndingToV(input) {
+    // Регулярное выражение для замены _t на _v перед расширением файла
+    const regex = /_t(\.[^.]+)$/;
+    return input.replace(regex, '_v$1');
+}

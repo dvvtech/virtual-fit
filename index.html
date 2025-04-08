@@ -266,32 +266,6 @@
             }, 3000);
         }*/        
 
-
-        function showResult(humanImgUrl, garmentImgUrl, resultImgUrl) {
-
-            const resultViewer = document.getElementById('resultViewer');
-            const resultImage = document.getElementById('resultImage');
-
-            loadImageWithSpinner(resultImgUrl);
-            resultViewer.classList.remove('hidden');
-
-            humanImgUrl = replaceEndingToV(humanImgUrl);
-            garmentImgUrl = replaceEndingToV(garmentImgUrl);
-
-            const buttons = resultViewer.querySelectorAll('.bottom-buttons button');
-            buttons[0].onclick = () => loadImageWithSpinner(humanImgUrl);
-            buttons[1].onclick = () => loadImageWithSpinner(garmentImgUrl);
-            //buttons[0].onclick = () => loadImageWithSpinner(humanImgUrl || window.humanPhotoUrl);
-            //buttons[1].onclick = () => loadImageWithSpinner(garmentImgUrl || window.garmPhotoUrl);
-            buttons[2].onclick = () => loadImageWithSpinner(resultImgUrl);
-        }
-
-        function replaceEndingToV(input) {
-            // Регулярное выражение для замены _t на _v перед расширением файла
-            const regex = /_t(\.[^.]+)$/;
-            return input.replace(regex, '_v$1');
-        }
-
         /*function showPreview(previewId) {
             const resultImage = document.getElementById('resultImage');
             if (previewId === 'resultImage') {
@@ -301,8 +275,8 @@
                 resultImage.src = preview.src;
             }
         }*/
-        
-        </script>
+
+    </script>
     <div id="historyContent" class="hidden bg-white p-8 rounded-xl shadow-2xl w-full max-w-5xl">
         <h2 class="text-2xl font-bold mb-6 text-gray-900 text-center">Fitting History</h2>
         <table class="table-auto w-full border-collapse border border-gray-200">
@@ -318,7 +292,7 @@
         <button class="mt-6 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
             onclick="hideHistory()">Back</button>
     </div>
-    
+
     <div id="collectionModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
         <div class="bg-white rounded-lg shadow-xl p-6 w-3/4 max-w-4xl">
             <h2 class="text-xl font-bold mb-4">Select from Collection</h2>
@@ -336,13 +310,6 @@
                 onclick="closeCollection()">Close</button>
         </div>
     </div>
-
-
-    <script>
-        
-
-    </script>
-
 
     <div id="authSuccessToast" class="fixed inset-0 flex items-center justify-center pointer-events-none hidden z-50">
         <div class="bg-white rounded-lg shadow-xl p-6 flex flex-col items-center max-w-sm mx-4">
