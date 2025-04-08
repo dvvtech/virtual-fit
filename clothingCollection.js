@@ -1,6 +1,6 @@
 //Коллекия одежды
 
-function openCollection(event, previewId) {
+async function openCollection(event, previewId) {
 
     event.stopPropagation();
     const collectionModal = document.getElementById('collectionModal');
@@ -13,21 +13,22 @@ function openCollection(event, previewId) {
     collectionGridMan.innerHTML = '';
     collectionGridWoman.innerHTML = '';
 
-    // Fetch collection from API
-    fetch(`${API_BASE_URL}/api/virtual-fit/clothing-collection`)
-        .then(response => response.json())
-        .then(data => {
-            if (previewId === "garmPreview") {
-                data.manСlothingItems.forEach(item => {
-                    const img = document.createElement('img');
-                    img.src = item.link;
-                    img.alt = item.category;
-                    img.className = 'w-full h-40 object-contain rounded cursor-pointer hover:opacity-75';
-                    img.onclick = () => selectFromCollection(item.link, previewId);
-                    collectionGridMan.appendChild(img);
-                });
-            }
-            data.man.forEach(item => {
+    try {
+
+        const response = await makeAuthenticatedRequest(`${API_BASE_URL}/api/clothing`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }                              
+        });
+
+        if (!response.ok) {                                            
+            throw new Error(err.description || 'Failed to delete item');                                          
+        }
+
+        const data = await response.json();
+        if (previewId === "garmPreview") {
+            data.manСlothingItems.forEach(item => {
                 const img = document.createElement('img');
                 img.src = item.link;
                 img.alt = item.category;
@@ -35,18 +36,18 @@ function openCollection(event, previewId) {
                 img.onclick = () => selectFromCollection(item.link, previewId);
                 collectionGridMan.appendChild(img);
             });
+        }
+        data.man.forEach(item => {
+            const img = document.createElement('img');
+            img.src = item.link;
+            img.alt = item.category;
+            img.className = 'w-full h-40 object-contain rounded cursor-pointer hover:opacity-75';
+            img.onclick = () => selectFromCollection(item.link, previewId);
+            collectionGridMan.appendChild(img);
+        });
 
-            if (previewId === "garmPreview") {
-                data.womanСlothingItems.forEach(item => {
-                    const img = document.createElement('img');
-                    img.src = item.link;
-                    img.alt = item.category;
-                    img.className = 'w-full h-40 object-contain rounded cursor-pointer hover:opacity-75';
-                    img.onclick = () => selectFromCollection(item.link, previewId);
-                    collectionGridWoman.appendChild(img);
-                });
-            }
-            data.woman.forEach(item => {
+        if (previewId === "garmPreview") {
+            data.womanСlothingItems.forEach(item => {
                 const img = document.createElement('img');
                 img.src = item.link;
                 img.alt = item.category;
@@ -54,15 +55,26 @@ function openCollection(event, previewId) {
                 img.onclick = () => selectFromCollection(item.link, previewId);
                 collectionGridWoman.appendChild(img);
             });
-
-            collectionModal.classList.remove('hidden');
-            showTab('man');
-            document.getElementById('overlay').classList.add('hidden');
-        })
-        .catch(error => {
-            console.error('Error fetching collection:', error);
-            document.getElementById('overlay').classList.add('hidden');
+        }
+        data.woman.forEach(item => {
+            const img = document.createElement('img');
+            img.src = item.link;
+            img.alt = item.category;
+            img.className = 'w-full h-40 object-contain rounded cursor-pointer hover:opacity-75';
+            img.onclick = () => selectFromCollection(item.link, previewId);
+            collectionGridWoman.appendChild(img);
         });
+
+        collectionModal.classList.remove('hidden');
+        showTab('man');
+        document.getElementById('overlay').classList.add('hidden');
+    }
+    catch(error)
+    {
+        console.error('Error fetching collection:', error);
+        document.getElementById('overlay').classList.add('hidden');
+        showError(error.message);
+    }    
 }
 
 function showTab(tab) {
