@@ -66,3 +66,65 @@ function checkAuthState() {
         logoutBtn.style.display = 'none';
     }
 }
+
+async function makeAuthenticatedRequest(url, options) {
+
+    const accessToken = localStorage.getItem('accessToken');
+    if (!accessToken) {
+        tryLogout();
+        throw new Error('Session expired. Please login again.');
+    }
+
+    let response = await fetch(url, {
+        ...options,
+        headers: {
+            ...options.headers,
+            'Authorization': `Bearer ${accessToken}`
+        }
+    });
+
+    if (response.status === 401) {
+        const refreshToken = localStorage.getItem('refreshToken');
+        if (!refreshToken) {
+            tryLogout();
+            throw new Error('Session expired. Please login again.');
+        }
+
+        try {
+            const newTokens = await refreshAccessToken(refreshToken);
+            response = await fetch(url, {
+                ...options,
+                headers: {
+                    ...options.headers,
+                    'Authorization': `Bearer ${newTokens.accessToken}`
+                }
+            });
+        } catch (error) {
+            tryLogout();
+            throw error;
+        }
+    }
+
+    return response;
+}
+
+async function refreshAccessToken(refreshToken) {
+    const response = await fetch(`${API_BASE_URL}/api/auth/refresh-token`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ refreshToken })
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to refresh token');
+    }
+
+    const { accessToken: accessToken, refreshToken: newRefreshToken } = await response.json();
+
+    localStorage.setItem('accessToken', accessToken);
+    if (newRefreshToken) {
+        localStorage.setItem('refreshToken', newRefreshToken);
+    }
+
+    return { accessToken, refreshToken: newRefreshToken };
+}

@@ -1,4 +1,3 @@
-вынести makeAuthenticatedRequest в общий js файл
 
 1. try on
 /*if (!response.ok) {
