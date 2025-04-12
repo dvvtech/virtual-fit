@@ -99,7 +99,7 @@ async function tryOn() {
 
 function handleSuccessTryOn(data) {
 
-    window.resultUrl = data.url;
+    window.resultUrl = data.url;    
     showResult(window.humanPhotoUrl, window.garmPhotoUrl, data.url);
 
     const remainingUsageEl = document.getElementById('remainingUsage');
@@ -113,8 +113,14 @@ async function handleErrorResponse(response) {
 
     let errorMessage;
     try {
-        const err = await response.json();
-        errorMessage = err.description || `Server error: ${response.status}`;
+        if(response.status == 429){
+
+            errorMessage = "limit used up";
+        }
+        else{
+            const err = await response.json();
+            errorMessage = err.description || `Server error: ${response.status}`;
+        }
     } catch {
         errorMessage = `Server error: ${response.status} ${response.statusText}`;
     }
