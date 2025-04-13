@@ -114,8 +114,8 @@ async function handleErrorResponse(response) {
     let errorMessage;
     try {
         if(response.status == 429){
-
-            errorMessage = "limit used up";
+             
+            errorMessage = await response.text();
             const remainingUsageEl = document.getElementById('remainingUsage');
             remainingUsageEl.textContent = 0;
             localStorage.setItem('remainingUsage', 0);
