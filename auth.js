@@ -43,6 +43,28 @@ function tryVkAuth() {
         });
 }
 
+function tryYandexAuth() {
+
+    fetch(`${API_BASE_URL}/api/yandex-auth`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Ошибка при получении URL для авторизации');
+            }
+            return response.text(); // Получаем ответ как plain text
+        })
+        .then(url => {
+            if (url) {
+                window.location.href = url; // Перенаправляем пользователя
+            } else {
+                throw new Error('URL для перенаправления не найден в ответе');
+            }
+        })
+        .catch(error => {
+            console.error('Произошла ошибка:', error);
+            // Можно добавить уведомление пользователя об ошибке
+        });
+}
+
 function tryLogout() {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
