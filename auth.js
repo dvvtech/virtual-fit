@@ -78,17 +78,21 @@ function checkAuthState() {
     const authButtons = document.getElementById('authButtons');
     const logoutBtn = document.getElementById('logoutBtn');
     const tryOnButton = document.getElementById('tryOnButton');
+    const remainingUsageContainer = document.getElementById('remainingUsageContainer');
+    
 
     if (accessToken && refreshToken) {
         // Если токены есть — скрываем кнопки входа и показываем Logout
         authButtons.style.display = 'none';
         logoutBtn.style.display = 'block';
         tryOnButton.style.display = 'block';
+        remainingUsageContainer.style.display = 'block';
     } else {
         // Если токенов нет — показываем кнопки входа и скрываем Logout
         authButtons.style.display = 'block';
         logoutBtn.style.display = 'none';
         tryOnButton.style.display = 'none';
+        remainingUsageContainer.style.display = 'none';
     }
 }
 
