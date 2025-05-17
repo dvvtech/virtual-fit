@@ -79,7 +79,7 @@ function checkAuthState() {
     const logoutBtn = document.getElementById('logoutBtn');
     const tryOnButton = document.getElementById('tryOnButton');
     const remainingUsageContainer = document.getElementById('remainingUsageContainer');
-    
+
 
     if (accessToken && refreshToken) {
         // Если токены есть — скрываем кнопки входа и показываем Logout
@@ -87,6 +87,15 @@ function checkAuthState() {
         logoutBtn.style.display = 'block';
         tryOnButton.style.display = 'block';
         remainingUsageContainer.style.display = 'block';
+
+        const savedRemainingUsage = localStorage.getItem('remainingUsage');
+        if (savedRemainingUsage) {
+            //const remainingUsageContainer = document.getElementById('remainingUsageContainer');
+            const remainingUsageField = document.getElementById('remainingUsage');
+            remainingUsageContainer.style.display = 'block';
+            remainingUsageField.textContent = savedRemainingUsage;
+        }
+
     } else {
         // Если токенов нет — показываем кнопки входа и скрываем Logout
         authButtons.style.display = 'block';

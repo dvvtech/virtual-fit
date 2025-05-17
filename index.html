@@ -232,15 +232,7 @@
         //const API_BASE_URL = 'https://localhost:7147';
         document.addEventListener('DOMContentLoaded', () => {
 
-            checkAuthState();
-
-            const savedRemainingUsage = localStorage.getItem('remainingUsage');
-            if (savedRemainingUsage) {
-                const remainingUsageContainer = document.getElementById('remainingUsageContainer');
-                const remainingUsageField = document.getElementById('remainingUsage');
-                remainingUsageContainer.style.display = 'block';
-                remainingUsageField.textContent = savedRemainingUsage;
-            }
+            checkAuthState();            
         });
 
         const shareButton = document.getElementById('shareButton');
