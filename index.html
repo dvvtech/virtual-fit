@@ -192,8 +192,11 @@
     <div id="overlay" class="fixed inset-0 bg-white bg-opacity-80 hidden flex items-center justify-center z-50">
         <div class="flex flex-col items-center">
             <div class="h-16 w-16 border-4 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
-            <div id="countdown" class="mt-4 text-lg font-semibold text-gray-700">
+            <div class="mt-4 text-lg font-semibold text-gray-700">
                 Please wait... <span id="countdown-number">37</span>s
+            </div>
+            <div id="progress-bar" class="mt-2 w-64 bg-gray-200 rounded-full h-2.5">
+                <div id="progress" class="bg-blue-600 h-2.5 rounded-full" style="width: 100%"></div>
             </div>
         </div>
     </div>
