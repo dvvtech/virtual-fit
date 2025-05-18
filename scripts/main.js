@@ -57,7 +57,8 @@ async function previewImage(event, previewId) {
 async function tryOn() {
 
     const mainContent = document.getElementById('mainContent');
-    document.getElementById('overlay').classList.remove('hidden');
+    showOverlay();
+    //document.getElementById('overlay').classList.remove('hidden');
 
     // Remove existing error messages
     const existingErrors = mainContent.querySelectorAll('.error-message');
@@ -93,7 +94,8 @@ async function tryOn() {
         console.error('Error:', error);
         showError(error.message);
     } finally {
-        overlay.classList.add('hidden');
+        hideOverlay();
+        //overlay.classList.add('hidden');
     }
 }
 
