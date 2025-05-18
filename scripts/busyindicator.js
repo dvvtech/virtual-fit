@@ -24,7 +24,7 @@ let countdownInterval;
         }, 1000);
     };
 
-    const showOverlay = (duration = 37) => {
+    const showOverlay = (duration = 34) => {
         // Сброс предыдущего отсчёта
         if (countdownInterval) clearInterval(countdownInterval);
         
