@@ -1,6 +1,7 @@
 async function showHistory() {
 
-    document.getElementById('overlay').classList.remove('hidden');
+    showOverlay(0);
+    //document.getElementById('overlay').classList.remove('hidden');
 
     const historyContent = document.getElementById('historyContent');
     const mainContent = document.getElementById('mainContent');
@@ -16,7 +17,8 @@ async function showHistory() {
 
         if (!response.ok) {
             return response.json().then(err => {
-                document.getElementById('overlay').classList.add('hidden');
+                hideOverlay();
+                //document.getElementById('overlay').classList.add('hidden');
                 throw new Error(err.description || 'Failed to fetch history');
             });
             //await handleErrorResponse(response);
@@ -70,7 +72,8 @@ async function showHistory() {
             console.error('Error:', error);
             alert(error.message);*/
     } finally {
-        document.getElementById('overlay').classList.add('hidden');
+        hideOverlay();
+        //document.getElementById('overlay').classList.add('hidden');
     }
 }
 
@@ -138,21 +141,24 @@ function showImageFullScreen(imgUrl, humanImgUrl, garmentImgUrl, resultImgUrl) {
 
 function loadImageWithSpinner(url) {
 
-    document.getElementById('overlay').classList.remove('hidden');
+    showOverlay(0);
+    //document.getElementById('overlay').classList.remove('hidden');
 
     // Создаем новый объект Image для предзагрузки
     const img = new Image();
     // Обработчик успешной загрузки
     img.onload = () => {
         resultImage.src = url; // Устанавливаем src
-        document.getElementById('overlay').classList.add('hidden');
+        hideOverlay();
+        //document.getElementById('overlay').classList.add('hidden');
     };
 
     // Обработчик ошибки загрузки
     img.onerror = () => {
         console.error('Error loading image');
         alert('Failed to load image');
-        document.getElementById('overlay').classList.add('hidden');
+        hideOverlay();
+        //document.getElementById('overlay').classList.add('hidden');
     };
 
     // Начинаем загрузку изображения

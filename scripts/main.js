@@ -3,14 +3,16 @@ async function previewImage(event, previewId) {
 
     const file = event.target.files[0];
     const preview = document.getElementById(previewId);
-    document.getElementById('overlay').classList.remove('hidden');
+    showOverlay(0);
+    //document.getElementById('overlay').classList.remove('hidden');
 
     if (file) {
 
         // Валидация типа файла (только изображения)
         if (!file.type.startsWith('image/')) {
             alert('Please upload a valid image file.');
-            document.getElementById('overlay').classList.add('hidden');
+            hideOverlay();
+            //document.getElementById('overlay').classList.add('hidden');
             return;
         }
 
@@ -49,7 +51,8 @@ async function previewImage(event, previewId) {
         }
         finally
         {
-            document.getElementById('overlay').classList.add('hidden');
+            hideOverlay();
+            //document.getElementById('overlay').classList.add('hidden');
         }                
     }
 }

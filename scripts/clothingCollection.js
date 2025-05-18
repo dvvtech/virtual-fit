@@ -7,7 +7,8 @@ async function openCollection(event, previewId) {
     const collectionGridMan = document.getElementById('collectionGridMan');
     const collectionGridWoman = document.getElementById('collectionGridWoman');
 
-    document.getElementById('overlay').classList.remove('hidden');
+    showOverlay(0);
+    //document.getElementById('overlay').classList.remove('hidden');
 
     // Clear previous content
     collectionGridMan.innerHTML = '';
@@ -67,12 +68,14 @@ async function openCollection(event, previewId) {
 
         collectionModal.classList.remove('hidden');
         showTab('man');
-        document.getElementById('overlay').classList.add('hidden');
+        hideOverlay();
+        //document.getElementById('overlay').classList.add('hidden');
     }
     catch(error)
     {
         console.error('Error fetching collection:', error);
-        document.getElementById('overlay').classList.add('hidden');
+        hideOverlay();
+        //document.getElementById('overlay').classList.add('hidden');
         showError(error.message);
     }    
 }
