@@ -197,9 +197,7 @@
     </div>
 
     <script>
-
-        document.getElementById('yandexAuthBtn').addEventListener('click', tryYandexAuth());
-
+        
         // Извлекаем токены из URL
         const urlParams = new URLSearchParams(window.location.search);
         const accessToken = urlParams.get('accessToken');
@@ -236,6 +234,8 @@
         document.addEventListener('DOMContentLoaded', () => {
 
             checkAuthState();
+
+            document.getElementById('yandexAuthBtn').addEventListener('click', tryYandexAuth());
         });
 
         const shareButton = document.getElementById('shareButton');
