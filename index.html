@@ -125,20 +125,15 @@
             </center>
 
             <center>
-                <a href="https://oauth.yandex.ru/authorize?response_type=token&client_id=ВАШ_CLIENT_ID&redirect_uri=ВАШ_REDIRECT_URI"
-                    style="display:inline-flex;align-items:center;background:#fff;border:1px solid #d3d3d3;border-radius:4px;padding:8px 16px;text-decoration:none;color:#000;font-family:sans-serif;font-size:16px;box-shadow:0 1px 2px rgba(0,0,0,0.05);transition:box-shadow 0.2s;margin-top: 10px;"
-                    target="_blank">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" style="margin-right:8px;"
-                        viewBox="0 0 24 24" fill="none">
-                        <rect width="24" height="24" rx="4" fill="#FC3F1D" />
-                        <path
-                            d="M13.43 12.67L16.47 7.5H14.87L12.65 11.16H12.62L10.4 7.5H8.8L11.84 12.67V16.5H13.43V12.67Z"
-                            fill="white" />
-                    </svg>
-                    Войти через Яндекс
-                </a>
-            </center>
-
+            <div class="yandex-auth-btn" id="yandexAuthBtn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" style="margin-right:8px;"
+                     viewBox="0 0 24 24" fill="none">
+                    <rect width="24" height="24" rx="4" fill="#FC3F1D" />
+                    <path d="M13.43 12.67L16.47 7.5H14.87L12.65 11.16H12.62L10.4 7.5H8.8L11.84 12.67V16.5H13.43V12.67Z" fill="white" />
+                </svg>
+                Войти через Яндекс
+            </div>
+        </center>
 
         </div>
         <button id="logoutBtn"
@@ -202,6 +197,8 @@
     </div>
 
     <script>
+
+        document.getElementById('yandexAuthBtn').addEventListener('click', tryYandexAuth());
 
         // Извлекаем токены из URL
         const urlParams = new URLSearchParams(window.location.search);
