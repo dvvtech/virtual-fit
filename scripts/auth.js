@@ -1,69 +1,35 @@
-
 function tryGoogleAuth() {
-
-    fetch(`${API_BASE_URL}/api/google-auth`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Ошибка при получении URL для авторизации');
-            }
-            return response.text(); // Получаем ответ как plain text
-        })
-        .then(url => {
-            if (url) {
-                window.location.href = url; // Перенаправляем пользователя
-            } else {
-                throw new Error('URL для перенаправления не найден в ответе');
-            }
-        })
-        .catch(error => {
-            console.error('Произошла ошибка:', error);
-            // Можно добавить уведомление пользователя об ошибке
-        });
+    tryAuth('google');
 }
 
 function tryVkAuth() {
-
-    fetch(`${API_BASE_URL}/api/vk-auth`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Ошибка при получении URL для авторизации');
-            }
-            return response.text(); // Получаем ответ как plain text
-        })
-        .then(url => {
-            if (url) {
-                window.location.href = url; // Перенаправляем пользователя
-            } else {
-                throw new Error('URL для перенаправления не найден в ответе');
-            }
-        })
-        .catch(error => {
-            console.error('Произошла ошибка:', error);
-            // Можно добавить уведомление пользователя об ошибке
-        });
+    tryAuth('vk');
 }
 
 function tryYandexAuth() {
+    tryAuth('yandex');
+}
 
-    fetch(`${API_BASE_URL}/api/yandex-auth`)
+function tryAuth(provider) {
+    fetch(`${API_BASE_URL}/api/${provider}-auth`)
         .then(response => {
             if (!response.ok) {
-                throw new Error('Ошибка при получении URL для авторизации');
+                throw new Error(`Ошибка при получении URL для авторизации через ${provider}`);
             }
-            return response.text(); // Получаем ответ как plain text
+            return response.text();
         })
         .then(url => {
-            if (url) {
-                window.location.href = url; // Перенаправляем пользователя
-            } else {
-                throw new Error('URL для перенаправления не найден в ответе');
+            if (!url) {
+                throw new Error(`URL для перенаправления (${provider}) не найден в ответе`);
             }
+            window.location.href = url;
         })
         .catch(error => {
-            console.error('Произошла ошибка:', error);
+            console.error(`Произошла ошибка при авторизации через ${provider}:`, error);
             // Можно добавить уведомление пользователя об ошибке
         });
 }
+
 
 function tryLogout() {
     localStorage.removeItem('accessToken');
