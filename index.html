@@ -217,16 +217,11 @@
                 ? `${window.location.pathname}?${urlParams.toString()}`
                 : window.location.pathname;
 
-            window.history.replaceState({}, '', newUrl);
-            //window.history.replaceState({}, '', urlParams);
-
+            window.history.replaceState({}, '', newUrl);            
             //вывести сообщение чтоб авторизация прошла успешно
             //showAuthSuccess();
         }
-
-        //const url = "https://a30944-8332.x.d-f.pw/uploads/guid_xxx_v.png";
-        //const newUrl = replaceEndingToV(url);
-
+        
         //'https://a30944-8332.x.d-f.pw';
         const API_BASE_URL = 'https://a33140-9deb.k.d-f.pw';
         //const API_BASE_URL = 'http://localhost:5023';

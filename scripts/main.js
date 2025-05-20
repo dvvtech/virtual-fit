@@ -1,3 +1,25 @@
+async function getTryOnLimit() {
+    try {
+        const response = await makeAuthenticatedRequest(`${API_BASE_URL}/api/try-on-limit`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const limitData = await response.json();
+        return limitData.remainingTries; // { remainingTries: number }
+    } catch (error) {
+        console.error('Failed to fetch try-on limit:', error);
+        // Можно добавить обработку ошибки (например, показать уведомление пользователю)
+        throw error; // Пробрасываем ошибку дальше, если нужно
+    }
+}
+
 //for upload image
 async function previewImage(event, previewId) {
 
