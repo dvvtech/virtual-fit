@@ -55,12 +55,12 @@ function checkAuthState() {
         remainingUsageContainer.style.display = 'block';
 
         //const savedRemainingUsage = localStorage.getItem('remainingUsage');
-        if (savedRemainingUsage) {
+        //if (savedRemainingUsage) {
             //const remainingUsageContainer = document.getElementById('remainingUsageContainer');
-            const remainingUsageField = document.getElementById('remainingUsage');
+            //const remainingUsageField = document.getElementById('remainingUsage');
             remainingUsageContainer.style.display = 'block';
             //remainingUsageField.textContent = savedRemainingUsage;
-        }
+        //}
 
     } else {
         // Если токенов нет — показываем кнопки входа и скрываем Logout
