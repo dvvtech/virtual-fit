@@ -12,7 +12,7 @@ async function getTryOnLimit() {
         }
 
         const limitData = await response.json();
-        return limitData.remainingTries; // { remainingTries: number }
+        return limitData; // { remainingTries: number }
     } catch (error) {
         console.error('Failed to fetch try-on limit:', error);
         // Можно добавить обработку ошибки (например, показать уведомление пользователю)

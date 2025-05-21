@@ -125,15 +125,17 @@
             </center>
 
             <center>
-            <div class="yandex-auth-btn" id="yandexAuthBtn">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" style="margin-right:8px;"
-                     viewBox="0 0 24 24" fill="none">
-                    <rect width="24" height="24" rx="4" fill="#FC3F1D" />
-                    <path d="M13.43 12.67L16.47 7.5H14.87L12.65 11.16H12.62L10.4 7.5H8.8L11.84 12.67V16.5H13.43V12.67Z" fill="white" />
-                </svg>
-                Войти через Яндекс
-            </div>
-        </center>
+                <div class="yandex-auth-btn" id="yandexAuthBtn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" style="margin-right:8px;"
+                        viewBox="0 0 24 24" fill="none">
+                        <rect width="24" height="24" rx="4" fill="#FC3F1D" />
+                        <path
+                            d="M13.43 12.67L16.47 7.5H14.87L12.65 11.16H12.62L10.4 7.5H8.8L11.84 12.67V16.5H13.43V12.67Z"
+                            fill="white" />
+                    </svg>
+                    Войти через Яндекс
+                </div>
+            </center>
 
         </div>
         <button id="logoutBtn"
@@ -197,7 +199,7 @@
     </div>
 
     <script>
-        
+
         // Извлекаем токены из URL
         const urlParams = new URLSearchParams(window.location.search);
         const accessToken = urlParams.get('accessToken');
@@ -217,16 +219,30 @@
                 ? `${window.location.pathname}?${urlParams.toString()}`
                 : window.location.pathname;
 
-            window.history.replaceState({}, '', newUrl);            
+            window.history.replaceState({}, '', newUrl);
             //вывести сообщение чтоб авторизация прошла успешно
             //showAuthSuccess();
         }
-        
+
         //'https://a30944-8332.x.d-f.pw';
         const API_BASE_URL = 'https://a33140-9deb.k.d-f.pw';
         //const API_BASE_URL = 'http://localhost:5023';
         //const API_BASE_URL = 'https://localhost:7147';
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => {
+
+            // Если пользователь авторизован, получаем лимиты
+            if (isUserAuthenticated()) { // Предполагаем, что у вас есть такая функция
+                try {
+                    const limit = await getTryOnLimit();
+                    //console.log('Remaining tries:', limit.remainingTries);
+
+                    // Обновляем UI с полученными лимитами
+                    updateLimitUI(limit.remainingTries);
+                } catch (error) {
+                    console.error('Failed to load try-on limits:', error);
+                    // Можно показать сообщение об ошибке
+                }
+            }
 
             checkAuthState();
 
@@ -273,6 +289,17 @@
             setTimeout(() => toast.remove(), 3000);
         }
 
+        // Вспомогательные функции
+        function isUserAuthenticated() {
+            return localStorage.getItem('accessToken') !== null;
+        }
+
+        function updateLimitUI(remainingTries) {
+            const limitElement = document.getElementById('remainingUsage');
+            if (limitElement) {
+                limitElement.textContent = remainingTries;
+            }
+        }
         /*function showAuthSuccess() {
             const toast = document.getElementById('authSuccessToast');
 

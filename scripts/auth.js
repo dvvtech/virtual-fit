@@ -54,12 +54,12 @@ function checkAuthState() {
         tryOnButton.style.display = 'block';
         remainingUsageContainer.style.display = 'block';
 
-        const savedRemainingUsage = localStorage.getItem('remainingUsage');
+        //const savedRemainingUsage = localStorage.getItem('remainingUsage');
         if (savedRemainingUsage) {
             //const remainingUsageContainer = document.getElementById('remainingUsageContainer');
             const remainingUsageField = document.getElementById('remainingUsage');
             remainingUsageContainer.style.display = 'block';
-            remainingUsageField.textContent = savedRemainingUsage;
+            //remainingUsageField.textContent = savedRemainingUsage;
         }
 
     } else {
