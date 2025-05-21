@@ -33,8 +33,13 @@ async function previewImage(event, previewId) {
         // Валидация типа файла (только изображения)
         if (!file.type.startsWith('image/')) {
             alert('Please upload a valid image file.');
-            hideOverlay();
-            //document.getElementById('overlay').classList.add('hidden');
+            hideOverlay();            
+            return;
+        }
+
+        if(!isUserAuthenticated()){
+            alert('Please log in');
+            hideOverlay();            
             return;
         }
 
