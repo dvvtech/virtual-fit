@@ -131,7 +131,7 @@ function handleSuccessTryOn(data) {
 
     const remainingUsageEl = document.getElementById('remainingUsage');
     remainingUsageEl.textContent = data.remainingUsage;
-    localStorage.setItem('remainingUsage', data.remainingUsage);
+    //localStorage.setItem('remainingUsage', data.remainingUsage);
 
     document.getElementById('remainingUsageContainer').style.display = 'block';
 }
@@ -145,7 +145,7 @@ async function handleErrorResponse(response) {
             errorMessage = await response.text();
             const remainingUsageEl = document.getElementById('remainingUsage');
             remainingUsageEl.textContent = 0;
-            localStorage.setItem('remainingUsage', 0);
+            //localStorage.setItem('remainingUsage', 0);
         }
         else{
             const err = await response.json();
