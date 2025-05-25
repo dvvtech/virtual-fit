@@ -266,3 +266,9 @@
 .yandex-auth-btn:hover {
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
+
+
+.bottom-buttons button.active {
+  background-color: #4f46e5; /* или любой другой цвет для выделения */
+  color: white;
+}

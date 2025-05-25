@@ -143,6 +143,7 @@ function showImageFullScreen(imgUrl, humanImgUrl, garmentImgUrl, resultImgUrl) {
     
     // Загружаем текущее изображение
     loadImageWithSpinner(cleanImageLink);
+    updateActiveButton(currentIndex);
     resultViewer.classList.remove('hidden');
     
     // Обновляем кнопки для переключения изображений

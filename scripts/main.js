@@ -197,22 +197,7 @@ function closeResult() {
 
 function showResult(humanImgUrl, garmentImgUrl, resultImgUrl) {
 
-    showImageFullScreen(resultImgUrl,  humanImgUrl, garmentImgUrl, resultImgUrl);
-    /*const resultViewer = document.getElementById('resultViewer');
-    const resultImage = document.getElementById('resultImage');
-
-    loadImageWithSpinner(resultImgUrl);
-    resultViewer.classList.remove('hidden');
-
-    humanImgUrl = replaceEndingToV(humanImgUrl);
-    garmentImgUrl = replaceEndingToV(garmentImgUrl);
-
-    const buttons = resultViewer.querySelectorAll('.bottom-buttons button');
-    buttons[0].onclick = () => loadImageWithSpinner(humanImgUrl);
-    buttons[1].onclick = () => loadImageWithSpinner(garmentImgUrl);
-    //buttons[0].onclick = () => loadImageWithSpinner(humanImgUrl || window.humanPhotoUrl);
-    //buttons[1].onclick = () => loadImageWithSpinner(garmentImgUrl || window.garmPhotoUrl);
-    buttons[2].onclick = () => loadImageWithSpinner(resultImgUrl);*/
+    showImageFullScreen(resultImgUrl,  humanImgUrl, garmentImgUrl, resultImgUrl);    
 }
 
 function replaceEndingToV(input) {
@@ -225,9 +210,22 @@ function replaceEndingToV(input) {
 function prevImg() {
     currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
     loadImageWithSpinner(currentImages[currentIndex]);
+    updateActiveButton(currentIndex);
 }
 
 function nextImg() {
     currentIndex = (currentIndex + 1) % currentImages.length;
     loadImageWithSpinner(currentImages[currentIndex]);
+    updateActiveButton(currentIndex);
+}
+
+function updateActiveButton(index) {
+    const buttons = document.querySelectorAll('.bottom-buttons button');
+    buttons.forEach((btn, i) => {
+        if (i === index) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+    });
 }
