@@ -369,9 +369,10 @@
         }*/
 
     </script>
+
     <div id="historyContent" class="hidden bg-white p-8 rounded-xl shadow-2xl w-full max-w-5xl relative">
-        <!-- Добавляем sticky контейнер для заголовка и кнопки -->
-        <div class="sticky top-0 bg-white pb-6 z-10">
+        <!-- Sticky header с отступом 5px сверху -->
+        <div class="sticky top-2 bg-white pb-6 z-10"> <!-- Изменили top-0 на top-2 -->
             <div class="flex justify-between items-center">
                 <h2 class="text-2xl font-bold text-gray-900">Fitting History</h2>
                 <button class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
@@ -379,6 +380,7 @@
             </div>
         </div>
 
+        <!-- Таблица с отступом сверху (чтобы не перекрывалась контентом) -->
         <table class="table-auto w-full border-collapse border border-gray-200 mt-6">
             <thead>
                 <tr>
