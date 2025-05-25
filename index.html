@@ -372,7 +372,7 @@
 
     <div id="historyContent" class="hidden bg-white p-8 rounded-xl shadow-2xl w-full max-w-5xl relative">
         <!-- Sticky header с отступом 5px сверху -->
-        <div class="sticky top-2 bg-white pb-6 z-10"> <!-- Изменили top-0 на top-2 -->
+        <div class="sticky bg-white pb-6 z-10">
             <div class="flex justify-between items-center">
                 <h2 class="text-2xl font-bold text-gray-900">Fitting History</h2>
                 <button class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
@@ -381,16 +381,20 @@
         </div>
 
         <!-- Таблица с отступом сверху (чтобы не перекрывалась контентом) -->
-        <table class="table-auto w-full border-collapse border border-gray-200 mt-6">
-            <thead>
-                <tr>
-                    <th class="border border-gray-200 p-2">Your Photo</th>
-                    <th class="border border-gray-200 p-2">Clothes Photo</th>
-                    <th class="border border-gray-200 p-2">Result</th>
-                </tr>
-            </thead>
-            <tbody id="historyTableBody"></tbody>
-        </table>
+        <div class="overflow-auto mt-6" style="max-height: calc(100vh - 200px);">
+            <!-- Добавлен контейнер с прокруткой -->
+            <table class="table-auto w-full border-collapse border border-gray-200">
+                <thead>
+                    <tr>
+                        <th class="sticky top-0 bg-white z-20 border border-gray-200 p-2">Your Photo</th>
+                        <!-- Добавлены sticky стили -->
+                        <th class="sticky top-0 bg-white z-20 border border-gray-200 p-2">Clothes Photo</th>
+                        <th class="sticky top-0 bg-white z-20 border border-gray-200 p-2">Result</th>
+                    </tr>
+                </thead>
+                <tbody id="historyTableBody"></tbody>
+            </table>
+        </div>
     </div>
 
     <div id="collectionModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
