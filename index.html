@@ -371,7 +371,7 @@
     </script>
 
     <div id="historyContent" class="hidden bg-white p-8 rounded-xl shadow-2xl w-full max-w-5xl relative">
-        <!-- Sticky header с отступом 5px сверху -->
+        <!-- Sticky header с отступом сверху -->
         <div class="sticky top-2 bg-white pb-6 z-10">
             <div class="flex justify-between items-center">
                 <h2 class="text-2xl font-bold text-gray-900">Fitting History</h2>
@@ -380,19 +380,22 @@
             </div>
         </div>
 
-        <!-- Таблица с отступом сверху (чтобы не перекрывалась контентом) -->
+        <!-- Таблица с отступом сверху -->
         <div class="overflow-auto mt-6" style="max-height: calc(100vh - 200px);">
-            <table class="table-auto w-full border-collapse border border-gray-200">
+            <table class="table-auto w-full border-collapse">
                 <thead>
-                    <tr>
-                        <th class="sticky top-0 bg-gray-100 z-20 border border-gray-300 p-2 text-gray-800">Your photo
+                    <tr class="relative"> <!-- Добавлен relative для псевдоэлемента -->
+                        <th class="sticky top-0 bg-gray-100 z-20 p-2 text-gray-800 border-b-2 border-gray-300">Your
+                            Photo</th>
+                        <th class="sticky top-0 bg-gray-100 z-20 p-2 text-gray-800 border-b-2 border-gray-300">Clothes
+                            Photo</th>
+                        <th class="sticky top-0 bg-gray-100 z-20 p-2 text-gray-800 border-b-2 border-gray-300">Result
                         </th>
-                        <th class="sticky top-0 bg-gray-100 z-20 border border-gray-300 p-2 text-gray-800">Clothes photo
-                        </th>
-                        <th class="sticky top-0 bg-gray-100 z-20 border border-gray-300 p-2 text-gray-800">Result</th>
+                        <!-- Псевдоэлемент для перекрытия артефактов -->
+                        <div class="absolute -top-px left-0 right-0 h-px bg-gray-100"></div>
                     </tr>
                 </thead>
-                <tbody id="historyTableBody"></tbody>
+                <tbody id="historyTableBody" class="border-t border-gray-200"></tbody>
             </table>
         </div>
     </div>
