@@ -372,7 +372,7 @@
 
     <div id="historyContent" class="hidden bg-white p-8 rounded-xl shadow-2xl w-full max-w-5xl relative">
         <!-- Sticky header с отступом 5px сверху -->
-        <div class="sticky bg-white pb-6 z-10">
+        <div class="sticky top-2 bg-white pb-6 z-10">
             <div class="flex justify-between items-center">
                 <h2 class="text-2xl font-bold text-gray-900">Fitting History</h2>
                 <button class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
@@ -382,14 +382,14 @@
 
         <!-- Таблица с отступом сверху (чтобы не перекрывалась контентом) -->
         <div class="overflow-auto mt-6" style="max-height: calc(100vh - 200px);">
-            <!-- Добавлен контейнер с прокруткой -->
             <table class="table-auto w-full border-collapse border border-gray-200">
                 <thead>
                     <tr>
-                        <th class="sticky top-0 bg-white z-20 border border-gray-200 p-2">Your Photo</th>
-                        <!-- Добавлены sticky стили -->
-                        <th class="sticky top-0 bg-white z-20 border border-gray-200 p-2">Clothes Photo</th>
-                        <th class="sticky top-0 bg-white z-20 border border-gray-200 p-2">Result</th>
+                        <th class="sticky top-0 bg-gray-100 z-20 border border-gray-300 p-2 text-gray-800">Your photo
+                        </th>
+                        <th class="sticky top-0 bg-gray-100 z-20 border border-gray-300 p-2 text-gray-800">Clothes photo
+                        </th>
+                        <th class="sticky top-0 bg-gray-100 z-20 border border-gray-300 p-2 text-gray-800">Result</th>
                     </tr>
                 </thead>
                 <tbody id="historyTableBody"></tbody>
