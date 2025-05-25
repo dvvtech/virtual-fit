@@ -219,3 +219,14 @@ function replaceEndingToV(input) {
     const regex = /_t(\.[^.]+)$/;
     return input.replace(regex, '_v$1');
 }
+
+// Реализуйте функции навигации
+function prevImg() {
+    currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+    loadImageWithSpinner(currentImages[currentIndex]);
+}
+
+function nextImg() {
+    currentIndex = (currentIndex + 1) % currentImages.length;
+    loadImageWithSpinner(currentImages[currentIndex]);
+}

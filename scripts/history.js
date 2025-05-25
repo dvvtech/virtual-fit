@@ -120,23 +120,45 @@ function hideHistory() {
     mainContent.classList.remove('hidden');
 }
 
+// Добавьте эти переменные в начало вашего скрипта
+let currentImages = [];
+let currentIndex = 0;
+
 function showImageFullScreen(imgUrl, humanImgUrl, garmentImgUrl, resultImgUrl) {
 
     const resultViewer = document.getElementById('resultViewer');
     const resultImage = document.getElementById('resultImage');
 
+    // Сохраняем все изображения для навигации
+    currentImages = [
+        replaceEndingToV(humanImgUrl, "_t"),
+        replaceEndingToV(garmentImgUrl, "_t"),
+        replaceEndingToV(resultImgUrl, "_t")
+    ];
+    
+    // Находим индекс текущего изображения
     const cleanImageLink = replaceEndingToV(imgUrl);
-    //const cleanImageLink = removeThumbnailSuffix(imgUrl);
-
-    // Set initial image                    
+    currentIndex = currentImages.indexOf(cleanImageLink);
+    if (currentIndex === -1) currentIndex = 0;
+    
+    // Загружаем текущее изображение
     loadImageWithSpinner(cleanImageLink);
     resultViewer.classList.remove('hidden');
-
-    // Update buttons for switching images
+    
+    // Обновляем кнопки для переключения изображений
     const buttons = resultViewer.querySelectorAll('.bottom-buttons button');
-    buttons[0].onclick = () => loadImageWithSpinner(replaceEndingToV(humanImgUrl, "_t"));
-    buttons[1].onclick = () => loadImageWithSpinner(replaceEndingToV(garmentImgUrl, "_t"));
-    buttons[2].onclick = () => loadImageWithSpinner(replaceEndingToV(resultImgUrl, "_t"));
+    buttons[0].onclick = () => {
+        currentIndex = 0;
+        loadImageWithSpinner(currentImages[0]);
+    };
+    buttons[1].onclick = () => {
+        currentIndex = 1;
+        loadImageWithSpinner(currentImages[1]);
+    };
+    buttons[2].onclick = () => {
+        currentIndex = 2;
+        loadImageWithSpinner(currentImages[2]);
+    };
 }
 
 function loadImageWithSpinner(url) {
