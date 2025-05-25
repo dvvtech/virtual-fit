@@ -244,6 +244,11 @@
         const API_BASE_URL = 'https://a33140-9deb.k.d-f.pw';
         //const API_BASE_URL = 'http://localhost:5023';
         //const API_BASE_URL = 'https://localhost:7147';
+
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+
         document.addEventListener('DOMContentLoaded', async () => {
 
             // Если пользователь авторизован, получаем лимиты
@@ -263,7 +268,30 @@
             checkAuthState();
 
             document.getElementById('yandexAuthBtn').addEventListener('click', tryYandexAuth);
+
+            document.getElementById('resultImage').addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, false);
+
+            document.getElementById('resultImage').addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            }, false);
         });
+
+        function handleSwipe() {
+            const threshold = 50; // минимальное расстояние для свайпа
+
+            if (touchEndX < touchStartX - threshold) {
+                // Свайп влево - следующее изображение
+                //document.getElementById('nextButton').click();
+                nextImg();
+            } else if (touchEndX > touchStartX + threshold) {
+                // Свайп вправо - предыдущее изображение
+                //document.getElementById('prevButton').click();
+                prevImg();
+            }
+        }
 
         const shareButton = document.getElementById('shareButton');
         // Обработчик для кнопки "Поделиться"
