@@ -197,7 +197,8 @@ function closeResult() {
 
 function showResult(humanImgUrl, garmentImgUrl, resultImgUrl) {
 
-    const resultViewer = document.getElementById('resultViewer');
+    showImageFullScreen(resultImgUrl,  humanImgUrl, garmentImgUrl, resultImgUrl);
+    /*const resultViewer = document.getElementById('resultViewer');
     const resultImage = document.getElementById('resultImage');
 
     loadImageWithSpinner(resultImgUrl);
@@ -211,7 +212,7 @@ function showResult(humanImgUrl, garmentImgUrl, resultImgUrl) {
     buttons[1].onclick = () => loadImageWithSpinner(garmentImgUrl);
     //buttons[0].onclick = () => loadImageWithSpinner(humanImgUrl || window.humanPhotoUrl);
     //buttons[1].onclick = () => loadImageWithSpinner(garmentImgUrl || window.garmPhotoUrl);
-    buttons[2].onclick = () => loadImageWithSpinner(resultImgUrl);
+    buttons[2].onclick = () => loadImageWithSpinner(resultImgUrl);*/
 }
 
 function replaceEndingToV(input) {
