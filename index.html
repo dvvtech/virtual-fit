@@ -72,10 +72,10 @@
         </div>
 
         <!-- Remaining Usage -->
-        <div class="mb-6" id="remainingUsageContainer" style="display: none;">
+        <!--<div class="mb-6" id="remainingUsageContainer" style="display: none;">
             <label class="text-sm font-medium text-gray-700">Remaining Usage:</label>
             <span id="remainingUsage" class="text-gray-700 font-medium">0</span>
-        </div>
+        </div>-->
 
         <!-- Try Button -->
         <button id="tryOnButton"
@@ -248,29 +248,13 @@
 
         //'https://a30944-8332.x.d-f.pw';
         const API_BASE_URL = 'https://a33140-9deb.k.d-f.pw';
-        //const API_BASE_URL = 'http://localhost:5023';
-        //const API_BASE_URL = 'https://localhost:7147';
-
+        
         let touchStartX = 0;
         let touchEndX = 0;
 
 
         document.addEventListener('DOMContentLoaded', async () => {
-
-            // Если пользователь авторизован, получаем лимиты
-            if (isUserAuthenticated()) { // Предполагаем, что у вас есть такая функция
-                try {
-                    const limit = await getTryOnLimit();
-                    //console.log('Remaining tries:', limit.remainingTries);
-
-                    // Обновляем UI с полученными лимитами
-                    updateLimitUI(limit.remainingTries);
-                } catch (error) {
-                    console.error('Failed to load try-on limits:', error);
-                    // Можно показать сообщение об ошибке
-                }
-            }
-
+            
             checkAuthState();
 
             document.getElementById('yandexAuthBtn').addEventListener('click', tryYandexAuth);
@@ -344,12 +328,6 @@
             return localStorage.getItem('accessToken') !== null;
         }
 
-        function updateLimitUI(remainingTries) {
-            const limitElement = document.getElementById('remainingUsage');
-            if (limitElement) {
-                limitElement.textContent = remainingTries;
-            }
-        }
         /*function showAuthSuccess() {
             const toast = document.getElementById('authSuccessToast');
 
@@ -362,16 +340,6 @@
                 toast.classList.add('hidden');
                 toast.classList.remove('toast-animation');
             }, 3000);
-        }*/
-
-        /*function showPreview(previewId) {
-            const resultImage = document.getElementById('resultImage');
-            if (previewId === 'resultImage') {
-                resultImage.src = window.resultUrl;
-            } else {
-                const preview = document.getElementById(previewId);
-                resultImage.src = preview.src;
-            }
         }*/
 
     </script>
