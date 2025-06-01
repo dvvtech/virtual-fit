@@ -8,9 +8,9 @@ async function showProfile(){
 
     mainContent.classList.add('hidden');
     profileContent.classList.remove('hidden');
-    /*try {
+    try {
 
-        const response = await makeAuthenticatedRequest(`${API_BASE_URL}/api/virtual-fit/history`, {
+        const response = await makeAuthenticatedRequest(`${API_BASE_URL}/api/virtual-fit/profile`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -29,23 +29,26 @@ async function showProfile(){
 
         const data = await response.json();
         //handleSuccess(data);
-        const historyTableBody = document.getElementById('historyTableBody');
-        historyTableBody.innerHTML = '';
+         document.getElementById('userName').textContent = data.name;
+         document.getElementById('userEmail').textContent = data.email;
+         document.getElementById('fittingsToday').textContent = data.countFittingToday;
+         document.getElementById('totalFittings').textContent = data.totalAttemptsUsed;
+         document.getElementById('lastFittingDate').textContent = data.lastFittingDate;
 
 
         mainContent.classList.add('hidden');
-        historyContent.classList.remove('hidden');
+        profileContent.classList.remove('hidden');
 
     } catch (error) {
         //console.error('Error:', error);
         showError(error.message);
-        /*document.getElementById('overlay').classList.add('hidden');
+        document.getElementById('overlay').classList.add('hidden');
             console.error('Error:', error);
-            alert(error.message);*/
-    /*} finally {
+            alert(error.message);
+    } finally {
         hideOverlay();
         //document.getElementById('overlay').classList.add('hidden');
-    }*/
+    }
 }
 
 function hideProfile() {
