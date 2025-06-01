@@ -44,7 +44,6 @@ function checkAuthState() {
     const authButtons = document.getElementById('authButtons');
     const logoutBtn = document.getElementById('logoutBtn');
     const tryOnButton = document.getElementById('tryOnButton');
-    const remainingUsageContainer = document.getElementById('remainingUsageContainer');
 
 
     if (accessToken && refreshToken) {
@@ -58,7 +57,7 @@ function checkAuthState() {
         //if (savedRemainingUsage) {
             //const remainingUsageContainer = document.getElementById('remainingUsageContainer');
             //const remainingUsageField = document.getElementById('remainingUsage');
-            remainingUsageContainer.style.display = 'block';
+            //remainingUsageContainer.style.display = 'block';
             //remainingUsageField.textContent = savedRemainingUsage;
         //}
 
@@ -66,8 +65,7 @@ function checkAuthState() {
         // Если токенов нет — показываем кнопки входа и скрываем Logout
         authButtons.style.display = 'block';
         logoutBtn.style.display = 'none';
-        tryOnButton.style.display = 'none';
-        remainingUsageContainer.style.display = 'none';
+        tryOnButton.style.display = 'none';        
     }
 }
 
