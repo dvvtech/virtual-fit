@@ -10,8 +10,8 @@ async function showProfile(){
     profileContent.classList.remove('hidden');
     try {
 
-        const response = await makeAuthenticatedRequest(`${API_BASE_URL}/api/virtual-fit/profile`, {
-            method: 'POST',
+        const response = await makeAuthenticatedRequest(`${API_BASE_URL}/api/profile`, {
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
             }
