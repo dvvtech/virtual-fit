@@ -51,8 +51,7 @@ function checkAuthState() {
         authButtons.style.display = 'none';
         logoutBtn.style.display = 'block';
         tryOnButton.style.display = 'block';
-        remainingUsageContainer.style.display = 'block';
-
+        
         //const savedRemainingUsage = localStorage.getItem('remainingUsage');
         //if (savedRemainingUsage) {
             //const remainingUsageContainer = document.getElementById('remainingUsageContainer');
