@@ -1,4 +1,4 @@
-async function showProfile(){
+async function showProfile() {
 
     //showOverlay(0);
 
@@ -29,11 +29,11 @@ async function showProfile(){
 
         const data = await response.json();
         //handleSuccess(data);
-         document.getElementById('userName').textContent = data.name;
-         document.getElementById('userEmail').textContent = data.email;
-         document.getElementById('fittingsToday').textContent = data.countFittingToday;
-         document.getElementById('totalFittings').textContent = data.totalAttemptsUsed;
-         document.getElementById('lastFittingDate').textContent = data.lastFittingDate;
+        setTextContentIfExists('userName', data.name);
+        setTextContentIfExists('userEmail', data.email);
+        setTextContentIfExists('fittingsToday', data.countFittingToday);
+        setTextContentIfExists('totalFittings', data.totalAttemptsUsed);
+        setTextContentIfExists('lastFittingDate', data.lastFittingDate);
 
 
         mainContent.classList.add('hidden');
@@ -43,11 +43,21 @@ async function showProfile(){
         //console.error('Error:', error);
         showError(error.message);
         document.getElementById('overlay').classList.add('hidden');
-            console.error('Error:', error);
-            alert(error.message);
+        console.error('Error:', error);
+        alert(error.message);
     } finally {
         hideOverlay();
         //document.getElementById('overlay').classList.add('hidden');
+    }
+}
+
+// Функция для безопасного установки текста
+function setTextContentIfExists(elementId, value) {
+    if (value != null && value !== undefined && value !== '') {
+        const element = document.getElementById(elementId);
+        if (element) {
+            element.textContent = value;
+        }
     }
 }
 
