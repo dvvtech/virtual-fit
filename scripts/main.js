@@ -134,11 +134,11 @@ function handleSuccessTryOn(data) {
     window.resultUrl = data.url;    
     showResult(window.humanPhotoUrl, window.garmPhotoUrl, data.url);
 
-    const remainingUsageEl = document.getElementById('remainingUsage');
-    remainingUsageEl.textContent = data.remainingUsage;
+    //const remainingUsageEl = document.getElementById('remainingUsage');
+    //remainingUsageEl.textContent = data.remainingUsage;
     //localStorage.setItem('remainingUsage', data.remainingUsage);
 
-    document.getElementById('remainingUsageContainer').style.display = 'block';
+    //document.getElementById('remainingUsageContainer').style.display = 'block';
 }
 
 async function handleErrorResponse(response) {
@@ -148,8 +148,8 @@ async function handleErrorResponse(response) {
         if(response.status == 429){
              
             errorMessage = await response.text();
-            const remainingUsageEl = document.getElementById('remainingUsage');
-            remainingUsageEl.textContent = 0;
+            //const remainingUsageEl = document.getElementById('remainingUsage');
+            //remainingUsageEl.textContent = 0;
             //localStorage.setItem('remainingUsage', 0);
         }
         else{
