@@ -150,14 +150,17 @@ function showImageFullScreen(imgUrl, humanImgUrl, garmentImgUrl, resultImgUrl) {
     const buttons = resultViewer.querySelectorAll('.bottom-buttons button');
     buttons[0].onclick = () => {
         currentIndex = 0;
+        updateActiveButton(currentIndex);
         loadImageWithSpinner(currentImages[0]);
     };
     buttons[1].onclick = () => {
         currentIndex = 1;
+        updateActiveButton(currentIndex);
         loadImageWithSpinner(currentImages[1]);
     };
     buttons[2].onclick = () => {
         currentIndex = 2;
+        updateActiveButton(currentIndex);
         loadImageWithSpinner(currentImages[2]);
     };
 }
