@@ -39,11 +39,17 @@ function tryLogout() {
 }
 
 function checkAuthState() {
+    
     const accessToken = localStorage.getItem('accessToken');
     const refreshToken = localStorage.getItem('refreshToken');
+
     const authButtons = document.getElementById('authButtons');
     const logoutBtn = document.getElementById('logoutBtn');
     const tryOnButton = document.getElementById('tryOnButton');
+
+    //const historyButton = document.getElementById('historyButton');
+    //const profileButton = document.getElementById('profileButton');
+    const exampleButton = document.getElementById('exampleButton');
 
 
     if (accessToken && refreshToken) {
@@ -51,7 +57,8 @@ function checkAuthState() {
         authButtons.style.display = 'none';
         logoutBtn.style.display = 'block';
         tryOnButton.style.display = 'block';
-        
+        exampleButton.style.display = 'none';
+
         //const savedRemainingUsage = localStorage.getItem('remainingUsage');
         //if (savedRemainingUsage) {
             //const remainingUsageContainer = document.getElementById('remainingUsageContainer');
@@ -64,7 +71,8 @@ function checkAuthState() {
         // Если токенов нет — показываем кнопки входа и скрываем Logout
         authButtons.style.display = 'block';
         logoutBtn.style.display = 'none';
-        tryOnButton.style.display = 'none';        
+        tryOnButton.style.display = 'none';  
+        exampleButton.style.display = 'block';      
     }
 }
 
