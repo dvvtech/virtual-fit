@@ -24,7 +24,7 @@ async function showHistoryWithUrl(url, { authenticated = true } = {}) {
                 headers: { 'Content-Type': 'application/json' }
               })
             : await fetch(url, {
-                method: 'POST',
+                method: 'GET',
                 headers: { 'Content-Type': 'application/json' }
               });
 
