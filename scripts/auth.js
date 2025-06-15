@@ -47,8 +47,8 @@ function checkAuthState() {
     const logoutBtn = document.getElementById('logoutBtn');
     const tryOnButton = document.getElementById('tryOnButton');
 
-    //const historyButton = document.getElementById('historyButton');
-    //const profileButton = document.getElementById('profileButton');
+    const historyButton = document.getElementById('historyButton');
+    const profileButton = document.getElementById('profileButton');
     const exampleButton = document.getElementById('exampleButton');
 
 
@@ -71,7 +71,9 @@ function checkAuthState() {
         // Если токенов нет — показываем кнопки входа и скрываем Logout
         authButtons.style.display = 'block';
         logoutBtn.style.display = 'none';
-        tryOnButton.style.display = 'none';  
+        tryOnButton.style.display = 'none';
+        historyButton.style.display = 'none';
+        profileButton.style.display = 'none';  
         exampleButton.style.display = 'block';      
     }
 }
