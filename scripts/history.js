@@ -1,6 +1,6 @@
 async function showExample() {
 
-    showHistoryWithUrl(`${API_BASE_URL}/api/virtual-fit/examples`);
+    showHistoryWithUrl(`${API_BASE_URL}/api/virtual-fit/examples`, { authenticated: false });
 }
 
 async function showHistory() {
@@ -8,7 +8,7 @@ async function showHistory() {
     showHistoryWithUrl(`${API_BASE_URL}/api/virtual-fit/history`);
 }
 
-async function showHistoryWithUrl(url) {
+async function showHistoryWithUrl(url, { authenticated = true } = {}) {
 
     showOverlay(0);
     //document.getElementById('overlay').classList.remove('hidden');
@@ -18,12 +18,15 @@ async function showHistoryWithUrl(url) {
 
     try {
 
-        const response = await makeAuthenticatedRequest(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
+        const response = authenticated 
+            ? await makeAuthenticatedRequest(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+              })
+            : await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+              });
 
         if (!response.ok) {
             return response.json().then(err => {
