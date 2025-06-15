@@ -1,11 +1,13 @@
 async function showExample() {
 
     showHistoryWithUrl(`${API_BASE_URL}/api/virtual-fit/examples`, { authenticated: false });
+    document.getElementById('fittingResultTitle').textContent = 'Examples';
 }
 
 async function showHistory() {
 
     showHistoryWithUrl(`${API_BASE_URL}/api/virtual-fit/history`);
+    document.getElementById('fittingResultTitle').textContent = 'Fitting History';
 }
 
 async function showHistoryWithUrl(url, { authenticated = true } = {}) {
