@@ -1,4 +1,14 @@
+async function showExample() {
+
+    showHistoryWithUrl(`${API_BASE_URL}/api/virtual-fit/examples`);
+}
+
 async function showHistory() {
+
+    showHistoryWithUrl(`${API_BASE_URL}/api/virtual-fit/history`);
+}
+
+async function showHistoryWithUrl(url) {
 
     showOverlay(0);
     //document.getElementById('overlay').classList.remove('hidden');
@@ -8,7 +18,7 @@ async function showHistory() {
 
     try {
 
-        const response = await makeAuthenticatedRequest(`${API_BASE_URL}/api/virtual-fit/history`, {
+        const response = await makeAuthenticatedRequest(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
