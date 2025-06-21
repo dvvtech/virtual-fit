@@ -71,6 +71,7 @@ function checkAuthState() {
 
     } else {
         // Если токенов нет — показываем кнопки входа и скрываем Logout
+        authButtons.style.display = 'block';
         authButtons.style.visibility = 'visible'
         logoutBtn.style.display = 'none';
         tryOnButton.style.display = 'none';
