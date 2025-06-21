@@ -54,7 +54,7 @@ function checkAuthState() {
 
     if (accessToken && refreshToken) {
         // Если токены есть — скрываем кнопки входа и показываем Logout
-        authButtons.style.visibility = 'hidden';
+        authButtons.style.display = 'none';
         logoutBtn.style.display = 'block';
         tryOnButton.style.display = 'block';
         historyButton.style.display = 'block';
@@ -71,7 +71,7 @@ function checkAuthState() {
 
     } else {
         // Если токенов нет — показываем кнопки входа и скрываем Logout
-        authButtons.style.visibility = 'visible'
+        authButtons.style.visibility = 'flex'
         logoutBtn.style.display = 'none';
         tryOnButton.style.display = 'none';
         historyButton.style.display = 'none';
