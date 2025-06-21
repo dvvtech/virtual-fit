@@ -80,68 +80,54 @@
             class="w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:from-blue-600 hover:to-blue-700 transition shadow-md hover:shadow-lg"
             onclick="tryOn()">Try On</button>
 
-        <div id="authButtons">
+        <!--<div id="authButtons">-->
+        <div class="social-buttons-row" id="authButtons">
 
-            <button id="VKIDSDKAuthButton" onclick="tryVkAuth()" class="VkIdWebSdk__button VkIdWebSdk__button_reset">
-                <div class="VkIdWebSdk__button_container">
-                    <div class="VkIdWebSdk__button_icon">
-                        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" clip-rule="evenodd"
-                                d="M4.54648 4.54648C3 6.09295 3 8.58197 3 13.56V14.44C3 19.418 3 21.907 4.54648 23.4535C6.09295 25 8.58197 25 13.56 25H14.44C19.418 25 21.907 25 23.4535 23.4535C25 21.907 25
-                           19.418 25 14.44V13.56C25 8.58197 25 6.09295 23.4535 4.54648C21.907 3 19.418 3 14.44 3H13.56C8.58197 3 6.09295 3 4.54648 4.54648ZM6.79999 10.15C6.91798 15.8728 9.92951 19.31 14.8932 19.31H15.1812V16.05C16.989 16.2332 18.3371
-                           17.5682 18.8875 19.31H21.4939C20.7869 16.7044 18.9535 15.2604 17.8141 14.71C18.9526 14.0293 20.5641 12.3893 20.9436 10.15H18.5722C18.0747 11.971 16.5945 13.6233 15.1803 13.78V10.15H12.7711V16.5C11.305 16.1337 9.39237 14.3538 9.314 10.15H6.79999Z"
-                                fill="white" />
-                        </svg>
-                    </div>
-                    <div class="VkIdWebSdk__button_text">
-                        Sign in with VK ID
-                    </div>
+            <button class="vk-auth-button" onclick="tryVkAuth()">
+                <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                        d="M4.54648 4.54648C3 6.09295 3 8.58197 3 13.56V14.44C3 19.418 3 21.907 4.54648 23.4535C6.09295 25 8.58197 25 13.56 25H14.44C19.418 25 21.907 25 23.4535 23.4535C25 21.907 25 19.418 25 14.44V13.56C25 8.58197 25 6.09295 23.4535 4.54648C21.907 3 19.418 3 14.44 3H13.56C8.58197 3 6.09295 3 4.54648 4.54648ZM6.79999 10.15C6.91798 15.8728 9.92951 19.31 14.8932 19.31H15.1812V16.05C16.989 16.2332 18.3371 17.5682 18.8875 19.31H21.4939C20.7869 16.7044 18.9535 15.2604 17.8141 14.71C18.9526 14.0293 20.5641 12.3893 20.9436 10.15H18.5722C18.0747 11.971 16.5945 13.6233 15.1803 13.78V10.15H12.7711V16.5C11.305 16.1337 9.39237 14.3538 9.314 10.15H6.79999Z"
+                        fill="white" />
+                </svg>
+            </button>
+
+            <button class="google-auth-button" onclick="tryGoogleAuth()">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                        fill="#4285F4" />
+                    <path
+                        d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                        fill="#34A853" />
+                    <path
+                        d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+                        fill="#FBBC05" />
+                    <path
+                        d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+                        fill="#EA4335" />
+                </svg>
+            </button>
+
+            <button class="yandex-auth-button" onclick="tryYandexAuth()">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M2.04 12c0-5.523 4.476-10 10-10 5.522 0 10 4.477 10 10s-4.478 10-10 10c-5.524 0-10-4.477-10-10z"
+                        fill="#FC3F1D" />
+                    <path
+                        d="M13.32 7.666h-.924c-1.694 0-2.585.858-2.585 2.123 0 1.43.616 2.1 1.881 2.959l1.149.826-4.409 4.926H5.328l3.226-3.708c-2.013-1.517-3.038-2.875-3.038-4.85 0-2.288 1.595-4.05 4.62-4.05h3.98v15.332h-2.196V7.666z"
+                        fill="#fff" />
+                </svg>
+            </button>
+
+            <button class="mailru-auth-button">
+                <div class="mailru-logo">
+                    <span class="mailru-at">@</span>
+                    <span class="mailru-text">mail</span>
                 </div>
             </button>
 
-
-            <center>
-                <button class="gsi-material-button" onclick="tryGoogleAuth()">
-                    <div class="gsi-material-button-state"></div>
-                    <div class="gsi-material-button-content-wrapper">
-                        <div class="gsi-material-button-icon">
-                            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"
-                                xmlns:xlink="http://www.w3.org/1999/xlink" style="display: block;">
-                                <path fill="#EA4335"
-                                    d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z">
-                                </path>
-                                <path fill="#4285F4"
-                                    d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z">
-                                </path>
-                                <path fill="#FBBC05"
-                                    d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z">
-                                </path>
-                                <path fill="#34A853"
-                                    d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z">
-                                </path>
-                                <path fill="none" d="M0 0h48v48H0z"></path>
-                            </svg>
-                        </div>
-                        <span class="gsi-material-button-contents">Sign in with Google</span>
-                        <span style="display: none;">Sign in with Google</span>
-                    </div>
-                </button>
-            </center>
-
-            <center>
-                <div class="yandex-auth-btn" id="yandexAuthBtn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" style="margin-right:8px;"
-                        viewBox="0 0 24 24" fill="none">
-                        <rect width="24" height="24" rx="4" fill="#FC3F1D" />
-                        <path
-                            d="M13.43 12.67L16.47 7.5H14.87L12.65 11.16H12.62L10.4 7.5H8.8L11.84 12.67V16.5H13.43V12.67Z"
-                            fill="white" />
-                    </svg>
-                    Войти через Яндекс
-                </div>
-            </center>
-
         </div>
+
         <button id="logoutBtn"
             class="w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:from-blue-600 hover:to-blue-700 transition shadow-md hover:shadow-lg"
             onclick="tryLogout()">Log out</button>
@@ -255,7 +241,7 @@
 
             checkAuthState();
 
-            document.getElementById('yandexAuthBtn').addEventListener('click', tryYandexAuth);
+            //document.getElementById('yandexAuthBtn').addEventListener('click', tryYandexAuth);
 
             document.getElementById('resultImage').addEventListener('touchstart', (e) => {
                 touchStartX = e.changedTouches[0].screenX;
