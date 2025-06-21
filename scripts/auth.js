@@ -54,7 +54,7 @@ function checkAuthState() {
 
     if (accessToken && refreshToken) {
         // Если токены есть — скрываем кнопки входа и показываем Logout
-        authButtons.style.visibility = 'hidden';
+        authButtons.style.display = 'block';
         logoutBtn.style.display = 'block';
         tryOnButton.style.display = 'block';
         historyButton.style.display = 'block';
