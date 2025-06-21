@@ -10,6 +10,10 @@ function tryYandexAuth() {
     tryAuth('yandex');
 }
 
+function tryMailRuAuth() {
+    tryAuth('mailru');
+}
+
 function tryAuth(provider) {
     fetch(`${API_BASE_URL}/api/${provider}-auth`)
         .then(response => {
