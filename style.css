@@ -428,3 +428,65 @@
   justify-content: center;
   padding: 8px;
 }
+
+
+
+
+
+h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        .welcome-text {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+        .highlight {
+            font-size: 20px;
+            font-weight: bold;
+            color: #e74c3c;
+            margin: 25px 0;
+        }
+        .login-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 30px 0;
+        }
+        .login-btn {
+            padding: 12px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            color: white;
+        }
+        .google { background-color: #DB4437; }
+        .apple { background-color: #000000; }
+        .facebook { background-color: #4267B2; }
+        .vk { background-color: #4C75A3; }
+        .email-btn {
+            background: none;
+            border: 1px solid #3498db;
+            color: #3498db;
+            padding: 12px 20px;
+            border-radius: 5px;
+            margin-top: 15px;
+            cursor: pointer;
+        }
+        .examples-btn {
+            display: inline-block;
+            margin: 30px 0;
+            padding: 12px 25px;
+            background-color: #2ecc71;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .emoji {
+            font-size: 24px;
+            margin-right: 5px;
+            vertical-align: middle;
+        }

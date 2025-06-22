@@ -65,6 +65,8 @@ function checkAuthState() {
         profileButton.style.display = 'block';
         exampleButton.style.display = 'none';
 
+        document.getElementById("mainDiv").style.display = "block";
+
         //const savedRemainingUsage = localStorage.getItem('remainingUsage');
         //if (savedRemainingUsage) {
             //const remainingUsageContainer = document.getElementById('remainingUsageContainer');
@@ -82,6 +84,8 @@ function checkAuthState() {
         historyButton.style.display = 'none';
         profileButton.style.display = 'none';  
         exampleButton.style.display = 'block';      
+
+        document.getElementById("mainDiv").style.display = "none";
     }
 }
 
