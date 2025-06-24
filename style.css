@@ -130,9 +130,9 @@
   margin-top: 16px; /* Добавляем отступ сверху кнопки Google */
 }
 
-#logoutBtn {
+/*#logoutBtn {
   margin-top: 16px; /* Добавляем отступ снизу кнопки VK */
-}
+/*}*/
 
 /*google button*/
 
@@ -511,7 +511,7 @@ h1 {
             font-size: 16px;
             border: none;
             border-radius: 5px;
-            cursor: pointer;
+            
         }
         .try-on {
             background-color: #4CAF50;
