@@ -55,7 +55,6 @@ function checkAuthState() {
     const profileButton = document.getElementById('profileButton');
     const exampleButton = document.getElementById('exampleButton');
 
-
     if (accessToken && refreshToken) {
         // Если токены есть — скрываем кнопки входа и показываем Logout
         authButtons.style.display = 'none';
