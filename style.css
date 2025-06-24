@@ -496,10 +496,14 @@ h1 {
 
 
 
-        .buttons {            
+        .buttons {
+            display: flex;
             justify-content: center;
-            gap: 40px;
+            gap: 20px;
             margin-bottom: 30px;
+
+  align-items: center;  
+  padding: 8px;
         }
         
         button {
